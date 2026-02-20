@@ -24,7 +24,8 @@ export function PlayerCard() {
       transition={{ duration: 0.5, ease: 'easeOut' }}
       className="w-full max-w-sm mx-auto bg-black/40 backdrop-blur-xl border border-[#19222D] rounded-[30px] overflow-hidden shadow-2xl relative group"
     >
-      <div className="h-32 w-full relative bg-gradient-to-r from-blue-900 to-purple-900">
+      <div className="h-32 w-full relative overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800&auto=format&fit=crop" alt="banner" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
         <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full flex items-center gap-1">
           <Target className="w-3 h-3 text-cyan-400" />
