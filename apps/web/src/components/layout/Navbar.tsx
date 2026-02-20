@@ -6,6 +6,7 @@ import { Menu, X, Trophy, Swords, Users, Target, Search, Bell } from 'lucide-rea
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLightMode, setIsLightMode] = useState(false);
 
   const navItems = [
     { name: 'Dashboard', icon: Target },
@@ -18,12 +19,40 @@ export function Navbar() {
     <nav className="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-lg border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <div className="flex items-center gap-4">
-            <div className="flex items-center justify-center w-24 h-10 rounded-full border border-white/20 bg-white/5 cursor-pointer hover:bg-white/10 transition-colors">
-              <span className="text-white font-black tracking-widest text-sm">MATZ</span>
+
+          <div className="scale-[0.55] sm:scale-[0.60] origin-left">
+            <div className="flex items-center gap-[16px] relative" style={{ perspective: '1000px' }}>
+              <div
+                className="w-[148px] h-[86px] border-[7px] rounded-full flex items-center p-[6px] relative z-10 pointer-events-none transition-colors duration-500"
+                style={{ borderColor: isLightMode ? '#000' : '#FFF' }}
+              >
+                <motion.div
+                  className="w-[60px] h-[60px] rounded-full flex justify-center items-center cursor-pointer z-20 pointer-events-auto"
+                  style={{ backgroundColor: isLightMode ? '#000' : '#FFF' }}
+                  animate={{ x: isLightMode ? 0 : 62 }}
+                  transition={{ type: "spring", stiffness: 150, damping: 20 }}
+                  onClick={() => setIsLightMode(!isLightMode)}
+                >
+                  <span
+                    className="text-[14px] font-black tracking-[0.5px] select-none pointer-events-none"
+                    style={{ color: isLightMode ? '#FFF' : '#000' }}
+                  >
+                    MATZ
+                  </span>
+                </motion.div>
+              </div>
+              <motion.div
+                className="text-[95px] font-black leading-[0.8] -ml-1 select-none relative z-0 cursor-pointer hover:opacity-80"
+                style={{ color: isLightMode ? '#000' : '#FFF', transformOrigin: 'center center' }}
+                animate={{ x: isLightMode ? -106 : 0, scale: isLightMode ? 0.52 : 1 }}
+                transition={{ type: "spring", stiffness: 150, damping: 20 }}
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              >
+                N
+              </motion.div>
             </div>
-            <div className="text-white font-black text-4xl cursor-pointer hover:opacity-80 transition-opacity">N</div>
           </div>
+
           <div className="hidden md:flex items-center gap-8">
             <div className="flex items-center bg-white/5 rounded-full px-4 py-2 border border-white/10 hover:border-white/20 transition-colors focus-within:border-white/40">
               <Search className="w-4 h-4 text-white/50 mr-2" />
@@ -38,6 +67,7 @@ export function Navbar() {
               ))}
             </div>
           </div>
+
           <div className="hidden md:flex items-center gap-4">
             <button className="relative p-2 text-white/70 hover:text-white transition-colors">
               <Bell className="w-5 h-5" />
@@ -48,6 +78,7 @@ export function Navbar() {
               <span className="text-white text-sm font-bold">John Doe</span>
             </div>
           </div>
+
           <div className="md:hidden flex items-center">
             <button onClick={() => setIsOpen(!isOpen)} className="text-white/70 hover:text-white p-2">
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -55,9 +86,15 @@ export function Navbar() {
           </div>
         </div>
       </div>
+
       <AnimatePresence>
         {isOpen && (
-          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="md:hidden bg-black/95 border-b border-white/10 absolute w-full">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="md:hidden bg-black/95 border-b border-white/10 absolute w-full"
+          >
             <div className="px-4 pt-2 pb-6 space-y-2">
               <div className="flex items-center bg-white/5 rounded-full px-4 py-3 mb-4 border border-white/10">
                 <Search className="w-4 h-4 text-white/50 mr-2" />
