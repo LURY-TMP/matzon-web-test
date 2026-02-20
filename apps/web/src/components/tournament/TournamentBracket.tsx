@@ -96,134 +96,21 @@ export function TournamentBracket() {
       </div>
 
       {/* Round labels */}
-      <div className="flex mb-3 overflow-x-auto" style={{ minWidth: TW }}>
+            <div className="flex mb-3" style={{ minWidth: TW, gap: 0 }}>
         {[
-          { label: 'Oitavas', x: X0 + MW / 2 },
-          { label: 'Quartos', x: X1 + MW / 2 },
-          { label: 'Semi', x: X2 + MW / 2 },
-          { label: 'Final', x: X3 + MW / 2 },
-          { label: 'Semi', x: X4 + MW / 2 },
-          { label: 'Quartos', x: X5 + MW / 2 },
-          { label: 'Oitavas', x: X6 + MW / 2 },
+          { label: 'Oitavas', w: MW + CW },
+          { label: 'Quartos', w: MW + CW },
+          { label: 'Semi', w: MW + CW },
+          { label: 'Final', w: MW + CW },
+          { label: 'Semi', w: MW + CW },
+          { label: 'Quartos', w: MW + CW },
+          { label: 'Oitavas', w: MW },
         ].map((r, i) => (
-          <div key={i} className="absolute text-[9px] font-black uppercase tracking-widest text-center"
-            style={{ left: r.x - 30, width: 60, color: i === 3 ? '#0A84FF' : 'var(--text-tertiary)' }}>
+          <div key={i} className="text-[9px] font-black uppercase tracking-widest text-center flex-shrink-0"
+            style={{ width: r.w, color: i === 3 ? '#0A84FF' : 'var(--text-tertiary)' }}>
             {r.label}
           </div>
         ))}
-      </div>
-
-      <div className="overflow-x-auto pb-4 max-w-full">
-        <div className="relative" style={{ width: TW, height: TOTAL_H + 60 }}>
-
-          {/* ── SVG LINES ── */}
-          <svg className="absolute inset-0" width={TW} height={TOTAL_H + 60} style={{ pointerEvents: 'none', overflow: 'visible' }}>
-
-            {/* LEFT: R1 → R2 (pair 0-1) */}
-            <line x1={X0+MW} y1={mc(R1Y[0])} x2={X0+MW+CW/2} y2={mc(R1Y[0])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X0+MW+CW/2} y1={mc(R1Y[0])} x2={X0+MW+CW/2} y2={mc(R1Y[1])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X0+MW} y1={mc(R1Y[1])} x2={X0+MW+CW/2} y2={mc(R1Y[1])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X0+MW+CW/2} y1={(mc(R1Y[0])+mc(R1Y[1]))/2} x2={X1} y2={(mc(R1Y[0])+mc(R1Y[1]))/2} stroke={LINE} strokeWidth={1.5}/>
-
-            {/* LEFT: R1 → R2 (pair 2-3) */}
-            <line x1={X0+MW} y1={mc(R1Y[2])} x2={X0+MW+CW/2} y2={mc(R1Y[2])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X0+MW+CW/2} y1={mc(R1Y[2])} x2={X0+MW+CW/2} y2={mc(R1Y[3])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X0+MW} y1={mc(R1Y[3])} x2={X0+MW+CW/2} y2={mc(R1Y[3])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X0+MW+CW/2} y1={(mc(R1Y[2])+mc(R1Y[3]))/2} x2={X1} y2={(mc(R1Y[2])+mc(R1Y[3]))/2} stroke={LINE} strokeWidth={1.5}/>
-
-            {/* LEFT: R2 → SF */}
-            <line x1={X1+MW} y1={mc(R2Y[0])} x2={X1+MW+CW/2} y2={mc(R2Y[0])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X1+MW+CW/2} y1={mc(R2Y[0])} x2={X1+MW+CW/2} y2={mc(R2Y[1])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X1+MW} y1={mc(R2Y[1])} x2={X1+MW+CW/2} y2={mc(R2Y[1])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X1+MW+CW/2} y1={mc(SFY)} x2={X2} y2={mc(SFY)} stroke={LINE} strokeWidth={1.5}/>
-
-            {/* LEFT: SF → FINAL */}
-            <line x1={X2+MW} y1={mc(SFY)} x2={X3} y2={mc(FY)} stroke={LINE} strokeWidth={1.5}/>
-
-            {/* Champion line (from top of final box upward) */}
-            <line x1={X3+MW/2} y1={FY} x2={X3+MW/2} y2={CHAMPION_Y+MH+20} stroke={LINE} strokeWidth={1.5}/>
-
-            {/* RIGHT: SF → FINAL */}
-            <line x1={X3+MW} y1={mc(FY)} x2={X4} y2={mc(SFY)} stroke={LINE} strokeWidth={1.5}/>
-
-            {/* RIGHT: R2 → SF */}
-            <line x1={X4+MW} y1={mc(SFY)} x2={X4+MW+CW/2} y2={mc(SFY)} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X4+MW+CW/2} y1={mc(R2Y[0])} x2={X4+MW+CW/2} y2={mc(R2Y[1])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X4+MW+CW/2} y1={mc(R2Y[0])} x2={X5} y2={mc(R2Y[0])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X4+MW+CW/2} y1={mc(R2Y[1])} x2={X5} y2={mc(R2Y[1])} stroke={LINE} strokeWidth={1.5}/>
-
-            {/* RIGHT: R1 → R2 (pair 0-1) */}
-            <line x1={X5+MW} y1={mc(R2Y[0])} x2={X5+MW+CW/2} y2={mc(R2Y[0])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X5+MW+CW/2} y1={mc(R1Y[0])} x2={X5+MW+CW/2} y2={mc(R1Y[1])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X5+MW+CW/2} y1={mc(R1Y[0])} x2={X6} y2={mc(R1Y[0])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X5+MW+CW/2} y1={mc(R1Y[1])} x2={X6} y2={mc(R1Y[1])} stroke={LINE} strokeWidth={1.5}/>
-
-            {/* RIGHT: R1 → R2 (pair 2-3) */}
-            <line x1={X5+MW} y1={mc(R2Y[1])} x2={X5+MW+CW/2} y2={mc(R2Y[1])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X5+MW+CW/2} y1={mc(R1Y[2])} x2={X5+MW+CW/2} y2={mc(R1Y[3])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X5+MW+CW/2} y1={mc(R1Y[2])} x2={X6} y2={mc(R1Y[2])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X5+MW+CW/2} y1={mc(R1Y[3])} x2={X6} y2={mc(R1Y[3])} stroke={LINE} strokeWidth={1.5}/>
-          </svg>
-
-          {/* ── CHAMPION (above final) ── */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.55 }}
-            className="absolute flex flex-col items-center gap-1.5 px-4 py-3 rounded-2xl"
-            style={{ width: MW, top: CHAMPION_Y, left: X3, backgroundColor: 'rgba(255,214,10,0.08)' }}
-          >
-            <Trophy className="w-5 h-5" style={{ color: '#FFD60A' }} />
-            <span className="text-[9px] font-black uppercase tracking-wider" style={{ color: '#FFD60A' }}>CAMPEÃO</span>
-            <img src={av[0]} className="w-9 h-9 rounded-full object-cover" style={{ border: '2px solid #FFD60A' }} />
-            <span className="text-xs font-bold" style={{ color: 'var(--text-primary)' }}>Faker</span>
-          </motion.div>
-
-          {/* ── FINAL ── */}
-          <MatchCard winner={{ name: 'Faker', avatar: av[0] }} loser={{ name: 'Coldzera', avatar: av[12] }}
-            sw={3} sl={2} label="FINAL" date="30 MAI." x={X3} y={FY} delay={0.38} isFinal />
-
-          {/* ── LEFT SF ── */}
-          <MatchCard winner={{ name: 'Faker', avatar: av[0] }} loser={{ name: 'Kscerato', avatar: av[6] }}
-            sw={3} sl={2} label="SF1" date="28 ABR." x={X2} y={SFY} delay={0.28} />
-
-          {/* ── LEFT R2 ── */}
-          <MatchCard winner={{ name: 'Faker', avatar: av[0] }} loser={{ name: 'S1mple', avatar: av[2] }}
-            sw={3} sl={2} label="QF1" date="7 ABR." x={X1} y={R2Y[0]} delay={0.15} />
-          <MatchCard winner={{ name: 'Kscerato', avatar: av[6] }} loser={{ name: 'TenZ', avatar: av[4] }}
-            sw={3} sl={1} label="QF2" date="7 ABR." x={X1} y={R2Y[1]} delay={0.18} />
-
-          {/* ── LEFT R1 ── */}
-          <MatchCard winner={{ name: 'Faker', avatar: av[0] }} loser={{ name: 'ZywOo', avatar: av[1] }}
-            sw={3} sl={1} label="WPO1" date="10 MAR." x={X0} y={R1Y[0]} delay={0} />
-          <MatchCard winner={{ name: 'S1mple', avatar: av[2] }} loser={{ name: 'NiKo', avatar: av[3] }}
-            sw={3} sl={2} label="WPO2" date="10 MAR." x={X0} y={R1Y[1]} delay={0.04} />
-          <MatchCard winner={{ name: 'TenZ', avatar: av[4] }} loser={{ name: 'Shroud', avatar: av[5] }}
-            sw={3} sl={0} label="WPO3" date="10 MAR." x={X0} y={R1Y[2]} delay={0.08} />
-          <MatchCard winner={{ name: 'Kscerato', avatar: av[6] }} loser={{ name: 'Device', avatar: av[7] }}
-            sw={3} sl={1} label="WPO4" date="10 MAR." x={X0} y={R1Y[3]} delay={0.12} />
-
-          {/* ── RIGHT SF ── */}
-          <MatchCard winner={{ name: 'Coldzera', avatar: av[12] }} loser={{ name: 'Apex', avatar: av[9] }}
-            sw={3} sl={1} label="SF2" date="28 ABR." x={X4} y={SFY} delay={0.28} />
-
-          {/* ── RIGHT R2 ── */}
-          <MatchCard winner={{ name: 'Apex', avatar: av[9] }} loser={{ name: 'Rain', avatar: av[11] }}
-            sw={3} sl={1} label="QF3" date="7 ABR." x={X5} y={R2Y[0]} delay={0.15} />
-          <MatchCard winner={{ name: 'Coldzera', avatar: av[12] }} loser={{ name: 'Twistzz', avatar: av[15] }}
-            sw={3} sl={2} label="QF4" date="7 ABR." x={X5} y={R2Y[1]} delay={0.18} />
-
-          {/* ── RIGHT R1 ── */}
-          <MatchCard winner={{ name: 'Apex', avatar: av[9] }} loser={{ name: 'Mixer', avatar: av[8] }}
-            sw={3} sl={1} label="WPO5" date="10 MAR." x={X6} y={R1Y[0]} delay={0} />
-          <MatchCard winner={{ name: 'Rain', avatar: av[11] }} loser={{ name: 'Krimz', avatar: av[10] }}
-            sw={3} sl={2} label="WPO6" date="10 MAR." x={X6} y={R1Y[1]} delay={0.04} />
-          <MatchCard winner={{ name: 'Coldzera', avatar: av[12] }} loser={{ name: 'EliGE', avatar: av[13] }}
-            sw={3} sl={0} label="WPO7" date="10 MAR." x={X6} y={R1Y[2]} delay={0.08} />
-          <MatchCard winner={{ name: 'Twistzz', avatar: av[15] }} loser={{ name: 'Xantares', avatar: av[14] }}
-            sw={3} sl={2} label="WPO8" date="10 MAR." x={X6} y={R1Y[3]} delay={0.12} />
-
-        </div>
       </div>
     </section>
   );
