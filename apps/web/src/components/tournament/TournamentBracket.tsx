@@ -1,8 +1,8 @@
 'use client';
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Trophy } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Trophy, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const av = [
   'https://randomuser.me/api/portraits/men/32.jpg',
@@ -23,67 +23,77 @@ const av = [
   'https://randomuser.me/api/portraits/men/19.jpg',
 ];
 
-const LINE = 'rgba(255,255,255,0.18)';
-const MW = 145;
-const MH = 86;
-const GAP = 48;
-const IH = MH + GAP;
-const CW = 32;
+const rounds = [
+  {
+    label: 'Oitavas de Final', date: '10 MAR.',
+    matches: [
+      { w: { name: 'Faker', avatar: av[0] }, l: { name: 'ZywOo', avatar: av[1] }, sw: 3, sl: 1 },
+      { w: { name: 'S1mple', avatar: av[2] }, l: { name: 'NiKo', avatar: av[3] }, sw: 3, sl: 2 },
+      { w: { name: 'TenZ', avatar: av[4] }, l: { name: 'Shroud', avatar: av[5] }, sw: 3, sl: 0 },
+      { w: { name: 'Kscerato', avatar: av[6] }, l: { name: 'Device', avatar: av[7] }, sw: 3, sl: 1 },
+      { w: { name: 'Apex', avatar: av[9] }, l: { name: 'Mixer', avatar: av[8] }, sw: 3, sl: 1 },
+      { w: { name: 'Rain', avatar: av[11] }, l: { name: 'Krimz', avatar: av[10] }, sw: 3, sl: 2 },
+      { w: { name: 'Coldzera', avatar: av[12] }, l: { name: 'EliGE', avatar: av[13] }, sw: 3, sl: 0 },
+      { w: { name: 'Twistzz', avatar: av[15] }, l: { name: 'Xantares', avatar: av[14] }, sw: 3, sl: 2 },
+    ],
+  },
+  {
+    label: 'Quartos de Final', date: '7 ABR.',
+    matches: [
+      { w: { name: 'Faker', avatar: av[0] }, l: { name: 'S1mple', avatar: av[2] }, sw: 3, sl: 2 },
+      { w: { name: 'Kscerato', avatar: av[6] }, l: { name: 'TenZ', avatar: av[4] }, sw: 3, sl: 1 },
+      { w: { name: 'Apex', avatar: av[9] }, l: { name: 'Rain', avatar: av[11] }, sw: 3, sl: 1 },
+      { w: { name: 'Coldzera', avatar: av[12] }, l: { name: 'Twistzz', avatar: av[15] }, sw: 3, sl: 2 },
+    ],
+  },
+  {
+    label: 'Semifinais', date: '28 ABR.',
+    matches: [
+      { w: { name: 'Faker', avatar: av[0] }, l: { name: 'Kscerato', avatar: av[6] }, sw: 3, sl: 2 },
+      { w: { name: 'Coldzera', avatar: av[12] }, l: { name: 'Apex', avatar: av[9] }, sw: 3, sl: 1 },
+    ],
+  },
+  {
+    label: 'Grande Final', date: '30 MAI.',
+    matches: [
+      { w: { name: 'Faker', avatar: av[0] }, l: { name: 'Coldzera', avatar: av[12] }, sw: 3, sl: 2 },
+    ],
+  },
+];
 
-// X positions
-const X0 = 0;
-const X1 = X0 + MW + CW;
-const X2 = X1 + MW + CW;
-const X3 = X2 + MW + CW; // FINAL center
-const X4 = X3 + MW + CW; // SF right
-const X5 = X4 + MW + CW; // R2 right
-const X6 = X5 + MW + CW; // R1 right
-const TW = X6 + MW;
-
-// Y positions — R1: 4 matches, R2: 2 matches, SF: 1 match
-const R1Y = [0, IH, IH * 2, IH * 3];
-const R2Y = [IH / 2, IH * 2 + IH / 2];
-const SFY = IH + IH / 2;
-const FY = SFY;
-const CHAMPION_Y = FY - 150;
-
-const mc = (y: number) => y + MH / 2;
-
-function MatchCard({ winner, loser, sw, sl, label, date, x, y, delay = 0, isFinal = false }: any) {
+function MatchCard({ m, delay = 0 }: { m: any; delay?: number }) {
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ delay }}
-      className="absolute rounded-xl overflow-hidden"
-      style={{ width: MW, top: y, left: x, backgroundColor: 'var(--bg-card)' }}
+      className="rounded-2xl overflow-hidden"
+      style={{ backgroundColor: 'var(--bg-card)', minWidth: 180 }}
     >
-      <div className="flex items-center gap-2 px-3 py-2.5"
-        style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', backgroundColor: 'rgba(10,132,255,0.09)' }}>
-        <img src={winner.avatar} className="w-6 h-6 rounded-full object-cover flex-shrink-0" />
-        <span className="text-[11px] font-bold truncate flex-1" style={{ color: 'var(--text-primary)' }}>{winner.name}</span>
-        <span className="text-[11px] font-black flex-shrink-0" style={{ color: '#0A84FF' }}>{sw}</span>
+      <div className="flex items-center gap-2 px-4 py-3"
+        style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', backgroundColor: 'rgba(10,132,255,0.08)' }}>
+        <img src={m.w.avatar} className="w-7 h-7 rounded-full object-cover flex-shrink-0" />
+        <span className="text-[12px] font-bold flex-1 truncate" style={{ color: 'var(--text-primary)' }}>{m.w.name}</span>
+        <span className="text-[12px] font-black flex-shrink-0" style={{ color: '#0A84FF' }}>{m.sw}</span>
       </div>
-      <div className="flex items-center gap-2 px-3 py-2.5">
-        <img src={loser.avatar} className="w-6 h-6 rounded-full object-cover flex-shrink-0" />
-        <span className="text-[11px] truncate flex-1" style={{ color: 'var(--text-tertiary)' }}>{loser.name}</span>
-        <span className="text-[11px] flex-shrink-0" style={{ color: 'var(--text-tertiary)' }}>{sl}</span>
-      </div>
-      <div className="px-3 py-1" style={{ backgroundColor: 'rgba(255,255,255,0.02)' }}>
-        <span className="text-[8px] font-bold" style={{ color: 'var(--text-tertiary)' }}>
-          {label}{date ? ` · ${date}` : ''}
-          {isFinal && <span className="ml-1 px-1.5 py-0.5 rounded-full text-[8px]" style={{ backgroundColor: 'rgba(10,132,255,0.2)', color: '#0A84FF' }}> FINAL</span>}
-        </span>
+      <div className="flex items-center gap-2 px-4 py-3">
+        <img src={m.l.avatar} className="w-7 h-7 rounded-full object-cover flex-shrink-0" />
+        <span className="text-[12px] flex-1 truncate" style={{ color: 'var(--text-tertiary)' }}>{m.l.name}</span>
+        <span className="text-[12px] flex-shrink-0" style={{ color: 'var(--text-tertiary)' }}>{m.sl}</span>
       </div>
     </motion.div>
   );
 }
 
 export function TournamentBracket() {
-  const TOTAL_H = IH * 4;
+  const [current, setCurrent] = useState(0);
+  const total = rounds.length;
+  const round = rounds[current];
 
   return (
     <section className="w-full max-w-7xl mx-auto py-10 px-4">
+
+      {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-2">
         <div>
           <h2 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>Invitational MATZON 2026</h2>
@@ -95,136 +105,92 @@ export function TournamentBracket() {
         </div>
       </div>
 
-      {/* Round labels */}
-      <div className="flex mb-3 overflow-x-auto" style={{ minWidth: TW }}>
-        {[
-          { label: 'Oitavas', x: X0 + MW / 2 },
-          { label: 'Quartos', x: X1 + MW / 2 },
-          { label: 'Semi', x: X2 + MW / 2 },
-          { label: 'Final', x: X3 + MW / 2 },
-          { label: 'Semi', x: X4 + MW / 2 },
-          { label: 'Quartos', x: X5 + MW / 2 },
-          { label: 'Oitavas', x: X6 + MW / 2 },
-        ].map((r, i) => (
-          <div key={i} className="absolute text-[9px] font-black uppercase tracking-widest text-center"
-            style={{ left: r.x - 30, width: 60, color: i === 3 ? '#0A84FF' : 'var(--text-tertiary)' }}>
+      {/* Round Tabs */}
+      <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
+        {rounds.map((r, i) => (
+          <button key={i} onClick={() => setCurrent(i)}
+            className="flex-shrink-0 px-4 py-2 rounded-full text-xs font-semibold transition-all"
+            style={{
+              backgroundColor: current === i ? '#0A84FF' : 'var(--bg-card)',
+              color: current === i ? '#fff' : 'var(--text-secondary)',
+            }}>
             {r.label}
-          </div>
+          </button>
         ))}
       </div>
 
-      <div className="overflow-x-auto pb-4 max-w-full">
-        <div className="relative" style={{ width: TW, height: TOTAL_H + 60 }}>
+      {/* Matches */}
+      <AnimatePresence mode="wait">
+        <motion.div key={current}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: 0.25 }}
+        >
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <p className="text-base font-bold" style={{ color: 'var(--text-primary)' }}>{round.label}</p>
+              <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>{round.date} · {round.matches.length} jogos</p>
+            </div>
+            <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>{current + 1} / {total}</span>
+          </div>
 
-          {/* ── SVG LINES ── */}
-          <svg className="absolute inset-0" width={TW} height={TOTAL_H + 60} style={{ pointerEvents: 'none', overflow: 'visible' }}>
+          <div className="grid gap-3" style={{
+            gridTemplateColumns: `repeat(${Math.min(round.matches.length, 4)}, minmax(180px, 1fr))`
+          }}>
+            {round.matches.map((m, i) => (
+              <MatchCard key={i} m={m} delay={i * 0.05} />
+            ))}
+          </div>
 
-            {/* LEFT: R1 → R2 (pair 0-1) */}
-            <line x1={X0+MW} y1={mc(R1Y[0])} x2={X0+MW+CW/2} y2={mc(R1Y[0])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X0+MW+CW/2} y1={mc(R1Y[0])} x2={X0+MW+CW/2} y2={mc(R1Y[1])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X0+MW} y1={mc(R1Y[1])} x2={X0+MW+CW/2} y2={mc(R1Y[1])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X0+MW+CW/2} y1={(mc(R1Y[0])+mc(R1Y[1]))/2} x2={X1} y2={(mc(R1Y[0])+mc(R1Y[1]))/2} stroke={LINE} strokeWidth={1.5}/>
+          {/* Final winner */}
+          {current === total - 1 && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2 }}
+              className="flex items-center gap-4 mt-5 p-5 rounded-2xl"
+              style={{ backgroundColor: 'rgba(255,214,10,0.08)' }}
+            >
+              <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
+                style={{ backgroundColor: 'rgba(255,214,10,0.15)' }}>
+                <Trophy className="w-6 h-6" style={{ color: '#FFD60A' }} />
+              </div>
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-wider mb-1" style={{ color: '#FFD60A' }}>Campeão</p>
+                <div className="flex items-center gap-2">
+                  <img src={av[0]} className="w-9 h-9 rounded-full object-cover" style={{ border: '2px solid #FFD60A' }} />
+                  <span className="text-base font-bold" style={{ color: 'var(--text-primary)' }}>Faker</span>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </motion.div>
+      </AnimatePresence>
 
-            {/* LEFT: R1 → R2 (pair 2-3) */}
-            <line x1={X0+MW} y1={mc(R1Y[2])} x2={X0+MW+CW/2} y2={mc(R1Y[2])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X0+MW+CW/2} y1={mc(R1Y[2])} x2={X0+MW+CW/2} y2={mc(R1Y[3])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X0+MW} y1={mc(R1Y[3])} x2={X0+MW+CW/2} y2={mc(R1Y[3])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X0+MW+CW/2} y1={(mc(R1Y[2])+mc(R1Y[3]))/2} x2={X1} y2={(mc(R1Y[2])+mc(R1Y[3]))/2} stroke={LINE} strokeWidth={1.5}/>
+      {/* Navigation */}
+      <div className="flex items-center justify-between mt-6">
+        <button onClick={() => setCurrent(Math.max(0, current - 1))} disabled={current === 0}
+          className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all"
+          style={{ backgroundColor: 'var(--bg-card)', color: current === 0 ? 'var(--text-tertiary)' : 'var(--text-primary)', opacity: current === 0 ? 0.4 : 1 }}>
+          <ChevronLeft className="w-4 h-4" /> Anterior
+        </button>
 
-            {/* LEFT: R2 → SF */}
-            <line x1={X1+MW} y1={mc(R2Y[0])} x2={X1+MW+CW/2} y2={mc(R2Y[0])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X1+MW+CW/2} y1={mc(R2Y[0])} x2={X1+MW+CW/2} y2={mc(R2Y[1])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X1+MW} y1={mc(R2Y[1])} x2={X1+MW+CW/2} y2={mc(R2Y[1])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X1+MW+CW/2} y1={mc(SFY)} x2={X2} y2={mc(SFY)} stroke={LINE} strokeWidth={1.5}/>
-
-            {/* LEFT: SF → FINAL */}
-            <line x1={X2+MW} y1={mc(SFY)} x2={X3} y2={mc(FY)} stroke={LINE} strokeWidth={1.5}/>
-
-            {/* Champion line (from top of final box upward) */}
-            <line x1={X3+MW/2} y1={FY} x2={X3+MW/2} y2={CHAMPION_Y+MH+20} stroke={LINE} strokeWidth={1.5}/>
-
-            {/* RIGHT: SF → FINAL */}
-            <line x1={X3+MW} y1={mc(FY)} x2={X4} y2={mc(SFY)} stroke={LINE} strokeWidth={1.5}/>
-
-            {/* RIGHT: R2 → SF */}
-            <line x1={X4+MW} y1={mc(SFY)} x2={X4+MW+CW/2} y2={mc(SFY)} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X4+MW+CW/2} y1={mc(R2Y[0])} x2={X4+MW+CW/2} y2={mc(R2Y[1])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X4+MW+CW/2} y1={mc(R2Y[0])} x2={X5} y2={mc(R2Y[0])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X4+MW+CW/2} y1={mc(R2Y[1])} x2={X5} y2={mc(R2Y[1])} stroke={LINE} strokeWidth={1.5}/>
-
-            {/* RIGHT: R1 → R2 (pair 0-1) */}
-            <line x1={X5+MW} y1={mc(R2Y[0])} x2={X5+MW+CW/2} y2={mc(R2Y[0])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X5+MW+CW/2} y1={mc(R1Y[0])} x2={X5+MW+CW/2} y2={mc(R1Y[1])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X5+MW+CW/2} y1={mc(R1Y[0])} x2={X6} y2={mc(R1Y[0])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X5+MW+CW/2} y1={mc(R1Y[1])} x2={X6} y2={mc(R1Y[1])} stroke={LINE} strokeWidth={1.5}/>
-
-            {/* RIGHT: R1 → R2 (pair 2-3) */}
-            <line x1={X5+MW} y1={mc(R2Y[1])} x2={X5+MW+CW/2} y2={mc(R2Y[1])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X5+MW+CW/2} y1={mc(R1Y[2])} x2={X5+MW+CW/2} y2={mc(R1Y[3])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X5+MW+CW/2} y1={mc(R1Y[2])} x2={X6} y2={mc(R1Y[2])} stroke={LINE} strokeWidth={1.5}/>
-            <line x1={X5+MW+CW/2} y1={mc(R1Y[3])} x2={X6} y2={mc(R1Y[3])} stroke={LINE} strokeWidth={1.5}/>
-          </svg>
-
-          {/* ── CHAMPION (above final) ── */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.55 }}
-            className="absolute flex flex-col items-center gap-1.5 px-4 py-3 rounded-2xl"
-            style={{ width: MW, top: CHAMPION_Y, left: X3, backgroundColor: 'rgba(255,214,10,0.08)' }}
-          >
-            <Trophy className="w-5 h-5" style={{ color: '#FFD60A' }} />
-            <span className="text-[9px] font-black uppercase tracking-wider" style={{ color: '#FFD60A' }}>CAMPEÃO</span>
-            <img src={av[0]} className="w-9 h-9 rounded-full object-cover" style={{ border: '2px solid #FFD60A' }} />
-            <span className="text-xs font-bold" style={{ color: 'var(--text-primary)' }}>Faker</span>
-          </motion.div>
-
-          {/* ── FINAL ── */}
-          <MatchCard winner={{ name: 'Faker', avatar: av[0] }} loser={{ name: 'Coldzera', avatar: av[12] }}
-            sw={3} sl={2} label="FINAL" date="30 MAI." x={X3} y={FY} delay={0.38} isFinal />
-
-          {/* ── LEFT SF ── */}
-          <MatchCard winner={{ name: 'Faker', avatar: av[0] }} loser={{ name: 'Kscerato', avatar: av[6] }}
-            sw={3} sl={2} label="SF1" date="28 ABR." x={X2} y={SFY} delay={0.28} />
-
-          {/* ── LEFT R2 ── */}
-          <MatchCard winner={{ name: 'Faker', avatar: av[0] }} loser={{ name: 'S1mple', avatar: av[2] }}
-            sw={3} sl={2} label="QF1" date="7 ABR." x={X1} y={R2Y[0]} delay={0.15} />
-          <MatchCard winner={{ name: 'Kscerato', avatar: av[6] }} loser={{ name: 'TenZ', avatar: av[4] }}
-            sw={3} sl={1} label="QF2" date="7 ABR." x={X1} y={R2Y[1]} delay={0.18} />
-
-          {/* ── LEFT R1 ── */}
-          <MatchCard winner={{ name: 'Faker', avatar: av[0] }} loser={{ name: 'ZywOo', avatar: av[1] }}
-            sw={3} sl={1} label="WPO1" date="10 MAR." x={X0} y={R1Y[0]} delay={0} />
-          <MatchCard winner={{ name: 'S1mple', avatar: av[2] }} loser={{ name: 'NiKo', avatar: av[3] }}
-            sw={3} sl={2} label="WPO2" date="10 MAR." x={X0} y={R1Y[1]} delay={0.04} />
-          <MatchCard winner={{ name: 'TenZ', avatar: av[4] }} loser={{ name: 'Shroud', avatar: av[5] }}
-            sw={3} sl={0} label="WPO3" date="10 MAR." x={X0} y={R1Y[2]} delay={0.08} />
-          <MatchCard winner={{ name: 'Kscerato', avatar: av[6] }} loser={{ name: 'Device', avatar: av[7] }}
-            sw={3} sl={1} label="WPO4" date="10 MAR." x={X0} y={R1Y[3]} delay={0.12} />
-
-          {/* ── RIGHT SF ── */}
-          <MatchCard winner={{ name: 'Coldzera', avatar: av[12] }} loser={{ name: 'Apex', avatar: av[9] }}
-            sw={3} sl={1} label="SF2" date="28 ABR." x={X4} y={SFY} delay={0.28} />
-
-          {/* ── RIGHT R2 ── */}
-          <MatchCard winner={{ name: 'Apex', avatar: av[9] }} loser={{ name: 'Rain', avatar: av[11] }}
-            sw={3} sl={1} label="QF3" date="7 ABR." x={X5} y={R2Y[0]} delay={0.15} />
-          <MatchCard winner={{ name: 'Coldzera', avatar: av[12] }} loser={{ name: 'Twistzz', avatar: av[15] }}
-            sw={3} sl={2} label="QF4" date="7 ABR." x={X5} y={R2Y[1]} delay={0.18} />
-
-          {/* ── RIGHT R1 ── */}
-          <MatchCard winner={{ name: 'Apex', avatar: av[9] }} loser={{ name: 'Mixer', avatar: av[8] }}
-            sw={3} sl={1} label="WPO5" date="10 MAR." x={X6} y={R1Y[0]} delay={0} />
-          <MatchCard winner={{ name: 'Rain', avatar: av[11] }} loser={{ name: 'Krimz', avatar: av[10] }}
-            sw={3} sl={2} label="WPO6" date="10 MAR." x={X6} y={R1Y[1]} delay={0.04} />
-          <MatchCard winner={{ name: 'Coldzera', avatar: av[12] }} loser={{ name: 'EliGE', avatar: av[13] }}
-            sw={3} sl={0} label="WPO7" date="10 MAR." x={X6} y={R1Y[2]} delay={0.08} />
-          <MatchCard winner={{ name: 'Twistzz', avatar: av[15] }} loser={{ name: 'Xantares', avatar: av[14] }}
-            sw={3} sl={2} label="WPO8" date="10 MAR." x={X6} y={R1Y[3]} delay={0.12} />
-
+        <div className="flex gap-2">
+          {rounds.map((_, i) => (
+            <button key={i} onClick={() => setCurrent(i)}
+              className="rounded-full transition-all"
+              style={{ width: current === i ? 20 : 6, height: 6, backgroundColor: current === i ? '#0A84FF' : 'rgba(255,255,255,0.15)' }} />
+          ))}
         </div>
+
+        <button onClick={() => setCurrent(Math.min(total - 1, current + 1))} disabled={current === total - 1}
+          className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all"
+          style={{ backgroundColor: 'var(--bg-card)', color: current === total - 1 ? 'var(--text-tertiary)' : 'var(--text-primary)', opacity: current === total - 1 ? 0.4 : 1 }}>
+          Próximo <ChevronRight className="w-4 h-4" />
+        </button>
       </div>
+
     </section>
   );
 }
