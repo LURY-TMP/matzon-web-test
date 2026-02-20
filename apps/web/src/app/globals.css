@@ -3,58 +3,14 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --bg-color: #000000;
-    --text-color: #ffffff;
+  body {
+    background-color: #000000;
+    color: #ffffff;
+    transition: background-color 0.5s ease, color 0.5s ease;
   }
 
   body.light-mode {
-    --bg-color: #F2F2F7;
-    --text-color: #000000;
+    background-color: #F2F2F7;
+    color: #000000;
   }
-
-  body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    transition: background-color 0.5s ease, color 0.5s ease;
-  }
-}
-
-body.light-mode .bg-black {
-  background-color: var(--bg-color) !important;
-}
-
-body.light-mode .text-white {
-  color: var(--text-color) !important;
-}
-
-body.light-mode .bg-black\/40,
-body.light-mode .bg-black\/60,
-body.light-mode .bg-black\/95 {
-  background-color: rgba(255, 255, 255, 0.85) !important;
-}
-
-body.light-mode .border-white\/10,
-body.light-mode .border-white\/5,
-body.light-mode .border-white\/20 {
-  border-color: rgba(0, 0, 0, 0.1) !important;
-}
-
-body.light-mode .text-white\/30,
-body.light-mode .text-white\/40,
-body.light-mode .text-white\/50,
-body.light-mode .text-white\/60,
-body.light-mode .text-white\/70,
-body.light-mode .text-white\/80 {
-  color: rgba(0, 0, 0, 0.6) !important;
-}
-
-body.light-mode .bg-white\/5,
-body.light-mode .bg-white\/10 {
-  background-color: rgba(0, 0, 0, 0.05) !important;
-}
-
-body.light-mode .bg-white {
-  background-color: #000000 !important;
-  color: #ffffff !important;
 }
