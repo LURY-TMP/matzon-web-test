@@ -10,7 +10,6 @@
   --text-secondary: rgba(245,245,247,0.6);
   --text-tertiary: rgba(245,245,247,0.35);
   --accent: #0A84FF;
-  --accent-hover: #409CFF;
   --success: #30D158;
   --danger: #FF453A;
   --warning: #FFD60A;
@@ -23,12 +22,7 @@ body.light-mode {
   --bg-card-hover: rgba(0,0,0,0.05);
   --text-primary: #1D1D1F;
   --text-secondary: rgba(29,29,31,0.6);
-  --text-tertiary: rgba(29,29,31,0.35);
-}
-
-* {
-  border: none !important;
-  outline: none;
+  --text-tertiary: rgba(29,29,31,0.4);
 }
 
 body {
@@ -39,15 +33,19 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-::selection {
-  background: rgba(10,132,255,0.3);
-}
+.font-oswald { font-family: 'Oswald', sans-serif; }
 
+::selection { background: rgba(10,132,255,0.3); }
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
 
-/* Bordas globais dark mode */
-body:not(.light-mode) * {
-  border-color: #19222D !important;
-}
+/* Light mode - texto legível na fase eliminatória */
+body.light-mode .text-white { color: #1D1D1F; }
+body.light-mode .text-white\/70 { color: rgba(29,29,31,0.7); }
+body.light-mode .text-white\/50 { color: rgba(29,29,31,0.5); }
+body.light-mode .text-white\/30 { color: rgba(29,29,31,0.3); }
+body.light-mode .bg-white\/5 { background-color: rgba(0,0,0,0.04); }
+body.light-mode .bg-white\/10 { background-color: rgba(0,0,0,0.06); }
+body.light-mode .bg-black\/40 { background-color: rgba(255,255,255,0.8); }
+body.light-mode .bg-black\/60 { background-color: rgba(255,255,255,0.9); }
