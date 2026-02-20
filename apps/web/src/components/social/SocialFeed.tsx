@@ -55,7 +55,7 @@ export function SocialFeed() {
       <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl p-4 mb-8 shadow-lg">
         <div className="flex gap-4">
           <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-500 flex items-center justify-center flex-shrink-0">
-            <span className="text-white font-black text-sm">JD</span>
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="JD" className="w-full h-full object-cover rounded-full" />
           </div>
           <div className="flex-1">
             <textarea placeholder="Partilhe a sua última vitória ou procure um Duo..." className="w-full bg-transparent text-white placeholder:text-white/30 resize-none outline-none text-lg min-h-[60px]" />
