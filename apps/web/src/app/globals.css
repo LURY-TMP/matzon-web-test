@@ -1,12 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap');
 @import "tailwindcss";
 
-body {
-  background-color: #000000;
-  color: #ffffff;
-  transition: background-color 0.5s ease, color 0.5s ease;
-}
+@layer base {
+  body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #000000;
+    color: #ffffff;
+    transition: background-color 0.5s ease;
+  }
 
-body.light-mode {
-  background-color: #F2F2F7;
-  color: #000000;
+  body.light-mode {
+    background-color: #F2F2F7;
+  }
 }
