@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Trophy, Swords, Users, Target, Twitter, Youtube, Instagram, Twitch, Discord, Mail } from 'lucide-react';
+import { Trophy, Swords, Users, Target, Twitter, Youtube, Instagram, Twitch, MessageCircle, Mail } from 'lucide-react';
 
 const footerLinks = [
   {
@@ -27,7 +27,7 @@ const socials = [
   { icon: Youtube, label: 'YouTube' },
   { icon: Instagram, label: 'Instagram' },
   { icon: Twitch, label: 'Twitch' },
-  { icon: Discord, label: 'Discord' },
+  { icon: MessageCircle, label: "Discord" },
 ];
 
 const stats = [
