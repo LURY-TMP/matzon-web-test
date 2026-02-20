@@ -5,7 +5,7 @@
 @layer base {
   body {
     font-family: 'Nunito', sans-serif;
-    background-color: #0D1117;
+    background-color: #12171E;
     color: #ffffff;
     transition: background-color 0.5s ease;
   }
