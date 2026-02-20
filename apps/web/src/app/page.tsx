@@ -1,5 +1,4 @@
 import { Navbar } from '@/components/layout/Navbar';
-import { LandingHero } from '@/components/layout/LandingHero';
 import { Leaderboard } from '@/components/gaming/Leaderboard';
 import { PlayerCard } from '@/components/social/PlayerCard';
 import { TournamentBracket } from '@/components/tournament/TournamentBracket';
@@ -9,7 +8,6 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-black">
       <Navbar />
-      <LandingHero />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col lg:flex-row gap-8 items-start">
         <div className="w-full lg:w-2/3">
           <Leaderboard />
