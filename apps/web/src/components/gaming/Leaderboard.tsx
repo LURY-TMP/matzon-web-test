@@ -150,7 +150,7 @@ export function Leaderboard() {
               className="text-sm font-semibold transition-opacity hover:opacity-70"
               style={{ color: '#0A84FF' }}
             >
-              {showAll ? 'Ver menos' : 'Ver todos os jogadores'}
+              {showAll ? 'Ver menos' : 'Ver todos'}
             </button>
           </div>
         )}
