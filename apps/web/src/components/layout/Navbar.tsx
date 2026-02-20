@@ -145,7 +145,7 @@ export function Navbar() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
             <div className="absolute top-6 left-6 z-20 flex items-center gap-2 px-4 py-2 rounded-full bg-red-600/90 backdrop-blur-md text-white text-sm font-black tracking-wider uppercase">
-              <Zap className="w-4 h-4 fill-current" /> Em Destaque
+            <div className="absolute top-4 left-4 z-20 flex items-center gap-1 px-2.5 py-1 rounded-full bg-red-600/90 backdrop-blur-md text-white text-[9px] font-black tracking-wider uppercase"><Zap className="w-2.5 h-2.5 fill-current" />Em Destaque</div>
             </div>
           </motion.div>
         </div>
