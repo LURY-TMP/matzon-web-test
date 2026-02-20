@@ -23,58 +23,43 @@ const avatars = [
   'https://randomuser.me/api/portraits/men/19.jpg',
 ];
 
-function TeamSlot({ code, date, avatar, side }: { code: string; date: string; avatar: string; side: 'left' | 'right' }) {
-  return (
-    <div className={`flex flex-col items-center gap-1 ${side === 'right' ? 'items-end' : 'items-start'}`}>
-      <img src={avatar} alt={code} className="w-10 h-10 rounded-full object-cover" style={{ border: '2px solid rgba(255,255,255,0.1)' }} />
-      <span className="text-[11px] font-bold" style={{ color: 'var(--text-primary)' }}>{code}</span>
-      <span className="text-[10px]" style={{ color: 'var(--text-tertiary)' }}>{date}</span>
-    </div>
-  );
-}
+const LINE = 'rgba(255,255,255,0.15)';
+const BOX_W = 160;
+const BOX_H = 80;
+const GAP = 12;
 
-function MatchBox({ left, right, code, date, isFinal = false }: any) {
+function MatchBox({ left, right, label, date, isFinal = false, delay = 0 }: any) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex flex-col items-center gap-1"
+      transition={{ delay }}
+      className="flex flex-col rounded-2xl overflow-hidden"
+      style={{ width: BOX_W, backgroundColor: 'var(--bg-card)' }}
     >
-      <div
-        className="flex items-center justify-between gap-4 px-4 py-3 rounded-2xl w-[200px]"
-        style={{ backgroundColor: 'var(--bg-card)' }}
-      >
-        <TeamSlot code={left.code} date="" avatar={left.avatar} side="left" />
-        <div className="flex flex-col items-center">
-          <span className="text-[10px] font-semibold" style={{ color: 'var(--text-tertiary)' }}>{code}</span>
-          <span className="text-[10px]" style={{ color: 'var(--text-tertiary)' }}>{date}</span>
-          {isFinal && (
-            <span className="mt-1 px-2 py-0.5 rounded-full text-[9px] font-black" style={{ backgroundColor: 'rgba(10,132,255,0.2)', color: '#0A84FF' }}>Final</span>
-          )}
-        </div>
-        <TeamSlot code={right.code} date="" avatar={right.avatar} side="right" />
+      {/* Player 1 */}
+      <div className="flex items-center gap-2 px-3 py-2.5" style={{ borderBottom: `1px solid rgba(255,255,255,0.04)` }}>
+        <img src={left.avatar} className="w-7 h-7 rounded-full object-cover flex-shrink-0" />
+        <span className="text-[11px] font-semibold truncate flex-1" style={{ color: 'var(--text-primary)' }}>{left.code}</span>
+      </div>
+      {/* Player 2 */}
+      <div className="flex items-center gap-2 px-3 py-2.5">
+        <img src={right.avatar} className="w-7 h-7 rounded-full object-cover flex-shrink-0" />
+        <span className="text-[11px] font-semibold truncate flex-1" style={{ color: 'var(--text-primary)' }}>{right.code}</span>
+      </div>
+      {/* Footer */}
+      <div className="flex items-center justify-center gap-1 px-3 py-1.5" style={{ backgroundColor: 'rgba(255,255,255,0.02)' }}>
+        <span className="text-[9px] font-bold" style={{ color: 'var(--text-tertiary)' }}>{label}</span>
+        {date && <span className="text-[9px]" style={{ color: 'var(--text-tertiary)' }}>· {date}</span>}
+        {isFinal && <span className="ml-1 px-1.5 py-0.5 rounded-full text-[8px] font-black" style={{ backgroundColor: 'rgba(10,132,255,0.2)', color: '#0A84FF' }}>Final</span>}
       </div>
     </motion.div>
   );
 }
 
-// Linha vertical de conexão
-function VLine({ height = 24 }: { height?: number }) {
-  return <div style={{ width: 2, height, backgroundColor: 'rgba(255,255,255,0.12)', margin: '0 auto' }} />;
-}
-
-// Linha horizontal conectando dois
-function HConnector() {
-  return (
-    <div className="flex items-start justify-center" style={{ width: 440, margin: '0 auto' }}>
-      <div style={{ flex: 1, height: 2, backgroundColor: 'rgba(255,255,255,0.12)', marginTop: 0 }} />
-      <div style={{ width: 2, height: 20, backgroundColor: 'rgba(255,255,255,0.12)' }} />
-      <div style={{ flex: 1, height: 2, backgroundColor: 'rgba(255,255,255,0.12)', marginTop: 0 }} />
-    </div>
-  );
-}
-
 export function TournamentBracket() {
+  const CONNECTOR = LINE;
+
   return (
     <section className="w-full max-w-7xl mx-auto py-10 px-4">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-2">
@@ -87,65 +72,84 @@ export function TournamentBracket() {
         </div>
       </div>
 
-      <div className="overflow-x-auto pb-4">
-        <div className="flex flex-col items-center" style={{ minWidth: 500 }}>
+      <div className="overflow-x-auto pb-6">
+        <div className="flex flex-col items-center" style={{ minWidth: 600 }}>
 
-          {/* QUARTOS - Linha 1 (4 jogos lado a lado) */}
-          <div className="flex gap-6 justify-center">
-            <MatchBox code="WPO1" date="10 MAR." left={{ code: '1', avatar: avatars[0] }} right={{ code: '5/6', avatar: avatars[1] }} />
-            <MatchBox code="WPO2" date="10 MAR." left={{ code: '2', avatar: avatars[2] }} right={{ code: '3/4', avatar: avatars[3] }} />
-            <MatchBox code="WPO3" date="10 MAR." left={{ code: '3', avatar: avatars[4] }} right={{ code: '7/8', avatar: avatars[5] }} />
-            <MatchBox code="WPO4" date="10 MAR." left={{ code: '4', avatar: avatars[6] }} right={{ code: '1/2', avatar: avatars[7] }} />
+          {/* ── ROUND 1: 4 matches ── */}
+          <div className="flex justify-center" style={{ gap: GAP * 4 }}>
+            {[
+              { label: 'WPO1', date: '10 MAR.', l: avatars[0], r: avatars[1], lc: 'Faker', rc: 'ZywOo' },
+              { label: 'WPO2', date: '10 MAR.', l: avatars[2], r: avatars[3], lc: 'S1mple', rc: 'NiKo' },
+              { label: 'WPO3', date: '10 MAR.', l: avatars[4], r: avatars[5], lc: 'TenZ', rc: 'Shroud' },
+              { label: 'WPO4', date: '10 MAR.', l: avatars[6], r: avatars[7], lc: 'Kscerato', rc: 'Device' },
+            ].map((m, i) => (
+              <MatchBox key={i} delay={i * 0.05} label={m.label} date={m.date}
+                left={{ code: m.lc, avatar: m.l }} right={{ code: m.rc, avatar: m.r }} />
+            ))}
           </div>
 
-          {/* Connector 4→2 */}
-          <div className="flex gap-6 justify-center w-full" style={{ marginTop: 0 }}>
-            <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}><VLine height={16} /></div>
-            <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}><VLine height={16} /></div>
-            <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}><VLine height={16} /></div>
-            <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}><VLine height={16} /></div>
+          {/* Connectors R1 → R2 */}
+          <svg width="740" height="40" style={{ overflow: 'visible', display: 'block' }}>
+            {/* Left pair: match 0 and 1 → midpoint */}
+            <line x1="80" y1="0" x2="80" y2="20" stroke={CONNECTOR} strokeWidth="1.5" />
+            <line x1="80" y1="20" x2="252" y2="20" stroke={CONNECTOR} strokeWidth="1.5" />
+            <line x1="252" y1="0" x2="252" y2="20" stroke={CONNECTOR} strokeWidth="1.5" />
+            <line x1="166" y1="20" x2="166" y2="40" stroke={CONNECTOR} strokeWidth="1.5" />
+            {/* Right pair: match 2 and 3 → midpoint */}
+            <line x1="488" y1="0" x2="488" y2="20" stroke={CONNECTOR} strokeWidth="1.5" />
+            <line x1="488" y1="20" x2="660" y2="20" stroke={CONNECTOR} strokeWidth="1.5" />
+            <line x1="660" y1="0" x2="660" y2="20" stroke={CONNECTOR} strokeWidth="1.5" />
+            <line x1="574" y1="20" x2="574" y2="40" stroke={CONNECTOR} strokeWidth="1.5" />
+          </svg>
+
+          {/* ── ROUND 2: 2 matches ── */}
+          <div className="flex justify-center" style={{ gap: 220 }}>
+            {[
+              { label: 'WOF1', date: '7 ABR.', l: avatars[8], r: avatars[9], lc: 'WOF1', rc: 'WOF2' },
+              { label: 'WOF2', date: '7 ABR.', l: avatars[10], r: avatars[11], lc: 'WOF3', rc: 'WOF4' },
+            ].map((m, i) => (
+              <MatchBox key={i} delay={0.2 + i * 0.05} label={m.label} date={m.date}
+                left={{ code: m.lc, avatar: m.l }} right={{ code: m.rc, avatar: m.r }} />
+            ))}
           </div>
 
-          <div className="flex justify-center gap-[216px]">
-            <HConnector />
-          </div>
+          {/* Connectors R2 → R3 */}
+          <svg width="400" height="40" style={{ overflow: 'visible', display: 'block' }}>
+            <line x1="80" y1="0" x2="80" y2="20" stroke={CONNECTOR} strokeWidth="1.5" />
+            <line x1="80" y1="20" x2="320" y2="20" stroke={CONNECTOR} strokeWidth="1.5" />
+            <line x1="320" y1="0" x2="320" y2="20" stroke={CONNECTOR} strokeWidth="1.5" />
+            <line x1="200" y1="20" x2="200" y2="40" stroke={CONNECTOR} strokeWidth="1.5" />
+          </svg>
 
-          {/* OITAVOS - 2 jogos */}
-          <div className="flex gap-6 justify-center mt-0" style={{ gap: 216 }}>
-            <MatchBox code="WOF1" date="7 ABR." left={{ code: 'WOF1', avatar: avatars[8] }} right={{ code: 'WOF2', avatar: avatars[9] }} />
-            <MatchBox code="WOF3" date="7 ABR." left={{ code: 'WOF3', avatar: avatars[10] }} right={{ code: 'WOF4', avatar: avatars[11] }} />
-          </div>
+          {/* ── ROUND 3: QF ── */}
+          <MatchBox delay={0.35} label="WQF1" date="28 ABR."
+            left={{ code: 'WQF1', avatar: avatars[12] }} right={{ code: 'WQF2', avatar: avatars[13] }} />
 
-          <div className="flex justify-center" style={{ gap: 216 }}>
-            <div style={{ width: 440, display: 'flex', justifyContent: 'center' }}>
-              <VLine height={16} />
-            </div>
-            <div style={{ width: 440, display: 'flex', justifyContent: 'center' }}>
-              <VLine height={16} />
-            </div>
-          </div>
+          {/* Connector R3 → SF */}
+          <svg width="2" height="32" style={{ display: 'block' }}>
+            <line x1="1" y1="0" x2="1" y2="32" stroke={CONNECTOR} strokeWidth="1.5" />
+          </svg>
 
-          <HConnector />
+          {/* ── SEMIFINAL ── */}
+          <MatchBox delay={0.45} label="WSF" date="30 MAI." isFinal={true}
+            left={{ code: 'WSF1', avatar: avatars[14] }} right={{ code: 'WSF2', avatar: avatars[15] }} />
 
-          {/* QUARTOS FINAIS */}
-          <MatchBox code="WQF1" date="28 ABR." left={{ code: 'WQF1', avatar: avatars[12] }} right={{ code: 'WQF2', avatar: avatars[13] }} />
-          <VLine height={16} />
+          {/* Connector SF → Champion */}
+          <svg width="2" height="32" style={{ display: 'block' }}>
+            <line x1="1" y1="0" x2="1" y2="32" stroke={CONNECTOR} strokeWidth="1.5" />
+          </svg>
 
-          {/* SEMIFINAL */}
-          <MatchBox code="WSF1" date="30 MAI." left={{ code: 'WSF1', avatar: avatars[14] }} right={{ code: 'WSF2', avatar: avatars[15] }} isFinal={true} />
-          <VLine height={16} />
-
-          {/* CAMPEÃO */}
+          {/* ── CAMPEÃO ── */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5 }}
-            className="flex flex-col items-center gap-2 px-6 py-4 rounded-2xl"
+            transition={{ delay: 0.6 }}
+            className="flex flex-col items-center gap-2 px-8 py-5 rounded-2xl"
             style={{ backgroundColor: 'rgba(255,214,10,0.08)' }}
           >
-            <Trophy className="w-8 h-8" style={{ color: '#FFD60A' }} />
-            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#FFD60A' }}>Campeão</span>
-            <img src={avatars[0]} alt="winner" className="w-12 h-12 rounded-full object-cover" style={{ border: '2px solid #FFD60A' }} />
+            <Trophy className="w-7 h-7" style={{ color: '#FFD60A' }} />
+            <span className="text-[10px] font-black uppercase tracking-wider" style={{ color: '#FFD60A' }}>Campeão</span>
+            <img src={avatars[0]} className="w-12 h-12 rounded-full object-cover" style={{ border: '2px solid #FFD60A' }} />
             <span className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>Faker</span>
           </motion.div>
 
