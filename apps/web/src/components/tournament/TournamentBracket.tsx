@@ -26,7 +26,7 @@ const av = [
 const LINE = 'rgba(255,255,255,0.18)';
 const MW = 145; // match width
 const MH = 82;  // match height
-const IH = MH + 16; // item height with gap = 98
+const IH = MH + 28; // item height with gap = 98
 const CW = 28;  // connector width
 
 // All positions
