@@ -120,19 +120,19 @@ export function Navbar() {
           </div>
         </nav>
 
-        <div className="flex-1 flex flex-col items-center justify-center px-4 relative z-10 pb-6 mt-2">
+        <div className="flex-1 relative overflow-hidden">
           <motion.div variants={netflixGlowVariants} initial="hidden" animate="visible" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[600px] sm:h-[400px] bg-cyan-600/30 blur-[100px] rounded-full pointer-events-none" />
 
           <motion.div
             variants={bannerImageVariants}
             initial="hidden"
             animate="visible"
-            className="relative z-10 w-full max-w-6xl aspect-[16/6] sm:aspect-[21/8] rounded-[30px] sm:rounded-[50px] overflow-hidden border border-white/10 shadow-2xl mx-auto"
+            className="absolute inset-0 w-full h-full"
           >
             <img
               src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop"
               alt="MATZON Arena eSports"
-              className="w-full h-full object-cover scale-105 hover:scale-100 transition-transform duration-[2s]"
+              className="w-full h-full object-cover hover:scale-100 transition-transform duration-[2s]"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
             <div className="absolute top-6 left-6 flex items-center gap-2 px-4 py-2 rounded-full bg-red-600/90 backdrop-blur-md text-white text-sm font-black tracking-wider uppercase">
