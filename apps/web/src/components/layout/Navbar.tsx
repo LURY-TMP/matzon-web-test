@@ -35,7 +35,7 @@ export function Navbar() {
 
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6">
-      <header className="relative w-full max-w-7xl mx-auto min-h-[calc(100vh-3rem)] bg-black overflow-hidden flex flex-col rounded-[30px] sm:rounded-[40px] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+      <header className="relative w-full max-w-7xl mx-auto min-h-0 bg-black overflow-hidden flex flex-col rounded-[30px] sm:rounded-[40px] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
 
         <nav className="w-full z-50 bg-black/40 backdrop-blur-lg border-b border-white/10 h-20 relative">
           <div className="w-full px-4 sm:px-6 lg:px-8 h-full relative">
@@ -120,14 +120,14 @@ export function Navbar() {
           </div>
         </nav>
 
-        <div className="flex-1 flex flex-col items-center justify-center px-4 relative z-10 pb-8 sm:pb-10 mt-[-5px]">
+        <div className="flex-1 flex flex-col items-center justify-center px-4 relative z-10 pb-6 mt-2">
           <motion.div variants={netflixGlowVariants} initial="hidden" animate="visible" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[600px] sm:h-[400px] bg-cyan-600/30 blur-[100px] rounded-full pointer-events-none" />
 
           <motion.div
             variants={bannerImageVariants}
             initial="hidden"
             animate="visible"
-            className="relative z-10 w-full max-w-6xl aspect-video sm:aspect-[16/7] rounded-[30px] sm:rounded-[50px] overflow-hidden border border-white/10 shadow-2xl mx-auto"
+            className="relative z-10 w-full max-w-6xl aspect-[16/6] sm:aspect-[21/8] rounded-[30px] sm:rounded-[50px] overflow-hidden border border-white/10 shadow-2xl mx-auto"
           >
             <img
               src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop"
