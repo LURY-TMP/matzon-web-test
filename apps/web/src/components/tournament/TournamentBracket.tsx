@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Trophy } from 'lucide-react';
 
-const avatars = [
+const av = [
   'https://randomuser.me/api/portraits/men/32.jpg',
   'https://randomuser.me/api/portraits/men/44.jpg',
   'https://randomuser.me/api/portraits/men/55.jpg',
@@ -23,32 +23,27 @@ const avatars = [
   'https://randomuser.me/api/portraits/men/19.jpg',
 ];
 
-const LINE = 'rgba(255,255,255,0.15)';
-const BOX_W = 160;
-const BOX_H = 80;
-const GAP = 12;
+const C = 'rgba(255,255,255,0.15)';
+const W = 155;
 
 function MatchBox({ left, right, label, date, isFinal = false, delay = 0 }: any) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
+      initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay }}
-      className="flex flex-col rounded-2xl overflow-hidden"
-      style={{ width: BOX_W, backgroundColor: 'var(--bg-card)' }}
+      className="flex flex-col rounded-xl overflow-hidden flex-shrink-0"
+      style={{ width: W, backgroundColor: 'var(--bg-card)' }}
     >
-      {/* Player 1 */}
-      <div className="flex items-center gap-2 px-3 py-2.5" style={{ borderBottom: `1px solid rgba(255,255,255,0.04)` }}>
-        <img src={left.avatar} className="w-7 h-7 rounded-full object-cover flex-shrink-0" />
-        <span className="text-[11px] font-semibold truncate flex-1" style={{ color: 'var(--text-primary)' }}>{left.code}</span>
+      <div className="flex items-center gap-2 px-3 py-2" style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+        <img src={left.avatar} className="w-6 h-6 rounded-full object-cover flex-shrink-0" />
+        <span className="text-[11px] font-semibold truncate" style={{ color: 'var(--text-primary)' }}>{left.name}</span>
       </div>
-      {/* Player 2 */}
-      <div className="flex items-center gap-2 px-3 py-2.5">
-        <img src={right.avatar} className="w-7 h-7 rounded-full object-cover flex-shrink-0" />
-        <span className="text-[11px] font-semibold truncate flex-1" style={{ color: 'var(--text-primary)' }}>{right.code}</span>
+      <div className="flex items-center gap-2 px-3 py-2">
+        <img src={right.avatar} className="w-6 h-6 rounded-full object-cover flex-shrink-0" />
+        <span className="text-[11px] font-semibold truncate" style={{ color: 'var(--text-primary)' }}>{right.name}</span>
       </div>
-      {/* Footer */}
-      <div className="flex items-center justify-center gap-1 px-3 py-1.5" style={{ backgroundColor: 'rgba(255,255,255,0.02)' }}>
+      <div className="flex items-center justify-center gap-1 px-2 py-1" style={{ backgroundColor: 'rgba(255,255,255,0.02)' }}>
         <span className="text-[9px] font-bold" style={{ color: 'var(--text-tertiary)' }}>{label}</span>
         {date && <span className="text-[9px]" style={{ color: 'var(--text-tertiary)' }}>· {date}</span>}
         {isFinal && <span className="ml-1 px-1.5 py-0.5 rounded-full text-[8px] font-black" style={{ backgroundColor: 'rgba(10,132,255,0.2)', color: '#0A84FF' }}>Final</span>}
@@ -57,8 +52,93 @@ function MatchBox({ left, right, label, date, isFinal = false, delay = 0 }: any)
   );
 }
 
+function VLine({ h = 20 }: { h?: number }) {
+  return <div style={{ width: 1.5, height: h, backgroundColor: C, margin: '0 auto' }} />;
+}
+
+function HLine({ w = 300 }: { w?: number }) {
+  return <div style={{ width: w, height: 1.5, backgroundColor: C }} />;
+}
+
+function TSection({ matches4, matches2, qfMatch, label }: any) {
+  return (
+    <div className="flex flex-col items-center">
+      {/* 4 matches */}
+      <div className="flex gap-3">
+        {matches4.map((m: any, i: number) => (
+          <MatchBox key={i} delay={i * 0.05} {...m} />
+        ))}
+      </div>
+
+      {/* connectors 4→2 */}
+      <div className="flex" style={{ width: W * 4 + 12 * 3 }}>
+        <div className="flex flex-col items-center" style={{ width: W * 2 + 12 }}>
+          <div className="flex" style={{ width: '100%' }}>
+            <div className="flex flex-col items-center" style={{ flex: 1 }}><VLine h={16} /></div>
+            <div className="flex flex-col items-center" style={{ flex: 1 }}><VLine h={16} /></div>
+          </div>
+          <HLine w={W + 12} />
+          <VLine h={16} />
+        </div>
+        <div style={{ width: 12 }} />
+        <div className="flex flex-col items-center" style={{ width: W * 2 + 12 }}>
+          <div className="flex" style={{ width: '100%' }}>
+            <div className="flex flex-col items-center" style={{ flex: 1 }}><VLine h={16} /></div>
+            <div className="flex flex-col items-center" style={{ flex: 1 }}><VLine h={16} /></div>
+          </div>
+          <HLine w={W + 12} />
+          <VLine h={16} />
+        </div>
+      </div>
+
+      {/* 2 matches */}
+      <div className="flex gap-3" style={{ gap: 12 }}>
+        {matches2.map((m: any, i: number) => (
+          <MatchBox key={i} delay={0.2 + i * 0.05} {...m} />
+        ))}
+      </div>
+
+      {/* connectors 2→1 */}
+      <div className="flex flex-col items-center" style={{ width: W * 2 + 12 }}>
+        <div className="flex" style={{ width: '100%' }}>
+          <div className="flex flex-col items-center" style={{ flex: 1 }}><VLine h={16} /></div>
+          <div className="flex flex-col items-center" style={{ flex: 1 }}><VLine h={16} /></div>
+        </div>
+        <HLine w={W + 12} />
+        <VLine h={16} />
+      </div>
+
+      {/* QF */}
+      <MatchBox delay={0.35} {...qfMatch} />
+      <VLine h={20} />
+    </div>
+  );
+}
+
 export function TournamentBracket() {
-  const CONNECTOR = LINE;
+  const topMatches4 = [
+    { label: 'WPO1', date: '10 MAR.', left: { name: 'Faker', avatar: av[0] }, right: { name: 'ZywOo', avatar: av[1] } },
+    { label: 'WPO2', date: '10 MAR.', left: { name: 'S1mple', avatar: av[2] }, right: { name: 'NiKo', avatar: av[3] } },
+    { label: 'WPO3', date: '10 MAR.', left: { name: 'TenZ', avatar: av[4] }, right: { name: 'Shroud', avatar: av[5] } },
+    { label: 'WPO4', date: '10 MAR.', left: { name: 'Kscerato', avatar: av[6] }, right: { name: 'Device', avatar: av[7] } },
+  ];
+  const topMatches2 = [
+    { label: 'WOF1', date: '7 ABR.', left: { name: 'WOF1', avatar: av[8] }, right: { name: 'WOF2', avatar: av[9] } },
+    { label: 'WOF2', date: '7 ABR.', left: { name: 'WOF3', avatar: av[10] }, right: { name: 'WOF4', avatar: av[11] } },
+  ];
+  const topQF = { label: 'WQF1', date: '28 ABR.', left: { name: 'WQF1', avatar: av[12] }, right: { name: 'WQF2', avatar: av[13] } };
+
+  const botMatches4 = [
+    { label: 'WPO5', date: '10 MAR.', left: { name: 'Mixer', avatar: av[1] }, right: { name: 'Apex', avatar: av[0] } },
+    { label: 'WPO6', date: '10 MAR.', left: { name: 'Krimz', avatar: av[3] }, right: { name: 'Rain', avatar: av[2] } },
+    { label: 'WPO7', date: '10 MAR.', left: { name: 'Coldzera', avatar: av[5] }, right: { name: 'EliGE', avatar: av[4] } },
+    { label: 'WPO8', date: '10 MAR.', left: { name: 'Xantares', avatar: av[7] }, right: { name: 'Twistzz', avatar: av[6] } },
+  ];
+  const botMatches2 = [
+    { label: 'WOF5', date: '7 ABR.', left: { name: 'WOF5', avatar: av[11] }, right: { name: 'WOF6', avatar: av[10] } },
+    { label: 'WOF6', date: '7 ABR.', left: { name: 'WOF7', avatar: av[9] }, right: { name: 'WOF8', avatar: av[8] } },
+  ];
+  const botQF = { label: 'WQF2', date: '28 ABR.', left: { name: 'WQF3', avatar: av[14] }, right: { name: 'WQF4', avatar: av[15] } };
 
   return (
     <section className="w-full max-w-7xl mx-auto py-10 px-4">
@@ -73,85 +153,36 @@ export function TournamentBracket() {
       </div>
 
       <div className="overflow-x-auto pb-6">
-        <div className="flex flex-col items-center" style={{ minWidth: 600 }}>
+        <div className="flex flex-col items-center" style={{ minWidth: 680 }}>
 
-          {/* ── ROUND 1: 4 matches ── */}
-          <div className="flex justify-center" style={{ gap: GAP * 4 }}>
-            {[
-              { label: 'WPO1', date: '10 MAR.', l: avatars[0], r: avatars[1], lc: 'Faker', rc: 'ZywOo' },
-              { label: 'WPO2', date: '10 MAR.', l: avatars[2], r: avatars[3], lc: 'S1mple', rc: 'NiKo' },
-              { label: 'WPO3', date: '10 MAR.', l: avatars[4], r: avatars[5], lc: 'TenZ', rc: 'Shroud' },
-              { label: 'WPO4', date: '10 MAR.', l: avatars[6], r: avatars[7], lc: 'Kscerato', rc: 'Device' },
-            ].map((m, i) => (
-              <MatchBox key={i} delay={i * 0.05} label={m.label} date={m.date}
-                left={{ code: m.lc, avatar: m.l }} right={{ code: m.rc, avatar: m.r }} />
-            ))}
-          </div>
+          {/* TOP HALF */}
+          <TSection matches4={topMatches4} matches2={topMatches2} qfMatch={topQF} label="top" />
 
-          {/* Connectors R1 → R2 */}
-          <svg width="740" height="40" style={{ overflow: 'visible', display: 'block' }}>
-            {/* Left pair: match 0 and 1 → midpoint */}
-            <line x1="80" y1="0" x2="80" y2="20" stroke={CONNECTOR} strokeWidth="1.5" />
-            <line x1="80" y1="20" x2="252" y2="20" stroke={CONNECTOR} strokeWidth="1.5" />
-            <line x1="252" y1="0" x2="252" y2="20" stroke={CONNECTOR} strokeWidth="1.5" />
-            <line x1="166" y1="20" x2="166" y2="40" stroke={CONNECTOR} strokeWidth="1.5" />
-            {/* Right pair: match 2 and 3 → midpoint */}
-            <line x1="488" y1="0" x2="488" y2="20" stroke={CONNECTOR} strokeWidth="1.5" />
-            <line x1="488" y1="20" x2="660" y2="20" stroke={CONNECTOR} strokeWidth="1.5" />
-            <line x1="660" y1="0" x2="660" y2="20" stroke={CONNECTOR} strokeWidth="1.5" />
-            <line x1="574" y1="20" x2="574" y2="40" stroke={CONNECTOR} strokeWidth="1.5" />
-          </svg>
-
-          {/* ── ROUND 2: 2 matches ── */}
-          <div className="flex justify-center" style={{ gap: 220 }}>
-            {[
-              { label: 'WOF1', date: '7 ABR.', l: avatars[8], r: avatars[9], lc: 'WOF1', rc: 'WOF2' },
-              { label: 'WOF2', date: '7 ABR.', l: avatars[10], r: avatars[11], lc: 'WOF3', rc: 'WOF4' },
-            ].map((m, i) => (
-              <MatchBox key={i} delay={0.2 + i * 0.05} label={m.label} date={m.date}
-                left={{ code: m.lc, avatar: m.l }} right={{ code: m.rc, avatar: m.r }} />
-            ))}
-          </div>
-
-          {/* Connectors R2 → R3 */}
-          <svg width="400" height="40" style={{ overflow: 'visible', display: 'block' }}>
-            <line x1="80" y1="0" x2="80" y2="20" stroke={CONNECTOR} strokeWidth="1.5" />
-            <line x1="80" y1="20" x2="320" y2="20" stroke={CONNECTOR} strokeWidth="1.5" />
-            <line x1="320" y1="0" x2="320" y2="20" stroke={CONNECTOR} strokeWidth="1.5" />
-            <line x1="200" y1="20" x2="200" y2="40" stroke={CONNECTOR} strokeWidth="1.5" />
-          </svg>
-
-          {/* ── ROUND 3: QF ── */}
-          <MatchBox delay={0.35} label="WQF1" date="28 ABR."
-            left={{ code: 'WQF1', avatar: avatars[12] }} right={{ code: 'WQF2', avatar: avatars[13] }} />
-
-          {/* Connector R3 → SF */}
-          <svg width="2" height="32" style={{ display: 'block' }}>
-            <line x1="1" y1="0" x2="1" y2="32" stroke={CONNECTOR} strokeWidth="1.5" />
-          </svg>
-
-          {/* ── SEMIFINAL ── */}
+          {/* SEMIFINAL */}
           <MatchBox delay={0.45} label="WSF" date="30 MAI." isFinal={true}
-            left={{ code: 'WSF1', avatar: avatars[14] }} right={{ code: 'WSF2', avatar: avatars[15] }} />
+            left={{ name: 'WSF1', avatar: av[14] }} right={{ name: 'WSF2', avatar: av[15] }} />
+          <VLine h={20} />
 
-          {/* Connector SF → Champion */}
-          <svg width="2" height="32" style={{ display: 'block' }}>
-            <line x1="1" y1="0" x2="1" y2="32" stroke={CONNECTOR} strokeWidth="1.5" />
-          </svg>
-
-          {/* ── CAMPEÃO ── */}
+          {/* CAMPEÃO */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.6 }}
-            className="flex flex-col items-center gap-2 px-8 py-5 rounded-2xl"
+            className="flex flex-col items-center gap-2 px-8 py-5 rounded-2xl mb-4"
             style={{ backgroundColor: 'rgba(255,214,10,0.08)' }}
           >
             <Trophy className="w-7 h-7" style={{ color: '#FFD60A' }} />
             <span className="text-[10px] font-black uppercase tracking-wider" style={{ color: '#FFD60A' }}>Campeão</span>
-            <img src={avatars[0]} className="w-12 h-12 rounded-full object-cover" style={{ border: '2px solid #FFD60A' }} />
+            <img src={av[0]} className="w-12 h-12 rounded-full object-cover" style={{ border: '2px solid #FFD60A' }} />
             <span className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>Faker</span>
           </motion.div>
+
+          <VLine h={20} />
+
+          {/* BOTTOM HALF — espelhado */}
+          <div className="flex flex-col-reverse items-center">
+            <TSection matches4={botMatches4} matches2={botMatches2} qfMatch={botQF} label="bot" />
+          </div>
 
         </div>
       </div>
