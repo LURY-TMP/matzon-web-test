@@ -224,7 +224,7 @@ export function TournamentBracket() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.55 }}
             className="absolute flex flex-col items-center gap-2 px-5 py-3 rounded-2xl"
-            style={{ width: MW, top: F_Y - 110, left: X_FIN, backgroundColor: 'rgba(255,214,10,0.08)' }}
+            style={{ width: MW, top: F_Y - 150, left: X_FIN, backgroundColor: 'rgba(255,214,10,0.08)' }}
           >
             <Trophy className="w-5 h-5" style={{ color: '#FFD60A' }} />
             <img src={av[0]} className="w-9 h-9 rounded-full object-cover" style={{ border: '2px solid #FFD60A' }} />
