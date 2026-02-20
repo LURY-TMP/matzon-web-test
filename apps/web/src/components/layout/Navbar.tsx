@@ -128,7 +128,6 @@ export function Navbar() {
             initial="hidden"
           >
         <div className="absolute inset-0 w-full h-full overflow-hidden rounded-[30px] sm:rounded-[40px]">
-          >
             <img
               src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop"
               alt="MATZON Arena eSports"
