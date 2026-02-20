@@ -120,14 +120,14 @@ export function Navbar() {
           </div>
         </nav>
 
-        <div className="flex-1 flex flex-col items-center justify-center px-4 relative z-10 pb-20 sm:pb-24 mt-[-10px]">
+        <div className="flex-1 flex flex-col items-center justify-center px-4 relative z-10 pb-8 sm:pb-10 mt-[-5px]">
           <motion.div variants={netflixGlowVariants} initial="hidden" animate="visible" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[600px] sm:h-[400px] bg-cyan-600/30 blur-[100px] rounded-full pointer-events-none" />
 
           <motion.div
             variants={bannerImageVariants}
             initial="hidden"
             animate="visible"
-            className="relative z-10 w-full max-w-6xl aspect-video sm:aspect-[21/9] rounded-[30px] sm:rounded-[50px] overflow-hidden border border-white/10 shadow-2xl mx-auto"
+            className="relative z-10 w-full max-w-6xl aspect-video sm:aspect-[16/7] rounded-[30px] sm:rounded-[50px] overflow-hidden border border-white/10 shadow-2xl mx-auto"
           >
             <img
               src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop"
