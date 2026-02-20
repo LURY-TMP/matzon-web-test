@@ -47,7 +47,7 @@ export function SocialFeed() {
   };
 
   return (
-    <section className="w-full max-w-2xl mx-auto py-12 px-4">
+    <section className="w-full max-w-2xl mx-auto py-12 px-4 rounded-[20px] shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
       <div className="mb-8">
         <h2 className="text-3xl font-black text-white">Feed da Comunidade</h2>
         <p className="text-white/50 text-sm mt-1 font-semibold">Veja o que está a acontecer no Universo MATZON</p>

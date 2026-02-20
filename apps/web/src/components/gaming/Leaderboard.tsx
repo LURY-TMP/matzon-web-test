@@ -31,7 +31,7 @@ export function Leaderboard() {
     }
   };
   return (
-    <section className="w-full max-w-5xl mx-auto py-12 px-4 sm:px-6">
+    <section className="w-full max-w-5xl mx-auto py-12 px-4 sm:px-6 rounded-[20px] shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
       <div className="flex flex-col sm:flex-row justify-between items-end sm:items-center mb-8 gap-4">
         <div>
           <h2 className="text-3xl font-black text-white flex items-center gap-3">

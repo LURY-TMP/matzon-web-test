@@ -22,7 +22,7 @@ export function PlayerCard() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
-      className="w-full max-w-sm mx-auto bg-black/40 backdrop-blur-xl border border-[#19222D] rounded-[30px] overflow-hidden shadow-2xl relative group"
+      className="w-full max-w-sm mx-auto bg-black/40 shadow-[0_8px_30px_rgba(0,0,0,0.4)] backdrop-blur-xl border border-[#19222D] rounded-[30px] overflow-hidden shadow-2xl relative group"
     >
       <div className="h-32 w-full relative overflow-hidden">
         <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800&auto=format&fit=crop" alt="banner" className="w-full h-full object-cover" />

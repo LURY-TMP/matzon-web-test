@@ -34,8 +34,8 @@ export function Navbar() {
   };
 
   return (
-    <div className="w-full">
-      <header className="relative w-full bg-black flex flex-col w-full">
+    <div className="w-full px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6">
+      <header className="relative w-full max-w-7xl mx-auto bg-black flex flex-col rounded-[30px] sm:rounded-[40px] border border-[#19222D] shadow-[0_20px_50px_rgba(0,0,0,0.5)] w-full">
 
         {/* NAVBAR */}
         <nav className="w-full z-50 bg-black/40 backdrop-blur-lg border-b border-white/10 h-20 relative rounded-t-[30px] sm:rounded-t-[40px]">

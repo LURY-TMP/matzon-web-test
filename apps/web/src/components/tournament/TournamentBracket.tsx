@@ -44,7 +44,7 @@ export function TournamentBracket() {
   );
 
   return (
-    <section className="w-full max-w-7xl mx-auto py-12 px-4">
+    <section className="w-full max-w-7xl mx-auto py-12 px-4 rounded-[20px] shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
       <div className="mb-10 flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-black text-white flex items-center gap-3">
