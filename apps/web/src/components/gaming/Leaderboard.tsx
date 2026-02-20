@@ -25,7 +25,7 @@ export function Leaderboard() {
   };
 
   return (
-    <section className="w-full py-8">
+    <section suppressHydrationWarning className="w-full py-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <div>
           <h2 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>Ranking Global</h2>
@@ -41,7 +41,7 @@ export function Leaderboard() {
         <div className="grid grid-cols-12 gap-4 px-6 py-3 text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--text-tertiary)', backgroundColor: 'var(--bg-card)' }}>
           <div className="col-span-1 text-center">#</div>
           <div className="col-span-5">Jogador</div>
-          <div className="col-span-2 hidden sm:block text-center">Tier</div>
+          <div suppressHydrationWarning className="col-span-2 hidden sm:block text-center">Tier</div>
           <div className="col-span-2 text-center">Winrate</div>
           <div className="col-span-2 text-right">ELO</div>
         </div>
