@@ -87,7 +87,7 @@ export function Navbar() {
               <div className="absolute top-[10px] right-4 sm:right-6 lg:right-8 z-[999] flex flex-col items-end">
                 <motion.div
                   onClick={() => setIsOpen(!isOpen)}
-                  className="w-[60px] h-[60px] rounded-full flex justify-center items-center cursor-pointer shadow-xl transition-colors duration-500"
+                  className="w-[50px] h-[50px] rounded-full flex justify-center items-center cursor-pointer shadow-xl transition-colors duration-500"
                   style={{ backgroundColor: isLightMode ? '#000' : '#FFF' }}
                   whileTap={{ scale: 0.9 }}
                 >
