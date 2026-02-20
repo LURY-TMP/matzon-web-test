@@ -96,19 +96,11 @@ export function TournamentBracket() {
       </div>
 
       {/* Round labels */}
-      <div className="flex mb-3 overflow-x-auto" style={{ minWidth: TW }}>
-        {[
-          { label: 'Oitavas', x: X0 + MW / 2 },
-          { label: 'Quartos', x: X1 + MW / 2 },
-          { label: 'Semi', x: X2 + MW / 2 },
-          { label: 'Final', x: X3 + MW / 2 },
-          { label: 'Semi', x: X4 + MW / 2 },
-          { label: 'Quartos', x: X5 + MW / 2 },
-          { label: 'Oitavas', x: X6 + MW / 2 },
-        ].map((r, i) => (
-          <div key={i} className="absolute text-[9px] font-black uppercase tracking-widest text-center"
-            style={{ left: r.x - 30, width: 60, color: i === 3 ? '#0A84FF' : 'var(--text-tertiary)' }}>
-            {r.label}
+      <div className="flex mb-3" style={{ width: TW }}>
+        {(['Oitavas', 'Quartos', 'Semi', 'Final', 'Semi', 'Quartos', 'Oitavas'] as string[]).map((label, i) => (
+          <div key={i} className="text-[9px] font-black uppercase tracking-widest text-center flex-shrink-0"
+            style={{ width: i === 3 ? MW + CW : MW + CW, color: i === 3 ? '#0A84FF' : 'var(--text-tertiary)' }}>
+            {label}
           </div>
         ))}
       </div>
