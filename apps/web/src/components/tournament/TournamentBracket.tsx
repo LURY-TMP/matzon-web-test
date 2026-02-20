@@ -195,7 +195,7 @@ export function TournamentBracket() {
             {/* Final right connector */}
             <line x1={X_FIN + MW} y1={mc(SF_Y[0])} x2={X_SFR} y2={mc(SF_Y[0])} stroke={LINE} strokeWidth={1.5} />
             {/* Final → Champion */}
-            <line x1={X_FIN + MW/2} y1={F_Y + MH} x2={X_FIN + MW/2} y2={F_Y} stroke={LINE} strokeWidth={1.5} />
+            <line x1={X_FIN + MW/2} y1={F_Y - 40} x2={X_FIN + MW/2} y2={F_Y} stroke={LINE} strokeWidth={1.5} />
           </svg>
 
           {/* ── LEFT R1 ── */}
