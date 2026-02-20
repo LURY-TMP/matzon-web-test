@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Trophy, ChevronUp, ChevronDown, Minus, Medal, Search, Filter } from 'lucide-react';
+import { Trophy, ChevronUp, ChevronDown, Minus, Medal, Search } from 'lucide-react';
 
 const leaderboardData = [
   { id: '1', rank: 1, name: 'Faker_MZ', tag: '#KR1', tier: 'Elite', elo: 3450, winrate: '68%', trend: 'up', avatar: 'https://randomuser.me/api/portraits/men/32.jpg' },
@@ -14,84 +14,79 @@ const leaderboardData = [
 ];
 
 export function Leaderboard() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+  const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.08 } } };
+  const rowVariants = { hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0, transition: { duration: 0.3 } } };
+
+  const getRankColor = (rank: number) => {
+    if (rank === 1) return '#FFD60A';
+    if (rank === 2) return '#98989E';
+    if (rank === 3) return '#FF9F0A';
+    return 'rgba(245,245,247,0.3)';
   };
-  const rowVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.4 } }
-  };
-  const getRankStyle = (rank: number) => {
-    switch (rank) {
-      case 1: return 'text-yellow-400 bg-yellow-400/10 border-yellow-400/30 shadow-[0_0_15px_rgba(250,204,21,0.2)]';
-      case 2: return 'text-gray-300 bg-gray-300/10 border-gray-300/30';
-      case 3: return 'text-amber-600 bg-amber-600/10 border-amber-600/30';
-      default: return 'text-white/50 bg-white/5 border-white/5';
-    }
-  };
+
   return (
-    <section className="w-full max-w-5xl mx-auto py-12 px-4 sm:px-6 rounded-[20px] shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
-      <div className="flex flex-col sm:flex-row justify-between items-end sm:items-center mb-8 gap-4">
+    <section className="w-full py-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <div>
-          <h2 className="text-3xl font-black text-white flex items-center gap-3">
-            <Trophy className="w-8 h-8 text-cyan-400" />
-            Ranking Global
-          </h2>
-          <p className="text-white/50 text-sm mt-1 font-semibold tracking-wide">Temporada 5 • Top 100 Melhores Jogadores</p>
+          <h2 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>Ranking Global</h2>
+          <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>Temporada 5 · Top 100</p>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="flex items-center bg-white/5 rounded-full px-4 py-2 hover:bg-white/10 transition-colors">
-            <Search className="w-4 h-4 text-white/50 mr-2" />
-            <input type="text" placeholder="Buscar jogador..." className="bg-transparent border-none text-white text-sm focus:outline-none placeholder:text-white/30 w-32 sm:w-48" />
-          </div>
-          <button className="p-2.5 rounded-full bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-colors">
-            <Filter className="w-4 h-4" />
-          </button>
+        <div className="flex items-center rounded-2xl px-4 py-2.5 w-full sm:w-auto" style={{ backgroundColor: 'var(--bg-card)' }}>
+          <Search className="w-4 h-4 mr-2" style={{ color: 'var(--text-tertiary)' }} />
+          <input type="text" placeholder="Buscar jogador..." className="bg-transparent text-sm focus:outline-none w-full sm:w-48" style={{ color: 'var(--text-primary)' }} />
         </div>
       </div>
-      <div className="bg-white/5 backdrop-blur-2xl rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.4)] ">
-        <div className="grid grid-cols-12 gap-4 px-6 py-4 bg-white/5 text-xs font-bold text-white/40 uppercase tracking-wider">
-          <div className="col-span-2 sm:col-span-1 text-center">Rank</div>
-          <div className="col-span-6 sm:col-span-5">Jogador</div>
+
+      <div className="rounded-3xl overflow-hidden" style={{ backgroundColor: 'var(--bg-card)' }}>
+        <div className="grid grid-cols-12 gap-4 px-6 py-3 text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--text-tertiary)', backgroundColor: 'var(--bg-card)' }}>
+          <div className="col-span-1 text-center">#</div>
+          <div className="col-span-5">Jogador</div>
           <div className="col-span-2 hidden sm:block text-center">Tier</div>
           <div className="col-span-2 text-center">Winrate</div>
-          <div className="col-span-2 text-right pr-4">ELO</div>
+          <div className="col-span-2 text-right">ELO</div>
         </div>
-        <motion.div variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col">
+
+        <motion.div variants={containerVariants} initial="hidden" animate="visible">
           {leaderboardData.map((player) => (
-            <motion.div key={player.id} variants={rowVariants} className="grid grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-white/[0.02] transition-colors group cursor-pointer">
-              <div className="col-span-2 sm:col-span-1 flex justify-center">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center font-black text-sm border ${getRankStyle(player.rank)}`}>
-                  {player.rank <= 3 ? <Medal className="w-4 h-4" /> : player.rank}
+            <motion.div
+              key={player.id}
+              variants={rowVariants}
+              className="grid grid-cols-12 gap-4 px-6 py-4 items-center cursor-pointer transition-all duration-200"
+              style={{ backgroundColor: 'transparent' }}
+              onMouseEnter={e => (e.currentTarget.style.backgroundColor = 'var(--bg-card-hover)')}
+              onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'transparent')}
+            >
+              <div className="col-span-1 flex justify-center">
+                {player.rank <= 3
+                  ? <Medal className="w-4 h-4" style={{ color: getRankColor(player.rank) }} />
+                  : <span className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>{player.rank}</span>
+                }
+              </div>
+              <div className="col-span-5 flex items-center gap-3">
+                <img src={player.avatar} alt={player.name} className="w-9 h-9 rounded-full object-cover flex-shrink-0" />
+                <div>
+                  <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>{player.name}</p>
+                  <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>{player.tag}</p>
                 </div>
               </div>
-              <div className="col-span-6 sm:col-span-5 flex items-center gap-3">
-                <img src={player.avatar} alt={player.name} className="w-10 h-10 rounded-full flex-shrink-0 group-hover:border-white/30 transition-colors overflow-hidden object-cover" />
-                <div className="flex flex-col">
-                  <span className="text-white font-bold text-sm sm:text-base">{player.name}</span>
-                  <span className="text-white/40 text-xs font-semibold">{player.tag}</span>
-                </div>
+              <div className="col-span-2 hidden sm:flex justify-center">
+                <span className="px-2.5 py-1 rounded-full text-xs font-medium" style={{ backgroundColor: 'rgba(10,132,255,0.12)', color: '#0A84FF' }}>{player.tier}</span>
               </div>
-              <div className="col-span-2 hidden sm:flex justify-center items-center">
-                <span className="px-3 py-1 rounded-full bg-white/5 text-xs font-bold text-cyan-400">{player.tier}</span>
+              <div className="col-span-2 flex justify-center items-center gap-1">
+                <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>{player.winrate}</span>
+                {player.trend === 'up' && <ChevronUp className="w-3.5 h-3.5" style={{ color: '#30D158' }} />}
+                {player.trend === 'down' && <ChevronDown className="w-3.5 h-3.5" style={{ color: '#FF453A' }} />}
+                {player.trend === 'same' && <Minus className="w-3.5 h-3.5" style={{ color: 'var(--text-tertiary)' }} />}
               </div>
-              <div className="col-span-2 flex justify-center items-center gap-1 sm:gap-2">
-                <span className="text-white/80 font-bold text-sm">{player.winrate}</span>
-                {player.trend === 'up' && <ChevronUp className="w-4 h-4 text-green-400" />}
-                {player.trend === 'down' && <ChevronDown className="w-4 h-4 text-red-400" />}
-                {player.trend === 'same' && <Minus className="w-4 h-4 text-gray-500" />}
-              </div>
-              <div className="col-span-2 flex justify-end items-center pr-2 sm:pr-4">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 font-black text-lg">{player.elo}</span>
+              <div className="col-span-2 flex justify-end">
+                <span className="text-sm font-bold" style={{ color: '#0A84FF' }}>{player.elo}</span>
               </div>
             </motion.div>
           ))}
         </motion.div>
-        <div className="p-4 bg-white/[0.02] flex justify-center">
-          <button className="text-sm font-bold text-white/50 hover:text-white transition-colors flex items-center gap-2">
-            Carregar mais jogadores <ChevronDown className="w-4 h-4" />
-          </button>
+
+        <div className="px-6 py-4 text-center">
+          <button className="text-sm font-medium transition-colors" style={{ color: '#0A84FF' }}>Ver todos os jogadores</button>
         </div>
       </div>
     </section>

@@ -5,117 +5,84 @@ import { motion } from 'framer-motion';
 import { Heart, MessageSquare, Share2, MoreHorizontal, Image as ImageIcon, Send, Trophy } from 'lucide-react';
 
 const initialPosts = [
-  {
-    id: 1,
-    author: { name: 'S1mple', tag: '#EUW', avatar: '', initials: 'S1', photo: 'https://randomuser.me/api/portraits/men/44.jpg' },
-    content: 'Acabei de garantir o Top 2 Global! O matchmaking de hoje estava insano. GG WP a todos que jogaram contra mim na última bracket. 🏆🔥',
-    timestamp: '2h', likes: 1240, comments: 84, hasImage: false, isLiked: true,
-  },
-  {
-    id: 2,
-    author: { name: 'John Doe', tag: '#MZ1', avatar: '', initials: 'JD', photo: 'https://randomuser.me/api/portraits/men/32.jpg' },
-    content: 'Aquele clutch no 1v3 para fechar a partida... Nunca duvidem do buff do teclado novo! 😂',
-    timestamp: '5h', likes: 342, comments: 12, hasImage: false, isLiked: false,
-  },
-  {
-    id: 3,
-    author: { name: 'TenZ', tag: '#NA1', avatar: '', initials: 'TZ', photo: 'https://randomuser.me/api/portraits/men/55.jpg' },
-    content: 'Procurando um Duo para grindar o rank Elite esta noite. Requisitos: comunicação no Discord e não dar rage no primeiro round. Alguém on? ⚔️',
-    timestamp: '8h', likes: 890, comments: 156, hasImage: false, isLiked: false,
-  }
+  { id: 1, author: { name: 'S1mple', tag: '#EUW', photo: 'https://randomuser.me/api/portraits/men/44.jpg' }, content: 'Acabei de garantir o Top 2 Global! O matchmaking de hoje estava insano. GG WP a todos. 🏆🔥', timestamp: '2h', likes: 1240, comments: 84, isLiked: true },
+  { id: 2, author: { name: 'John Doe', tag: '#MZ1', photo: 'https://randomuser.me/api/portraits/men/32.jpg' }, content: 'Aquele clutch no 1v3 para fechar a partida... Nunca duvidem do buff do teclado novo! 😂', timestamp: '5h', likes: 342, comments: 12, isLiked: false },
+  { id: 3, author: { name: 'TenZ', tag: '#NA1', photo: 'https://randomuser.me/api/portraits/men/55.jpg' }, content: 'Procurando um Duo para grindar o rank Elite esta noite. Comunicação no Discord obrigatória. Alguém on? ⚔️', timestamp: '8h', likes: 890, comments: 156, isLiked: false },
 ];
 
 export function SocialFeed() {
   const [posts, setPosts] = useState(initialPosts);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
-  };
-  const postVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.4 } }
-  };
-
-  const toggleLike = (postId: number) => {
-    setPosts(posts.map(post => {
-      if (post.id === postId) {
-        return { ...post, isLiked: !post.isLiked, likes: post.isLiked ? post.likes - 1 : post.likes + 1 };
-      }
-      return post;
-    }));
+  const toggleLike = (id: number) => {
+    setPosts(posts.map(p => p.id === id ? { ...p, isLiked: !p.isLiked, likes: p.isLiked ? p.likes - 1 : p.likes + 1 } : p));
   };
 
   return (
-    <section className="w-full max-w-2xl mx-auto py-12 px-4 rounded-[20px] shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
-      <div className="mb-8">
-        <h2 className="text-3xl font-black text-white">Feed da Comunidade</h2>
-        <p className="text-white/50 text-sm mt-1 font-semibold">Veja o que está a acontecer no Universo MATZON</p>
+    <section className="w-full max-w-2xl mx-auto py-8 px-4">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>Feed da Comunidade</h2>
+        <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>O que está a acontecer no Universo MATZON</p>
       </div>
-      <div className="bg-white/5 backdrop-blur-2xl rounded-3xl p-4 mb-8 shadow-[0_8px_32px_rgba(0,0,0,0.4)] ">
-        <div className="flex gap-4">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-500 flex items-center justify-center flex-shrink-0">
-            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="JD" className="w-full h-full object-cover rounded-full" />
-          </div>
+
+      <div className="p-4 rounded-3xl mb-6" style={{ backgroundColor: 'var(--bg-card)' }}>
+        <div className="flex gap-3">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="you" className="w-10 h-10 rounded-full object-cover flex-shrink-0" />
           <div className="flex-1">
-            <textarea placeholder="Partilhe a sua última vitória ou procure um Duo..." className="w-full bg-transparent text-white placeholder:text-white/30 resize-none outline-none text-lg min-h-[60px]" />
-            <div className="flex items-center justify-between pt-3 mt-2">
-              <div className="flex gap-2">
-                <button className="p-2 text-white/50 hover:text-cyan-400 hover:bg-cyan-400/10 rounded-full transition-colors">
-                  <ImageIcon className="w-5 h-5" />
+            <textarea placeholder="Partilhe a sua última vitória..." className="w-full bg-transparent text-sm resize-none focus:outline-none min-h-[50px]" style={{ color: 'var(--text-primary)' }} />
+            <div className="flex items-center justify-between pt-3 mt-1" style={{ borderTop: 'none' }}>
+              <div className="flex gap-1">
+                <button className="p-2 rounded-xl transition-colors" style={{ color: 'var(--text-tertiary)' }}>
+                  <ImageIcon className="w-4 h-4" />
                 </button>
-                <button className="p-2 text-white/50 hover:text-yellow-400 hover:bg-yellow-400/10 rounded-full transition-colors">
-                  <Trophy className="w-5 h-5" />
+                <button className="p-2 rounded-xl transition-colors" style={{ color: 'var(--text-tertiary)' }}>
+                  <Trophy className="w-4 h-4" />
                 </button>
               </div>
-              <button className="flex items-center gap-2 bg-white text-black px-6 py-2 rounded-full font-bold hover:bg-white/90 transition-transform active:scale-95">
-                Postar <Send className="w-4 h-4" />
+              <button className="flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold transition-all" style={{ backgroundColor: '#0A84FF', color: '#fff' }}>
+                Postar <Send className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
         </div>
       </div>
-      <motion.div variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col gap-6">
-        {posts.map((post) => (
-          <motion.div key={post.id} variants={postVariants} className="bg-white/5 backdrop-blur-2xl rounded-3xl p-5 shadow-[0_8px_32px_rgba(0,0,0,0.4)]  hover:border-white/20 transition-colors">
-            <div className="flex justify-between items-start mb-4">
+
+      <div className="flex flex-col gap-4">
+        {posts.map((post, i) => (
+          <motion.div key={post.id} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} className="p-5 rounded-3xl" style={{ backgroundColor: 'var(--bg-card)' }}>
+            <div className="flex justify-between items-start mb-3">
               <div className="flex items-center gap-3">
-                <img src={post.author.photo} alt={post.author.name} className="w-12 h-12 rounded-full flex-shrink-0 shadow-md object-cover" />
-                <div className="flex flex-col">
+                <img src={post.author.photo} alt={post.author.name} className="w-10 h-10 rounded-full object-cover" />
+                <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-white font-bold text-base cursor-pointer hover:underline">{post.author.name}</span>
-                    <span className="text-white/40 text-sm font-semibold">{post.author.tag}</span>
+                    <span className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>{post.author.name}</span>
+                    <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>{post.author.tag}</span>
                   </div>
-                  <span className="text-white/30 text-xs font-bold">{post.timestamp}</span>
+                  <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>{post.timestamp}</span>
                 </div>
               </div>
-              <button className="text-white/30 hover:text-white p-1 rounded-full hover:bg-white/5 transition-colors">
+              <button style={{ color: 'var(--text-tertiary)' }}>
                 <MoreHorizontal className="w-5 h-5" />
               </button>
             </div>
-            <p className="text-white/90 text-[15px] leading-relaxed mb-4">{post.content}</p>
-            <div className="flex items-center gap-6 mt-4">
-              <button onClick={() => toggleLike(post.id)} className={`flex items-center gap-2 text-sm font-bold transition-colors group ${post.isLiked ? 'text-pink-500' : 'text-white/50 hover:text-pink-500'}`}>
-                <div className={`p-2 rounded-full transition-colors ${post.isLiked ? 'bg-pink-500/10' : 'group-hover:bg-pink-500/10'}`}>
-                  <Heart className={`w-5 h-5 ${post.isLiked ? 'fill-current' : ''}`} />
-                </div>
-                <span>{post.likes}</span>
+
+            <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--text-primary)' }}>{post.content}</p>
+
+            <div className="flex items-center gap-5">
+              <button onClick={() => toggleLike(post.id)} className="flex items-center gap-1.5 text-sm font-medium transition-colors" style={{ color: post.isLiked ? '#FF453A' : 'var(--text-tertiary)' }}>
+                <Heart className={`w-4 h-4 ${post.isLiked ? 'fill-current' : ''}`} />
+                {post.likes}
               </button>
-              <button className="flex items-center gap-2 text-sm font-bold text-white/50 hover:text-cyan-400 transition-colors group">
-                <div className="p-2 rounded-full group-hover:bg-cyan-400/10 transition-colors">
-                  <MessageSquare className="w-5 h-5" />
-                </div>
-                <span>{post.comments}</span>
+              <button className="flex items-center gap-1.5 text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>
+                <MessageSquare className="w-4 h-4" />
+                {post.comments}
               </button>
-              <button className="flex items-center gap-2 text-sm font-bold text-white/50 hover:text-green-400 transition-colors group ml-auto">
-                <div className="p-2 rounded-full group-hover:bg-green-400/10 transition-colors">
-                  <Share2 className="w-5 h-5" />
-                </div>
+              <button className="ml-auto" style={{ color: 'var(--text-tertiary)' }}>
+                <Share2 className="w-4 h-4" />
               </button>
             </div>
           </motion.div>
         ))}
-      </motion.div>
+      </div>
     </section>
   );
 }
