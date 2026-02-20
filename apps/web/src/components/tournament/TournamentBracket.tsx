@@ -113,7 +113,7 @@ export function TournamentBracket() {
         ))}
       </div>
 
-      <div className="overflow-x-auto pb-4">
+      <div className="overflow-x-auto pb-4 max-w-full">
         <div className="relative" style={{ width: TW, height: TOTAL_H + 60 }}>
 
           {/* ── SVG LINES ── */}

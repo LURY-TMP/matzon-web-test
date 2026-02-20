@@ -7,7 +7,7 @@ import { SocialFeed } from '@/components/social/SocialFeed';
 
 export default function Home() {
   return (
-    <main style={{ backgroundColor: 'var(--bg-primary)' }} className="min-h-screen">
+    <main style={{ backgroundColor: 'var(--bg-primary)' }} className="min-h-screen overflow-x-hidden">
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col lg:flex-row gap-6 items-start">
         <div className="w-full lg:w-2/3">
