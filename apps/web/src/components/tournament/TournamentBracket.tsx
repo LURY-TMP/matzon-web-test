@@ -95,17 +95,24 @@ export function TournamentBracket() {
         </div>
       </div>
 
-      {/* Round labels */}
-      <div className="flex mb-3" style={{ width: TW }}>
-        {(['Oitavas', 'Quartos', 'Semi', 'Final', 'Semi', 'Quartos', 'Oitavas'] as string[]).map((label, i) => (
-          <div key={i} className="text-[9px] font-black uppercase tracking-widest text-center flex-shrink-0"
-            style={{ width: i === 3 ? MW + CW : MW + CW, color: i === 3 ? '#0A84FF' : 'var(--text-tertiary)' }}>
-            {label}
-          </div>
-        ))}
-      </div>
-
       <div className="overflow-x-auto pb-4 max-w-full">
+        {/* Round labels */}
+        <div className="flex mb-3 flex-shrink-0" style={{ width: TW }}>
+          {([
+            { label: 'Oitavas', w: MW + CW },
+            { label: 'Quartos', w: MW + CW },
+            { label: 'Semi', w: MW + CW },
+            { label: 'Final', w: MW + CW },
+            { label: 'Semi', w: MW + CW },
+            { label: 'Quartos', w: MW + CW },
+            { label: 'Oitavas', w: MW },
+          ] as {label: string, w: number}[]).map((r, i) => (
+            <div key={i} className="text-[9px] font-black uppercase tracking-widest text-center flex-shrink-0"
+              style={{ width: r.w, color: i === 3 ? '#0A84FF' : 'var(--text-tertiary)' }}>
+              {r.label}
+            </div>
+          ))}
+        </div>
         <div className="relative" style={{ width: TW, height: TOTAL_H + 60 }}>
 
           {/* ── SVG LINES ── */}
