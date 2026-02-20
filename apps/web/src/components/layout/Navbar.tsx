@@ -35,12 +35,14 @@ export function Navbar() {
 
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6">
-      <header className="relative w-full max-w-7xl mx-auto min-h-0 bg-black flex flex-col rounded-[30px] sm:rounded-[40px] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+      <header className="relative w-full max-w-7xl mx-auto bg-black flex flex-col rounded-[30px] sm:rounded-[40px] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
 
-        <nav className="w-full z-50 bg-black/40 backdrop-blur-lg border-b border-white/10 h-20 relative">
+        {/* NAVBAR */}
+        <nav className="w-full z-50 bg-black/40 backdrop-blur-lg border-b border-white/10 h-20 relative rounded-t-[30px] sm:rounded-t-[40px]">
           <div className="w-full px-4 sm:px-6 lg:px-8 h-full relative">
             <div className="flex items-center justify-between h-full">
 
+              {/* LOGO */}
               <div className="scale-[0.55] sm:scale-[0.65] origin-left">
                 <div className="flex items-center gap-[16px] relative" style={{ perspective: '1000px' }}>
                   <div
@@ -55,7 +57,7 @@ export function Navbar() {
                       onClick={() => setIsLightMode(!isLightMode)}
                     >
                       <span
-                        className="text-[14px] font-black tracking-[0.5px] select-none pointer-events-none transition-colors"
+                        className="text-[14px] font-black tracking-[0.5px] select-none pointer-events-none"
                         style={{ color: isLightMode ? '#FFF' : '#000' }}
                       >
                         MATZ
@@ -63,7 +65,7 @@ export function Navbar() {
                     </motion.div>
                   </div>
                   <motion.div
-                    className="text-[95px] font-black leading-[0.8] -ml-1 select-none relative z-0 cursor-pointer hover:opacity-80 transition-colors"
+                    className="text-[95px] font-black leading-[0.8] -ml-1 select-none relative z-0 cursor-pointer hover:opacity-80"
                     style={{ color: isLightMode ? '#000' : '#FFF', transformOrigin: 'center center' }}
                     animate={{ x: isLightMode ? -100 : 0, scale: isLightMode ? 0.70 : 1 }}
                     transition={{ type: "spring", stiffness: 150, damping: 20 }}
@@ -73,6 +75,7 @@ export function Navbar() {
                 </div>
               </div>
 
+              {/* SEARCH */}
               <div className="hidden md:flex flex-1 justify-center px-8">
                 <div className="flex items-center bg-white/5 rounded-full px-4 py-2 border border-white/10 hover:border-white/20 transition-colors focus-within:border-white/40 w-full max-w-md">
                   <Search className="w-4 h-4 text-white/50 mr-2" />
@@ -80,6 +83,7 @@ export function Navbar() {
                 </div>
               </div>
 
+              {/* MENU HAMBURGUER */}
               <div className="absolute top-[10px] right-4 sm:right-6 lg:right-8 z-[999] flex flex-col items-end">
                 <motion.div
                   onClick={() => setIsOpen(!isOpen)}
@@ -88,9 +92,9 @@ export function Navbar() {
                   whileTap={{ scale: 0.9 }}
                 >
                   <div className="w-[24px] h-[24px] relative">
-                    <motion.span animate={{ top: isOpen ? 10.5 : 4, rotate: isOpen ? 45 : 0 }} className="block w-full h-[3px] absolute left-0 transition-colors duration-500" style={{ backgroundColor: isLightMode ? '#FFF' : '#000' }} />
-                    <motion.span animate={{ opacity: isOpen ? 0 : 1, top: 10.5 }} className="block w-full h-[3px] absolute left-0 transition-colors duration-500" style={{ backgroundColor: isLightMode ? '#FFF' : '#000' }} />
-                    <motion.span animate={{ top: isOpen ? 10.5 : 17, rotate: isOpen ? -45 : 0 }} className="block w-full h-[3px] absolute left-0 transition-colors duration-500" style={{ backgroundColor: isLightMode ? '#FFF' : '#000' }} />
+                    <motion.span animate={{ top: isOpen ? 10.5 : 4, rotate: isOpen ? 45 : 0 }} className="block w-full h-[3px] absolute left-0" style={{ backgroundColor: isLightMode ? '#FFF' : '#000' }} />
+                    <motion.span animate={{ opacity: isOpen ? 0 : 1, top: 10.5 }} className="block w-full h-[3px] absolute left-0" style={{ backgroundColor: isLightMode ? '#FFF' : '#000' }} />
+                    <motion.span animate={{ top: isOpen ? 10.5 : 17, rotate: isOpen ? -45 : 0 }} className="block w-full h-[3px] absolute left-0" style={{ backgroundColor: isLightMode ? '#FFF' : '#000' }} />
                   </div>
                 </motion.div>
 
@@ -104,11 +108,11 @@ export function Navbar() {
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: -20, scale: 0.5 }}
                           transition={{ delay: index * 0.1, type: "spring", stiffness: 260, damping: 20 }}
-                          className="w-[60px] h-[60px] rounded-full flex justify-center items-center cursor-pointer shadow-xl transition-transform hover:scale-110"
+                          className="w-[60px] h-[60px] rounded-full flex justify-center items-center cursor-pointer shadow-xl hover:scale-110 transition-transform"
                           style={{ backgroundColor: isLightMode ? '#000' : '#FFF' }}
                           title={item.label}
                         >
-                          <item.icon className="w-6 h-6 transition-colors duration-500" style={{ color: isLightMode ? '#FFF' : '#000' }} />
+                          <item.icon className="w-6 h-6" style={{ color: isLightMode ? '#FFF' : '#000' }} />
                         </motion.li>
                       ))}
                     </motion.ul>
@@ -120,21 +124,27 @@ export function Navbar() {
           </div>
         </nav>
 
-        <div className="flex-1 relative overflow-hidden">
-          <motion.div variants={netflixGlowVariants} initial="hidden" animate="visible" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[600px] sm:h-[400px] bg-cyan-600/30 blur-[100px] rounded-full pointer-events-none" />
-
+        {/* BANNER */}
+        <div className="relative w-full overflow-hidden rounded-b-[30px] sm:rounded-b-[40px]">
+          <motion.div
+            variants={netflixGlowVariants}
+            initial="hidden"
+            animate="visible"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-cyan-600/30 blur-[100px] rounded-full pointer-events-none z-10"
+          />
           <motion.div
             variants={bannerImageVariants}
             initial="hidden"
+            animate="visible"
+            className="relative w-full aspect-video sm:aspect-[21/9]"
           >
-        <div className="absolute inset-0 w-full h-full overflow-hidden rounded-[30px] sm:rounded-[40px]">
             <img
               src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop"
               alt="MATZON Arena eSports"
-              className="w-full h-full object-cover hover:scale-100 transition-transform duration-[2s]"
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-[2s]"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
-            <div className="absolute top-6 left-6 flex items-center gap-2 px-4 py-2 rounded-full bg-red-600/90 backdrop-blur-md text-white text-sm font-black tracking-wider uppercase">
+            <div className="absolute top-6 left-6 z-20 flex items-center gap-2 px-4 py-2 rounded-full bg-red-600/90 backdrop-blur-md text-white text-sm font-black tracking-wider uppercase">
               <Zap className="w-4 h-4 fill-current" /> Em Destaque
             </div>
           </motion.div>
