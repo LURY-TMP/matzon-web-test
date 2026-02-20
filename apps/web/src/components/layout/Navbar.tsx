@@ -52,7 +52,7 @@ export function Navbar() {
               <motion.div
                 className="text-[95px] font-black leading-[0.8] -ml-1 select-none relative z-0 cursor-pointer hover:opacity-80"
                 style={{ color: isLightMode ? '#000' : '#FFF', transformOrigin: 'center center' }}
-                animate={{ x: isLightMode ? -106 : 0, scale: isLightMode ? 0.70 : 1 }}
+                animate={{ x: isLightMode ? -120 : 0, scale: isLightMode ? 0.70 : 1 }}
                 transition={{ type: "spring", stiffness: 150, damping: 20 }}
                 onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               >
