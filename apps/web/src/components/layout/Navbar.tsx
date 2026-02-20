@@ -35,7 +35,7 @@ export function Navbar() {
 
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6">
-      <header className="relative w-full max-w-7xl mx-auto bg-black flex flex-col rounded-[30px] sm:rounded-[40px] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+      <header className="relative w-full max-w-7xl mx-auto bg-black flex flex-col rounded-[30px] sm:rounded-[40px] border border-[#19222D] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
 
         {/* NAVBAR */}
         <nav className="w-full z-50 bg-black/40 backdrop-blur-lg border-b border-white/10 h-20 relative rounded-t-[30px] sm:rounded-t-[40px]">
@@ -77,7 +77,7 @@ export function Navbar() {
 
               {/* SEARCH */}
               <div className="hidden md:flex flex-1 justify-center px-8">
-                <div className="flex items-center bg-white/5 rounded-full px-4 py-2 border border-white/10 hover:border-white/20 transition-colors focus-within:border-white/40 w-full max-w-md">
+                <div className="flex items-center bg-white/5 rounded-full px-4 py-2 border border-[#19222D] hover:border-white/20 transition-colors focus-within:border-white/40 w-full max-w-md">
                   <Search className="w-4 h-4 text-white/50 mr-2" />
                   <input type="text" placeholder="Buscar jogador ou torneio..." className="bg-transparent border-none text-white text-sm focus:outline-none placeholder:text-white/30 w-full" />
                 </div>
