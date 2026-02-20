@@ -6,7 +6,7 @@ import { SocialFeed } from '@/components/social/SocialFeed';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-black">
+    <main className="min-h-screen bg-[#12171E]">
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col lg:flex-row gap-8 items-start">
         <div className="w-full lg:w-2/3">
