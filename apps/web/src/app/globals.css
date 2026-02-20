@@ -5,7 +5,7 @@
 @layer base {
   body {
     font-family: 'Nunito', sans-serif;
-    background-color: #000000;
+    background-color: #0a0a0a;
     color: #ffffff;
     transition: background-color 0.5s ease;
   }
@@ -22,4 +22,4 @@
 .light-mode .text-white\/30, .light-mode .text-white\/40, .light-mode .text-white\/50, .light-mode .text-white\/60, .light-mode .text-white\/70, .light-mode .text-white\/80 { color: rgba(0,0,0,0.65); }
 .light-mode .border-white\/5, .light-mode .border-white\/10, .light-mode .border-white\/20 { border-color: rgba(0,0,0,0.1); }
 .light-mode .bg-white\/5, .light-mode .bg-white\/10 { background-color: rgba(0,0,0,0.05); }
-.light-mode .bg-white { background-color: #000000; color: #ffffff; }
+.light-mode .bg-white { background-color: #0a0a0a; color: #ffffff; }
