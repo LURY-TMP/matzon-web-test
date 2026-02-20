@@ -143,9 +143,8 @@ export function Navbar() {
               alt="MATZON Arena eSports"
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-[2s]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
             <div className="absolute top-6 left-6 z-20 flex items-center gap-2 px-4 py-2 rounded-full bg-red-600/90 backdrop-blur-md text-white text-sm font-black tracking-wider uppercase">
-            <div className="absolute top-3 left-3 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-600/90 backdrop-blur-md text-white text-[7px] font-black tracking-wider uppercase"><Zap className="w-2 h-2 fill-current" />Em Destaque</div>
+            <div className="absolute top-3 left-3 z-20 flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-red-600/90 backdrop-blur-md text-white text-[7px] font-black tracking-wider uppercase"><Zap className="w-2 h-2 fill-current" />Em Destaque</div>
             </div>
           </motion.div>
         </div>
