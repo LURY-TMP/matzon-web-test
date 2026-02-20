@@ -52,7 +52,7 @@ export function SocialFeed() {
         <h2 className="text-3xl font-black text-white">Feed da Comunidade</h2>
         <p className="text-white/50 text-sm mt-1 font-semibold">Veja o que está a acontecer no Universo MATZON</p>
       </div>
-      <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl p-4 mb-8 shadow-lg">
+      <div className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl p-4 mb-8 shadow-[0_8px_32px_rgba(0,0,0,0.4)] ring-1 ring-white/5">
         <div className="flex gap-4">
           <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-500 flex items-center justify-center flex-shrink-0">
             <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="JD" className="w-full h-full object-cover rounded-full" />
@@ -77,7 +77,7 @@ export function SocialFeed() {
       </div>
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col gap-6">
         {posts.map((post) => (
-          <motion.div key={post.id} variants={postVariants} className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl p-5 shadow-lg hover:border-white/20 transition-colors">
+          <motion.div key={post.id} variants={postVariants} className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl p-5 shadow-[0_8px_32px_rgba(0,0,0,0.4)] ring-1 ring-white/5 hover:border-white/20 transition-colors">
             <div className="flex justify-between items-start mb-4">
               <div className="flex items-center gap-3">
                 <img src={post.author.photo} alt={post.author.name} className="w-12 h-12 rounded-full flex-shrink-0 shadow-md object-cover" />

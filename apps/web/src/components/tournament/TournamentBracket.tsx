@@ -31,7 +31,7 @@ export function TournamentBracket() {
   ];
 
   const MatchCard = ({ match }: { match: any }) => (
-    <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden shadow-lg w-full sm:w-56 flex flex-col hover:border-white/30 transition-colors">
+    <div className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.4)] ring-1 ring-white/5 w-full sm:w-56 flex flex-col hover:border-white/20 transition-colors">
       <div className={`flex justify-between items-center p-3 border-b border-white/5 ${match.p1.winner ? 'bg-white/5' : 'opacity-50'}`}>
         <span className={`text-sm ${match.p1.winner ? 'text-white font-black' : 'text-white/60 font-bold'}`}>{match.p1.name}</span>
         <span className={`text-sm font-black ${match.p1.winner ? 'text-cyan-400' : 'text-white/40'}`}>{match.p1.score}</span>
