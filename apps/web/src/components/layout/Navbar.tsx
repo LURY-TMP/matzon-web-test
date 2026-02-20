@@ -80,7 +80,7 @@ export function Navbar() {
                 </div>
               </div>
 
-              <div className="absolute top-[10px] right-4 sm:right-6 lg:right-8 z-[200] flex flex-col items-end">
+              <div className="absolute top-[10px] right-4 sm:right-6 lg:right-8 z-[999] flex flex-col items-end">
                 <motion.div
                   onClick={() => setIsOpen(!isOpen)}
                   className="w-[60px] h-[60px] rounded-full flex justify-center items-center cursor-pointer shadow-xl transition-colors duration-500"
