@@ -1,16 +1,12 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@layer base {
-  body {
-    background-color: #000000;
-    color: #ffffff;
-    transition: background-color 0.5s ease, color 0.5s ease;
-  }
+body {
+  background-color: #000000;
+  color: #ffffff;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
 
-  body.light-mode {
-    background-color: #F2F2F7;
-    color: #000000;
-  }
+body.light-mode {
+  background-color: #F2F2F7;
+  color: #000000;
 }
