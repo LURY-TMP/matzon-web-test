@@ -34,7 +34,7 @@ export function PlayerCard() {
       </div>
       <div className="absolute top-20 left-6">
         <div className="relative">
-          <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-blue-600 to-purple-600 border-4 border-[#0a0a0a] flex items-center justify-center shadow-lg transform group-hover:scale-105 transition-transform duration-300">
+          <div className="w-20 h-20 rounded-[20px] bg-gradient-to-tr from-blue-600 to-purple-600 border-4 border-[#0a0a0a] flex items-center justify-center shadow-lg transform group-hover:scale-105 transition-transform duration-300">
             <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Player" className="w-full h-full object-cover" />
           </div>
           <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-4 border-[#0a0a0a] rounded-full" />
