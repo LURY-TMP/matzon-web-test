@@ -33,43 +33,50 @@ export function Navbar() {
     visible: { opacity: 1, scale: 1, filter: 'blur(0px)', transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } }
   };
 
+  const headerBg = isLightMode ? '#FFFFFF' : '#1A2130';
+  const logoBorderColor = isLightMode ? '#000000' : '#FFFFFF';
+  const logoBallBg = isLightMode ? '#000000' : '#FFFFFF';
+  const logoTextColor = isLightMode ? '#FFFFFF' : '#000000';
+  const logoNColor = isLightMode ? '#000000' : '#FFFFFF';
+  const menuBg = isLightMode ? '#000000' : '#FFFFFF';
+  const menuIconColor = isLightMode ? '#FFFFFF' : '#000000';
+  const menuLineColor = isLightMode ? '#FFFFFF' : '#000000';
+
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6">
       <header
         className="relative w-full max-w-7xl mx-auto flex flex-col rounded-[30px] sm:rounded-[40px] overflow-hidden"
-        style={{ backgroundColor: 'var(--bg-secondary)' }}
+        style={{ backgroundColor: headerBg }}
       >
-
-        {/* NAVBAR */}
-        <nav className="w-full z-50 backdrop-blur-xl h-20 relative">
+        <nav className="w-full z-50 h-20 relative">
           <div className="w-full px-4 sm:px-6 lg:px-8 h-full relative">
             <div className="flex items-center justify-between h-full">
 
               {/* LOGO */}
               <div className="scale-[0.55] sm:scale-[0.65] origin-left">
-                <div className="flex items-center gap-[16px] relative" style={{ perspective: '1000px' }}>
+                <div className="flex items-center gap-[16px] relative">
                   <div
-                    className="w-[148px] h-[86px] rounded-full flex items-center p-[6px] relative z-10 pointer-events-none transition-colors duration-500"
-                    style={{ border: `7px solid ${isLightMode ? '#000' : '#FFF'}` }}
+                    className="w-[148px] h-[86px] rounded-full flex items-center p-[6px] relative z-10 pointer-events-none"
+                    style={{ border: `7px solid ${logoBorderColor}`, transition: 'border-color 0.5s' }}
                   >
                     <motion.div
-                      className="w-[60px] h-[60px] rounded-full flex justify-center items-center cursor-pointer z-20 pointer-events-auto shadow-lg"
-                      style={{ backgroundColor: isLightMode ? '#000' : '#FFF' }}
+                      className="w-[60px] h-[60px] rounded-full flex justify-center items-center cursor-pointer z-20 pointer-events-auto"
+                      style={{ backgroundColor: logoBallBg }}
                       animate={{ x: isLightMode ? 0 : 62 }}
                       transition={{ type: "spring", stiffness: 150, damping: 20 }}
                       onClick={() => setIsLightMode(!isLightMode)}
                     >
                       <span
                         className="text-[14px] font-black tracking-[0.5px] select-none pointer-events-none"
-                        style={{ color: isLightMode ? '#FFF' : '#000' }}
+                        style={{ color: logoTextColor }}
                       >
                         MATZ
                       </span>
                     </motion.div>
                   </div>
                   <motion.div
-                    className="text-[95px] font-black leading-[0.8] -ml-1 select-none relative z-0 cursor-pointer hover:opacity-80"
-                    style={{ color: isLightMode ? '#000' : '#FFF', transformOrigin: 'center center' }}
+                    className="text-[95px] font-black leading-[0.8] -ml-1 select-none cursor-pointer hover:opacity-80"
+                    style={{ color: logoNColor, transformOrigin: 'center center' }}
                     animate={{ x: isLightMode ? -100 : 0, scale: isLightMode ? 0.70 : 1 }}
                     transition={{ type: "spring", stiffness: 150, damping: 20 }}
                   >
@@ -80,9 +87,17 @@ export function Navbar() {
 
               {/* SEARCH */}
               <div className="hidden md:flex flex-1 justify-center px-8">
-                <div className="flex items-center rounded-2xl px-4 py-2 w-full max-w-md" style={{ backgroundColor: 'var(--bg-card)' }}>
-                  <Search className="w-4 h-4 mr-2" style={{ color: 'var(--text-tertiary)' }} />
-                  <input type="text" placeholder="Buscar jogador ou torneio..." className="bg-transparent text-sm focus:outline-none w-full" style={{ color: 'var(--text-primary)' }} />
+                <div
+                  className="flex items-center rounded-2xl px-4 py-2 w-full max-w-md"
+                  style={{ backgroundColor: isLightMode ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.06)' }}
+                >
+                  <Search className="w-4 h-4 mr-2" style={{ color: isLightMode ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.35)' }} />
+                  <input
+                    type="text"
+                    placeholder="Buscar jogador ou torneio..."
+                    className="bg-transparent text-sm focus:outline-none w-full"
+                    style={{ color: isLightMode ? '#1D1D1F' : '#F5F5F7' }}
+                  />
                 </div>
               </div>
 
@@ -90,14 +105,14 @@ export function Navbar() {
               <div className="absolute top-[10px] right-4 sm:right-6 lg:right-8 z-[999] flex flex-col items-end">
                 <motion.div
                   onClick={() => setIsOpen(!isOpen)}
-                  className="w-[50px] h-[50px] rounded-full flex justify-center items-center cursor-pointer shadow-xl transition-colors duration-500"
-                  style={{ backgroundColor: isLightMode ? '#000' : '#FFF' }}
+                  className="w-[50px] h-[50px] rounded-full flex justify-center items-center cursor-pointer shadow-xl"
+                  style={{ backgroundColor: menuBg }}
                   whileTap={{ scale: 0.9 }}
                 >
                   <div className="w-[20px] h-[20px] relative">
-                    <motion.span animate={{ top: isOpen ? 8.5 : 3, rotate: isOpen ? 45 : 0 }} className="block w-full h-[2.5px] absolute left-0" style={{ backgroundColor: isLightMode ? '#FFF' : '#000' }} />
-                    <motion.span animate={{ opacity: isOpen ? 0 : 1, top: 8.5 }} className="block w-full h-[2.5px] absolute left-0" style={{ backgroundColor: isLightMode ? '#FFF' : '#000' }} />
-                    <motion.span animate={{ top: isOpen ? 8.5 : 14, rotate: isOpen ? -45 : 0 }} className="block w-full h-[2.5px] absolute left-0" style={{ backgroundColor: isLightMode ? '#FFF' : '#000' }} />
+                    <motion.span animate={{ top: isOpen ? 8.5 : 3, rotate: isOpen ? 45 : 0 }} className="block w-full h-[2.5px] absolute left-0" style={{ backgroundColor: menuLineColor }} />
+                    <motion.span animate={{ opacity: isOpen ? 0 : 1, top: 8.5 }} className="block w-full h-[2.5px] absolute left-0" style={{ backgroundColor: menuLineColor }} />
+                    <motion.span animate={{ top: isOpen ? 8.5 : 14, rotate: isOpen ? -45 : 0 }} className="block w-full h-[2.5px] absolute left-0" style={{ backgroundColor: menuLineColor }} />
                   </div>
                 </motion.div>
 
@@ -112,10 +127,10 @@ export function Navbar() {
                           exit={{ opacity: 0, y: -20, scale: 0.5 }}
                           transition={{ delay: index * 0.1, type: "spring", stiffness: 260, damping: 20 }}
                           className="w-[50px] h-[50px] rounded-full flex justify-center items-center cursor-pointer shadow-xl hover:scale-110 transition-transform"
-                          style={{ backgroundColor: isLightMode ? '#000' : '#FFF' }}
+                          style={{ backgroundColor: menuBg }}
                           title={item.label}
                         >
-                          <item.icon className="w-5 h-5" style={{ color: isLightMode ? '#FFF' : '#000' }} />
+                          <item.icon className="w-5 h-5" style={{ color: menuIconColor }} />
                         </motion.li>
                       ))}
                     </motion.ul>

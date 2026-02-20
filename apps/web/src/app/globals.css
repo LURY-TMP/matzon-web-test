@@ -49,3 +49,7 @@ body.light-mode .bg-white\/5 { background-color: rgba(0,0,0,0.04); }
 body.light-mode .bg-white\/10 { background-color: rgba(0,0,0,0.06); }
 body.light-mode .bg-black\/40 { background-color: rgba(255,255,255,0.8); }
 body.light-mode .bg-black\/60 { background-color: rgba(255,255,255,0.9); }
+
+/* Tournament bracket light mode */
+body.light-mode .from-gray-900 { --tw-gradient-from: #F5F5F7; }
+body.light-mode .to-black { --tw-gradient-to: #FFFFFF; }

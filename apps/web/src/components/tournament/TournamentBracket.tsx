@@ -33,11 +33,11 @@ export function TournamentBracket() {
   const MatchCard = ({ match }: { match: any }) => (
     <div className="bg-white/5 backdrop-blur-2xl rounded-xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.4)]  w-full sm:w-56 flex flex-col hover:border-white/20 transition-colors">
       <div className={`flex justify-between items-center p-3 ${match.p1.winner ? 'bg-white/5' : 'opacity-50'}`}>
-        <span className={`text-sm ${match.p1.winner ? 'text-white font-black' : 'text-white/60 font-bold'}`}>{match.p1.name}</span>
+        <span className={`text-sm ${match.p1.winner ? 'text-white font-black' : 'text-white/60 light-mode:text-black/60 font-bold'}`}>{match.p1.name}</span>
         <span className={`text-sm font-black ${match.p1.winner ? 'text-cyan-400' : 'text-white/40'}`}>{match.p1.score}</span>
       </div>
       <div className={`flex justify-between items-center p-3 ${match.p2.winner ? 'bg-white/5' : 'opacity-50'}`}>
-        <span className={`text-sm ${match.p2.winner ? 'text-white font-black' : 'text-white/60 font-bold'}`}>{match.p2.name}</span>
+        <span className={`text-sm ${match.p2.winner ? 'text-white font-black' : 'text-white/60 light-mode:text-black/60 font-bold'}`}>{match.p2.name}</span>
         <span className={`text-sm font-black ${match.p2.winner ? 'text-cyan-400' : 'text-white/40'}`}>{match.p2.score}</span>
       </div>
     </div>
@@ -75,7 +75,7 @@ export function TournamentBracket() {
           <div className="flex flex-col items-center justify-center ml-4">
             <Trophy className="w-16 h-16 text-yellow-400 mb-4 drop-shadow-[0_0_15px_rgba(250,204,21,0.5)]" />
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }} className="px-8 py-4 bg-gradient-to-r from-yellow-500/20 to-amber-500/20 border border-yellow-400/50 rounded-2xl flex flex-col items-center">
-              <span className="text-white/60 text-xs font-bold uppercase tracking-widest mb-1">Campeão</span>
+              <span className="text-white/60 light-mode:text-black/60 text-xs font-bold uppercase tracking-widest mb-1">Campeão</span>
               <span className="text-2xl font-black text-white">Faker</span>
             </motion.div>
           </div>
