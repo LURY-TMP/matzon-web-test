@@ -13,3 +13,11 @@
     background-color: #F2F2F7;
   }
 }
+
+.light-mode .text-white { color: #000000; }
+.light-mode .bg-black { background-color: #F2F2F7; }
+.light-mode .bg-black\/40, .light-mode .bg-black\/60, .light-mode .bg-black\/95 { background-color: rgba(255,255,255,0.75); }
+.light-mode .text-white\/30, .light-mode .text-white\/40, .light-mode .text-white\/50, .light-mode .text-white\/60, .light-mode .text-white\/70, .light-mode .text-white\/80 { color: rgba(0,0,0,0.65); }
+.light-mode .border-white\/5, .light-mode .border-white\/10, .light-mode .border-white\/20 { border-color: rgba(0,0,0,0.1); }
+.light-mode .bg-white\/5, .light-mode .bg-white\/10 { background-color: rgba(0,0,0,0.05); }
+.light-mode .bg-white { background-color: #000000; color: #ffffff; }
