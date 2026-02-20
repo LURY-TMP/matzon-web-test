@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Trophy, ChevronLeft, ChevronRight } from 'lucide-react';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Trophy } from 'lucide-react';
 
 const av = [
   'https://randomuser.me/api/portraits/men/32.jpg',
@@ -23,91 +23,121 @@ const av = [
   'https://randomuser.me/api/portraits/men/19.jpg',
 ];
 
-const rounds = [
-  {
-    label: 'Oitavas de Final',
-    date: '10 MAR.',
-    matches: [
-      { p1: { name: 'Faker', avatar: av[0] }, p2: { name: 'ZywOo', avatar: av[1] }, winner: 0 },
-      { p1: { name: 'S1mple', avatar: av[2] }, p2: { name: 'NiKo', avatar: av[3] }, winner: 0 },
-      { p1: { name: 'TenZ', avatar: av[4] }, p2: { name: 'Shroud', avatar: av[5] }, winner: 0 },
-      { p1: { name: 'Kscerato', avatar: av[6] }, p2: { name: 'Device', avatar: av[7] }, winner: 0 },
-      { p1: { name: 'Mixer', avatar: av[8] }, p2: { name: 'Apex', avatar: av[9] }, winner: 1 },
-      { p1: { name: 'Krimz', avatar: av[10] }, p2: { name: 'Rain', avatar: av[11] }, winner: 1 },
-      { p1: { name: 'Coldzera', avatar: av[12] }, p2: { name: 'EliGE', avatar: av[13] }, winner: 0 },
-      { p1: { name: 'Xantares', avatar: av[14] }, p2: { name: 'Twistzz', avatar: av[15] }, winner: 1 },
-    ],
-  },
-  {
-    label: 'Quartos de Final',
-    date: '7 ABR.',
-    matches: [
-      { p1: { name: 'Faker', avatar: av[0] }, p2: { name: 'S1mple', avatar: av[2] }, winner: 0 },
-      { p1: { name: 'TenZ', avatar: av[4] }, p2: { name: 'Kscerato', avatar: av[6] }, winner: 1 },
-      { p1: { name: 'Apex', avatar: av[9] }, p2: { name: 'Rain', avatar: av[11] }, winner: 0 },
-      { p1: { name: 'Coldzera', avatar: av[12] }, p2: { name: 'Twistzz', avatar: av[15] }, winner: 0 },
-    ],
-  },
-  {
-    label: 'Semifinais',
-    date: '28 ABR.',
-    matches: [
-      { p1: { name: 'Faker', avatar: av[0] }, p2: { name: 'Kscerato', avatar: av[6] }, winner: 0 },
-      { p1: { name: 'Apex', avatar: av[9] }, p2: { name: 'Coldzera', avatar: av[12] }, winner: 1 },
-    ],
-  },
-  {
-    label: 'Grande Final',
-    date: '30 MAI.',
-    matches: [
-      { p1: { name: 'Faker', avatar: av[0] }, p2: { name: 'Coldzera', avatar: av[12] }, winner: 0 },
-    ],
-  },
-];
+const C = 'rgba(255,255,255,0.15)';
+const MW = 150;
+const MH = 76;
+const VGAP = 16;
 
-function MatchCard({ match, delay = 0 }: { match: any; delay?: number }) {
-  const players = [match.p1, match.p2];
+function MatchCard({ p1, p2, w, label, date, delay = 0 }: any) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 8 }}
+      initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay }}
-      className="rounded-2xl overflow-hidden flex-shrink-0"
-      style={{ width: 170, backgroundColor: 'var(--bg-card)' }}
+      className="rounded-xl overflow-hidden flex-shrink-0"
+      style={{ width: MW, backgroundColor: 'var(--bg-card)' }}
     >
-      {players.map((p, i) => (
-        <div
-          key={i}
-          className="flex items-center gap-2 px-3 py-2.5"
+      {[p1, p2].map((p: any, i: number) => (
+        <div key={i} className="flex items-center gap-2 px-2.5 py-2"
           style={{
             borderBottom: i === 0 ? '1px solid rgba(255,255,255,0.04)' : 'none',
-            backgroundColor: match.winner === i ? 'rgba(10,132,255,0.08)' : 'transparent',
-          }}
-        >
-          {match.winner === i && (
-            <div className="w-1 h-1 rounded-full flex-shrink-0" style={{ backgroundColor: '#0A84FF' }} />
-          )}
+            backgroundColor: w === i ? 'rgba(10,132,255,0.08)' : 'transparent',
+          }}>
           <img src={p.avatar} className="w-6 h-6 rounded-full object-cover flex-shrink-0" />
-          <span
-            className="text-[11px] font-semibold truncate flex-1"
-            style={{ color: match.winner === i ? 'var(--text-primary)' : 'var(--text-tertiary)' }}
-          >
+          <span className="text-[10px] font-semibold truncate flex-1"
+            style={{ color: w === i ? 'var(--text-primary)' : 'var(--text-tertiary)' }}>
             {p.name}
           </span>
+          {w === i && <div className="w-1 h-1 rounded-full flex-shrink-0" style={{ backgroundColor: '#0A84FF' }} />}
         </div>
       ))}
+      <div className="px-2.5 py-1 flex gap-1 items-center" style={{ backgroundColor: 'rgba(255,255,255,0.02)' }}>
+        <span className="text-[8px] font-bold" style={{ color: 'var(--text-tertiary)' }}>{label}</span>
+        {date && <span className="text-[8px]" style={{ color: 'var(--text-tertiary)' }}>· {date}</span>}
+      </div>
     </motion.div>
   );
 }
 
+// Coluna de matches com linhas de ligação
+function BracketColumn({ matches, connectors = true, delay = 0 }: any) {
+  const count = matches.length;
+  const itemH = MH + VGAP;
+  const totalH = count * itemH - VGAP;
+
+  return (
+    <div className="relative flex-shrink-0" style={{ width: MW + (connectors ? 32 : 0) }}>
+      {/* Matches */}
+      <div className="flex flex-col" style={{ gap: VGAP }}>
+        {matches.map((m: any, i: number) => (
+          <MatchCard key={i} {...m} delay={delay + i * 0.05} />
+        ))}
+      </div>
+
+      {/* Connector lines to right */}
+      {connectors && (
+        <svg
+          className="absolute top-0 right-0"
+          width={32}
+          height={totalH}
+          style={{ overflow: 'visible' }}
+        >
+          {Array.from({ length: Math.floor(count / 2) }).map((_, i) => {
+            const top1 = i * 2 * itemH + MH / 2;
+            const top2 = (i * 2 + 1) * itemH + MH / 2;
+            const mid = (top1 + top2) / 2;
+            return (
+              <g key={i}>
+                <line x1={0} y1={top1} x2={20} y2={top1} stroke={C} strokeWidth={1.5} />
+                <line x1={20} y1={top1} x2={20} y2={top2} stroke={C} strokeWidth={1.5} />
+                <line x1={0} y1={top2} x2={20} y2={top2} stroke={C} strokeWidth={1.5} />
+                <line x1={20} y1={mid} x2={32} y2={mid} stroke={C} strokeWidth={1.5} />
+              </g>
+            );
+          })}
+        </svg>
+      )}
+    </div>
+  );
+}
+
 export function TournamentBracket() {
-  const [current, setCurrent] = useState(0);
-  const total = rounds.length;
+  const r1top = [
+    { p1: { name: 'Faker', avatar: av[0] }, p2: { name: 'ZywOo', avatar: av[1] }, w: 0, label: 'WPO1', date: '10 MAR.' },
+    { p1: { name: 'S1mple', avatar: av[2] }, p2: { name: 'NiKo', avatar: av[3] }, w: 0, label: 'WPO2', date: '10 MAR.' },
+    { p1: { name: 'TenZ', avatar: av[4] }, p2: { name: 'Shroud', avatar: av[5] }, w: 0, label: 'WPO3', date: '10 MAR.' },
+    { p1: { name: 'Kscerato', avatar: av[6] }, p2: { name: 'Device', avatar: av[7] }, w: 0, label: 'WPO4', date: '10 MAR.' },
+  ];
+  const r2top = [
+    { p1: { name: 'Faker', avatar: av[0] }, p2: { name: 'S1mple', avatar: av[2] }, w: 0, label: 'QF1', date: '7 ABR.' },
+    { p1: { name: 'TenZ', avatar: av[4] }, p2: { name: 'Kscerato', avatar: av[6] }, w: 1, label: 'QF2', date: '7 ABR.' },
+  ];
+  const sf_top = [
+    { p1: { name: 'Faker', avatar: av[0] }, p2: { name: 'Kscerato', avatar: av[6] }, w: 0, label: 'SF1', date: '28 ABR.' },
+  ];
+
+  const r1bot = [
+    { p1: { name: 'Mixer', avatar: av[8] }, p2: { name: 'Apex', avatar: av[9] }, w: 1, label: 'WPO5', date: '10 MAR.' },
+    { p1: { name: 'Krimz', avatar: av[10] }, p2: { name: 'Rain', avatar: av[11] }, w: 1, label: 'WPO6', date: '10 MAR.' },
+    { p1: { name: 'Coldzera', avatar: av[12] }, p2: { name: 'EliGE', avatar: av[13] }, w: 0, label: 'WPO7', date: '10 MAR.' },
+    { p1: { name: 'Xantares', avatar: av[14] }, p2: { name: 'Twistzz', avatar: av[15] }, w: 1, label: 'WPO8', date: '10 MAR.' },
+  ];
+  const r2bot = [
+    { p1: { name: 'Apex', avatar: av[9] }, p2: { name: 'Rain', avatar: av[11] }, w: 0, label: 'QF3', date: '7 ABR.' },
+    { p1: { name: 'Coldzera', avatar: av[12] }, p2: { name: 'Twistzz', avatar: av[15] }, w: 0, label: 'QF4', date: '7 ABR.' },
+  ];
+  const sf_bot = [
+    { p1: { name: 'Apex', avatar: av[9] }, p2: { name: 'Coldzera', avatar: av[12] }, w: 1, label: 'SF2', date: '28 ABR.' },
+  ];
+
+  const final = { p1: { name: 'Faker', avatar: av[0] }, p2: { name: 'Coldzera', avatar: av[12] }, w: 0, label: 'FINAL', date: '30 MAI.' };
+
+  const topH = r1top.length * (MH + VGAP) - VGAP;
+  const botH = r1bot.length * (MH + VGAP) - VGAP;
+  const totalH = topH + botH + MH + 80;
 
   return (
     <section className="w-full max-w-7xl mx-auto py-10 px-4">
-
-      {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-2">
         <div>
           <h2 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>Invitational MATZON 2026</h2>
@@ -119,122 +149,73 @@ export function TournamentBracket() {
         </div>
       </div>
 
-      {/* Round Tabs */}
-      <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
-        {rounds.map((r, i) => (
-          <button
-            key={i}
-            onClick={() => setCurrent(i)}
-            className="flex-shrink-0 px-4 py-2 rounded-full text-xs font-semibold transition-all"
-            style={{
-              backgroundColor: current === i ? '#0A84FF' : 'var(--bg-card)',
-              color: current === i ? '#fff' : 'var(--text-secondary)',
-            }}
-          >
-            {r.label}
-          </button>
-        ))}
-      </div>
+      <div className="overflow-x-auto pb-4">
+        <div className="relative" style={{ minWidth: 700 }}>
 
-      {/* Carousel */}
-      <div className="relative">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={current}
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -30 }}
-            transition={{ duration: 0.3 }}
-          >
-            {/* Round Label */}
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <p className="text-base font-bold" style={{ color: 'var(--text-primary)' }}>{rounds[current].label}</p>
-                <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>{rounds[current].date}</p>
+          {/* Round labels */}
+          <div className="flex mb-4" style={{ gap: 0 }}>
+            {['Oitavas', 'Quartos', 'Semifinais', 'Final', 'Semifinais', 'Quartos', 'Oitavas'].map((l, i) => (
+              <div key={i} className="text-center text-[10px] font-black uppercase tracking-wider"
+                style={{ width: i === 3 ? MW + 16 : MW + 32, color: 'var(--text-tertiary)', flexShrink: 0 }}>
+                {l}
               </div>
-              <div className="flex items-center gap-1 text-xs" style={{ color: 'var(--text-tertiary)' }}>
-                {current + 1} / {total}
-              </div>
-            </div>
-
-            {/* Matches Grid */}
-            <div className="flex flex-wrap gap-3">
-              {rounds[current].matches.map((match, i) => (
-                <MatchCard key={i} match={match} delay={i * 0.05} />
-              ))}
-            </div>
-
-            {/* Final Winner */}
-            {current === total - 1 && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.3 }}
-                className="flex items-center gap-4 mt-6 p-5 rounded-2xl"
-                style={{ backgroundColor: 'rgba(255,214,10,0.08)' }}
-              >
-                <div className="w-12 h-12 rounded-2xl flex items-center justify-center"
-                  style={{ backgroundColor: 'rgba(255,214,10,0.15)' }}>
-                  <Trophy className="w-6 h-6" style={{ color: '#FFD60A' }} />
-                </div>
-                <div>
-                  <p className="text-xs font-black uppercase tracking-wider mb-1" style={{ color: '#FFD60A' }}>Campeão</p>
-                  <div className="flex items-center gap-2">
-                    <img src={av[0]} className="w-8 h-8 rounded-full object-cover" style={{ border: '2px solid #FFD60A' }} />
-                    <span className="text-base font-bold" style={{ color: 'var(--text-primary)' }}>Faker</span>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Nav Buttons */}
-        <div className="flex items-center justify-between mt-6">
-          <button
-            onClick={() => setCurrent(Math.max(0, current - 1))}
-            disabled={current === 0}
-            className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all"
-            style={{
-              backgroundColor: current === 0 ? 'var(--bg-card)' : 'var(--bg-card)',
-              color: current === 0 ? 'var(--text-tertiary)' : 'var(--text-primary)',
-              opacity: current === 0 ? 0.4 : 1,
-            }}
-          >
-            <ChevronLeft className="w-4 h-4" /> Anterior
-          </button>
-
-          {/* Dots */}
-          <div className="flex gap-2">
-            {rounds.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrent(i)}
-                className="rounded-full transition-all"
-                style={{
-                  width: current === i ? 20 : 6,
-                  height: 6,
-                  backgroundColor: current === i ? '#0A84FF' : 'rgba(255,255,255,0.15)',
-                }}
-              />
             ))}
           </div>
 
-          <button
-            onClick={() => setCurrent(Math.min(total - 1, current + 1))}
-            disabled={current === total - 1}
-            className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all"
-            style={{
-              backgroundColor: 'var(--bg-card)',
-              color: current === total - 1 ? 'var(--text-tertiary)' : 'var(--text-primary)',
-              opacity: current === total - 1 ? 0.4 : 1,
-            }}
-          >
-            Próximo <ChevronRight className="w-4 h-4" />
-          </button>
+          <div className="flex items-center" style={{ gap: 0 }}>
+
+            {/* TOP LEFT: R1 */}
+            <div className="flex flex-col" style={{ gap: VGAP }}>
+              <BracketColumn matches={r1top} connectors={true} delay={0} />
+            </div>
+
+            {/* TOP LEFT: R2 */}
+            <div style={{ marginTop: (MH + VGAP) / 2 }}>
+              <BracketColumn matches={r2top} connectors={true} delay={0.1} />
+            </div>
+
+            {/* TOP LEFT: SF */}
+            <div style={{ marginTop: (MH + VGAP) * 1.5 }}>
+              <BracketColumn matches={sf_top} connectors={true} delay={0.2} />
+            </div>
+
+            {/* CENTER: FINAL */}
+            <div style={{ marginTop: (MH + VGAP) * 3.5 - MH }}>
+              <div className="flex flex-col items-center" style={{ width: MW + 16 }}>
+                <MatchCard {...final} delay={0.35} />
+                <div style={{ width: 1.5, height: 20, backgroundColor: C, margin: '0 auto' }} />
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.5 }}
+                  className="flex flex-col items-center gap-1.5 px-5 py-3 rounded-2xl"
+                  style={{ backgroundColor: 'rgba(255,214,10,0.08)' }}
+                >
+                  <Trophy className="w-5 h-5" style={{ color: '#FFD60A' }} />
+                  <img src={av[0]} className="w-9 h-9 rounded-full object-cover" style={{ border: '2px solid #FFD60A' }} />
+                  <span className="text-[10px] font-black" style={{ color: '#FFD60A' }}>Faker</span>
+                </motion.div>
+              </div>
+            </div>
+
+            {/* TOP RIGHT: SF */}
+            <div style={{ marginTop: (MH + VGAP) * 1.5 }}>
+              <BracketColumn matches={sf_bot} connectors={true} delay={0.2} />
+            </div>
+
+            {/* TOP RIGHT: R2 */}
+            <div style={{ marginTop: (MH + VGAP) / 2 }}>
+              <BracketColumn matches={r2bot} connectors={true} delay={0.1} />
+            </div>
+
+            {/* TOP RIGHT: R1 */}
+            <div>
+              <BracketColumn matches={r1bot} connectors={false} delay={0} />
+            </div>
+
+          </div>
         </div>
       </div>
-
     </section>
   );
 }
