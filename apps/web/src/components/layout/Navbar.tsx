@@ -126,7 +126,7 @@ export function Navbar() {
           <motion.div
             variants={bannerImageVariants}
             initial="hidden"
-            animate="visible"
+          >
         <div className="absolute inset-0 w-full h-full overflow-hidden rounded-[30px] sm:rounded-[40px]">
           >
             <img
