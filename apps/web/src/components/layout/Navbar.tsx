@@ -35,7 +35,7 @@ export function Navbar() {
 
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6">
-      <header className="relative w-full max-w-7xl mx-auto min-h-0 bg-black overflow-hidden flex flex-col rounded-[30px] sm:rounded-[40px] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+      <header className="relative w-full max-w-7xl mx-auto min-h-0 bg-black flex flex-col rounded-[30px] sm:rounded-[40px] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
 
         <nav className="w-full z-50 bg-black/40 backdrop-blur-lg border-b border-white/10 h-20 relative">
           <div className="w-full px-4 sm:px-6 lg:px-8 h-full relative">
