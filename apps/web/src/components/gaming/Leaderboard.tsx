@@ -5,12 +5,12 @@ import { motion } from 'framer-motion';
 import { Trophy, ChevronUp, ChevronDown, Minus, Medal, Search, Filter } from 'lucide-react';
 
 const leaderboardData = [
-  { id: '1', rank: 1, name: 'Faker_MZ', tag: '#KR1', tier: 'Elite', elo: 3450, winrate: '68%', trend: 'up' },
-  { id: '2', rank: 2, name: 'S1mple', tag: '#EUW', tier: 'Elite', elo: 3410, winrate: '65%', trend: 'up' },
-  { id: '3', rank: 3, name: 'TenZ', tag: '#NA1', tier: 'Pro', elo: 3380, winrate: '62%', trend: 'down' },
-  { id: '4', rank: 4, name: 'ZywOo', tag: '#EUW', tier: 'Pro', elo: 3350, winrate: '60%', trend: 'same' },
-  { id: '5', rank: 5, name: 'NiKo', tag: '#EUW', tier: 'Challenger', elo: 3320, winrate: '59%', trend: 'up' },
-  { id: '6', rank: 6, name: 'Kscerato', tag: '#BR1', tier: 'Challenger', elo: 3290, winrate: '58%', trend: 'down' },
+  { id: '1', rank: 1, name: 'Faker_MZ', tag: '#KR1', tier: 'Elite', elo: 3450, winrate: '68%', trend: 'up', avatar: 'https://randomuser.me/api/portraits/men/32.jpg' },
+  { id: '2', rank: 2, name: 'S1mple', tag: '#EUW', tier: 'Elite', elo: 3410, winrate: '65%', trend: 'up', avatar: 'https://randomuser.me/api/portraits/men/44.jpg' },
+  { id: '3', rank: 3, name: 'TenZ', tag: '#NA1', tier: 'Pro', elo: 3380, winrate: '62%', trend: 'down', avatar: 'https://randomuser.me/api/portraits/men/55.jpg' },
+  { id: '4', rank: 4, name: 'ZywOo', tag: '#EUW', tier: 'Pro', elo: 3350, winrate: '60%', trend: 'same', avatar: 'https://randomuser.me/api/portraits/men/62.jpg' },
+  { id: '5', rank: 5, name: 'NiKo', tag: '#EUW', tier: 'Challenger', elo: 3320, winrate: '59%', trend: 'up', avatar: 'https://randomuser.me/api/portraits/men/71.jpg' },
+  { id: '6', rank: 6, name: 'Kscerato', tag: '#BR1', tier: 'Challenger', elo: 3290, winrate: '58%', trend: 'down', avatar: 'https://randomuser.me/api/portraits/men/83.jpg' },
 ];
 
 export function Leaderboard() {
@@ -67,7 +67,7 @@ export function Leaderboard() {
                 </div>
               </div>
               <div className="col-span-6 sm:col-span-5 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 to-purple-600 flex-shrink-0 border border-white/10 group-hover:border-white/30 transition-colors" />
+                <img src={player.avatar} alt={player.name} className="w-10 h-10 rounded-full flex-shrink-0 border border-white/10 group-hover:border-white/30 transition-colors overflow-hidden object-cover" />
                 <div className="flex flex-col">
                   <span className="text-white font-bold text-sm sm:text-base">{player.name}</span>
                   <span className="text-white/40 text-xs font-semibold">{player.tag}</span>

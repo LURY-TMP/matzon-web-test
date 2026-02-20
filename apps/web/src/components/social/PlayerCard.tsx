@@ -22,7 +22,7 @@ export function PlayerCard() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
-      className="w-full max-w-sm mx-auto bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl relative group"
+      className="w-full max-w-sm mx-auto bg-black/40 backdrop-blur-xl border border-[#19222D] rounded-[30px] overflow-hidden shadow-2xl relative group"
     >
       <div className="h-32 w-full relative bg-gradient-to-r from-blue-900 to-purple-900">
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
@@ -34,7 +34,7 @@ export function PlayerCard() {
       <div className="absolute top-20 left-6">
         <div className="relative">
           <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-blue-600 to-purple-600 border-4 border-[#0a0a0a] flex items-center justify-center shadow-lg transform group-hover:scale-105 transition-transform duration-300">
-            <span className="text-white font-black text-2xl">JD</span>
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Player" className="w-full h-full object-cover" />
           </div>
           <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-4 border-[#0a0a0a] rounded-full" />
         </div>

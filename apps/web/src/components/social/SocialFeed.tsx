@@ -7,19 +7,19 @@ import { Heart, MessageSquare, Share2, MoreHorizontal, Image as ImageIcon, Send,
 const initialPosts = [
   {
     id: 1,
-    author: { name: 'S1mple', tag: '#EUW', avatar: 'from-blue-500 to-cyan-500', initials: 'S1' },
+    author: { name: 'S1mple', tag: '#EUW', avatar: '', initials: 'S1', photo: 'https://randomuser.me/api/portraits/men/44.jpg' },
     content: 'Acabei de garantir o Top 2 Global! O matchmaking de hoje estava insano. GG WP a todos que jogaram contra mim na última bracket. 🏆🔥',
     timestamp: '2h', likes: 1240, comments: 84, hasImage: false, isLiked: true,
   },
   {
     id: 2,
-    author: { name: 'John Doe', tag: '#MZ1', avatar: 'from-purple-500 to-pink-500', initials: 'JD' },
+    author: { name: 'John Doe', tag: '#MZ1', avatar: '', initials: 'JD', photo: 'https://randomuser.me/api/portraits/men/32.jpg' },
     content: 'Aquele clutch no 1v3 para fechar a partida... Nunca duvidem do buff do teclado novo! 😂',
     timestamp: '5h', likes: 342, comments: 12, hasImage: false, isLiked: false,
   },
   {
     id: 3,
-    author: { name: 'TenZ', tag: '#NA1', avatar: 'from-red-500 to-orange-500', initials: 'TZ' },
+    author: { name: 'TenZ', tag: '#NA1', avatar: '', initials: 'TZ', photo: 'https://randomuser.me/api/portraits/men/55.jpg' },
     content: 'Procurando um Duo para grindar o rank Elite esta noite. Requisitos: comunicação no Discord e não dar rage no primeiro round. Alguém on? ⚔️',
     timestamp: '8h', likes: 890, comments: 156, hasImage: false, isLiked: false,
   }
@@ -80,9 +80,7 @@ export function SocialFeed() {
           <motion.div key={post.id} variants={postVariants} className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl p-5 shadow-lg hover:border-white/20 transition-colors">
             <div className="flex justify-between items-start mb-4">
               <div className="flex items-center gap-3">
-                <div className={`w-12 h-12 rounded-full bg-gradient-to-tr ${post.author.avatar} flex items-center justify-center flex-shrink-0 shadow-md`}>
-                  <span className="text-white font-black text-sm">{post.author.initials}</span>
-                </div>
+                <img src={post.author.photo} alt={post.author.name} className="w-12 h-12 rounded-full flex-shrink-0 shadow-md object-cover" />
                 <div className="flex flex-col">
                   <div className="flex items-center gap-2">
                     <span className="text-white font-bold text-base cursor-pointer hover:underline">{post.author.name}</span>
