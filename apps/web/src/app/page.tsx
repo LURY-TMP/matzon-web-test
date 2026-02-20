@@ -2,6 +2,7 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Leaderboard } from '@/components/gaming/Leaderboard';
 import { PlayerCard } from '@/components/social/PlayerCard';
 import { TournamentBracket } from '@/components/tournament/TournamentBracket';
+import { Footer } from "@/components/layout/Footer";
 import { SocialFeed } from '@/components/social/SocialFeed';
 
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
       <div className="py-6">
         <SocialFeed />
       </div>
+          <Footer />
     </main>
   );
 }
