@@ -163,7 +163,7 @@ export function Navbar() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
             <div className="absolute top-3 left-3 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full backdrop-blur-md text-white text-[7px] font-black tracking-wider uppercase" style={{ backgroundColor: 'rgba(220,38,38,0.85)' }}>
-              <Zap className="w-2 h-2 fill-current" />Em Destaque
+              <Zap className="w-2 h-2 fill-current" /><span suppressHydrationWarning>Em Destaque</span>
             </div>
           </motion.div>
         </div>
