@@ -39,7 +39,7 @@ const stats = [
 
 export function Footer() {
   return (
-    <footer className="w-full mt-10" style={{ backgroundColor: 'var(--bg-secondary)' }}>
+    <footer className="w-full mt-10" style={{ backgroundColor: 'var(--bg-card)' }}>
 
       {/* Stats Bar */}
       <div className="w-full" style={{ backgroundColor: 'var(--bg-card)' }}>
@@ -124,7 +124,7 @@ export function Footer() {
             </div>
             <div className="flex items-center gap-2 w-full sm:w-auto">
               <div className="flex items-center gap-2 px-4 py-2.5 rounded-2xl flex-1 sm:w-64"
-                style={{ backgroundColor: 'var(--bg-primary)' }}>
+                style={{ backgroundColor: 'var(--bg-elevated)' }}>
                 <Mail className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--text-tertiary)' }} />
                 <input
                   type="email"
