@@ -56,7 +56,7 @@ function MatchCard({ winner, loser, sw, sl, label, date, x, y, delay = 0, isFina
       animate={{ opacity: 1 }}
       transition={{ delay }}
       className="absolute rounded-xl overflow-hidden"
-      style={{ width: MW, top: y, left: x, backgroundColor: 'var(--bg-secondary)' }}
+      style={{ width: MW, top: y, left: x, backgroundColor: 'rgba(255,255,255,0.04)' }}
     >
       <div className="flex items-center gap-2 px-3 py-2.5"
         style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', backgroundColor: 'rgba(10,132,255,0.09)' }}>
