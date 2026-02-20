@@ -128,7 +128,7 @@ export function LandingHero() {
                     {slide.type === 'stats' ? (
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                         {slide.content.map((stat, i) => (
-                          <div key={i} className="flex flex-col items-center p-6 bg-white/5 rounded-2xl backdrop-blur-sm border border-white/10">
+                          <div key={i} className="flex flex-col items-center p-6 bg-white/5 rounded-2xl backdrop-blur-sm">
                             <stat.icon className={`w-12 h-12 mb-4 ${stat.color}`} />
                             <span className={`text-4xl md:text-5xl font-black ${stat.color}`}>{stat.value}</span>
                             <span className="text-gray-400 text-sm font-bold uppercase tracking-wider mt-2">{stat.label}</span>

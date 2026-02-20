@@ -41,17 +41,17 @@ export function Leaderboard() {
           <p className="text-white/50 text-sm mt-1 font-semibold tracking-wide">Temporada 5 • Top 100 Melhores Jogadores</p>
         </div>
         <div className="flex items-center gap-3">
-          <div className="flex items-center bg-white/5 rounded-full px-4 py-2 border border-white/10 hover:bg-white/10 transition-colors">
+          <div className="flex items-center bg-white/5 rounded-full px-4 py-2 hover:bg-white/10 transition-colors">
             <Search className="w-4 h-4 text-white/50 mr-2" />
             <input type="text" placeholder="Buscar jogador..." className="bg-transparent border-none text-white text-sm focus:outline-none placeholder:text-white/30 w-32 sm:w-48" />
           </div>
-          <button className="p-2.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 text-white/70 hover:text-white transition-colors">
+          <button className="p-2.5 rounded-full bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-colors">
             <Filter className="w-4 h-4" />
           </button>
         </div>
       </div>
-      <div className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.4)] ">
-        <div className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-white/5 bg-white/5 text-xs font-bold text-white/40 uppercase tracking-wider">
+      <div className="bg-white/5 backdrop-blur-2xl rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.4)] ">
+        <div className="grid grid-cols-12 gap-4 px-6 py-4 bg-white/5 text-xs font-bold text-white/40 uppercase tracking-wider">
           <div className="col-span-2 sm:col-span-1 text-center">Rank</div>
           <div className="col-span-6 sm:col-span-5">Jogador</div>
           <div className="col-span-2 hidden sm:block text-center">Tier</div>
@@ -60,21 +60,21 @@ export function Leaderboard() {
         </div>
         <motion.div variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col">
           {leaderboardData.map((player) => (
-            <motion.div key={player.id} variants={rowVariants} className="grid grid-cols-12 gap-4 px-6 py-4 items-center border-b border-white/5 hover:bg-white/[0.02] transition-colors group cursor-pointer">
+            <motion.div key={player.id} variants={rowVariants} className="grid grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-white/[0.02] transition-colors group cursor-pointer">
               <div className="col-span-2 sm:col-span-1 flex justify-center">
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center font-black text-sm border ${getRankStyle(player.rank)}`}>
                   {player.rank <= 3 ? <Medal className="w-4 h-4" /> : player.rank}
                 </div>
               </div>
               <div className="col-span-6 sm:col-span-5 flex items-center gap-3">
-                <img src={player.avatar} alt={player.name} className="w-10 h-10 rounded-full flex-shrink-0 border border-white/10 group-hover:border-white/30 transition-colors overflow-hidden object-cover" />
+                <img src={player.avatar} alt={player.name} className="w-10 h-10 rounded-full flex-shrink-0 group-hover:border-white/30 transition-colors overflow-hidden object-cover" />
                 <div className="flex flex-col">
                   <span className="text-white font-bold text-sm sm:text-base">{player.name}</span>
                   <span className="text-white/40 text-xs font-semibold">{player.tag}</span>
                 </div>
               </div>
               <div className="col-span-2 hidden sm:flex justify-center items-center">
-                <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-cyan-400">{player.tier}</span>
+                <span className="px-3 py-1 rounded-full bg-white/5 text-xs font-bold text-cyan-400">{player.tier}</span>
               </div>
               <div className="col-span-2 flex justify-center items-center gap-1 sm:gap-2">
                 <span className="text-white/80 font-bold text-sm">{player.winrate}</span>

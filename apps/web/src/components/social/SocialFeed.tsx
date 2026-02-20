@@ -52,14 +52,14 @@ export function SocialFeed() {
         <h2 className="text-3xl font-black text-white">Feed da Comunidade</h2>
         <p className="text-white/50 text-sm mt-1 font-semibold">Veja o que está a acontecer no Universo MATZON</p>
       </div>
-      <div className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl p-4 mb-8 shadow-[0_8px_32px_rgba(0,0,0,0.4)] ">
+      <div className="bg-white/5 backdrop-blur-2xl rounded-3xl p-4 mb-8 shadow-[0_8px_32px_rgba(0,0,0,0.4)] ">
         <div className="flex gap-4">
           <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-500 flex items-center justify-center flex-shrink-0">
             <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="JD" className="w-full h-full object-cover rounded-full" />
           </div>
           <div className="flex-1">
             <textarea placeholder="Partilhe a sua última vitória ou procure um Duo..." className="w-full bg-transparent text-white placeholder:text-white/30 resize-none outline-none text-lg min-h-[60px]" />
-            <div className="flex items-center justify-between pt-3 border-t border-white/10 mt-2">
+            <div className="flex items-center justify-between pt-3 mt-2">
               <div className="flex gap-2">
                 <button className="p-2 text-white/50 hover:text-cyan-400 hover:bg-cyan-400/10 rounded-full transition-colors">
                   <ImageIcon className="w-5 h-5" />
@@ -77,7 +77,7 @@ export function SocialFeed() {
       </div>
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col gap-6">
         {posts.map((post) => (
-          <motion.div key={post.id} variants={postVariants} className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl p-5 shadow-[0_8px_32px_rgba(0,0,0,0.4)]  hover:border-white/20 transition-colors">
+          <motion.div key={post.id} variants={postVariants} className="bg-white/5 backdrop-blur-2xl rounded-3xl p-5 shadow-[0_8px_32px_rgba(0,0,0,0.4)]  hover:border-white/20 transition-colors">
             <div className="flex justify-between items-start mb-4">
               <div className="flex items-center gap-3">
                 <img src={post.author.photo} alt={post.author.name} className="w-12 h-12 rounded-full flex-shrink-0 shadow-md object-cover" />

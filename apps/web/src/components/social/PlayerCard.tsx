@@ -22,12 +22,12 @@ export function PlayerCard() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
-      className="w-full max-w-sm mx-auto bg-black/40 shadow-[0_8px_30px_rgba(0,0,0,0.4)] backdrop-blur-xl border border-[#19222D] rounded-[30px] overflow-hidden shadow-2xl relative group"
+      className="w-full max-w-sm mx-auto bg-black/40 shadow-[0_8px_30px_rgba(0,0,0,0.4)] backdrop-blur-xl rounded-[30px] overflow-hidden shadow-2xl relative group"
     >
       <div className="h-32 w-full relative overflow-hidden">
         <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800&auto=format&fit=crop" alt="banner" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-        <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full flex items-center gap-1">
+        <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1">
           <Target className="w-3 h-3 text-cyan-400" />
           <span className="text-white text-xs font-black">Lv. {playerData.level}</span>
         </div>
@@ -46,11 +46,11 @@ export function PlayerCard() {
             <h3 className="text-2xl font-black text-white leading-none">{playerData.name}</h3>
             <p className="text-white/40 text-sm font-bold mt-1">{playerData.tag}</p>
           </div>
-          <button className="bg-white/10 hover:bg-white/20 text-white p-2 rounded-full border border-white/10 transition-colors">
+          <button className="bg-white/10 hover:bg-white/20 text-white p-2 rounded-full transition-colors">
             <Swords className="w-4 h-4" />
           </button>
         </div>
-        <div className="flex items-center gap-4 bg-gradient-to-r from-blue-900/40 to-purple-900/40 border border-white/10 p-4 rounded-2xl mb-6">
+        <div className="flex items-center gap-4 bg-gradient-to-r from-blue-900/40 to-purple-900/40 p-4 rounded-2xl mb-6">
           <div className="w-12 h-12 rounded-full bg-cyan-400/20 border border-cyan-400/50 flex items-center justify-center shadow-[0_0_15px_rgba(34,211,238,0.3)]">
             <Trophy className="w-6 h-6 text-cyan-400" />
           </div>
@@ -63,17 +63,17 @@ export function PlayerCard() {
           </div>
         </div>
         <div className="grid grid-cols-3 gap-3 mb-6">
-          <div className="bg-white/5 border border-white/10 rounded-xl p-3 flex flex-col items-center justify-center">
+          <div className="bg-white/5 rounded-xl p-3 flex flex-col items-center justify-center">
             <TrendingUp className="w-4 h-4 text-white/40 mb-1" />
             <span className="text-white font-black text-lg">{playerData.winrate}</span>
             <span className="text-white/40 text-[10px] uppercase font-bold tracking-widest">Winrate</span>
           </div>
-          <div className="bg-white/5 border border-white/10 rounded-xl p-3 flex flex-col items-center justify-center">
+          <div className="bg-white/5 rounded-xl p-3 flex flex-col items-center justify-center">
             <Target className="w-4 h-4 text-white/40 mb-1" />
             <span className="text-white font-black text-lg">{playerData.kda}</span>
             <span className="text-white/40 text-[10px] uppercase font-bold tracking-widest">KDA Ratio</span>
           </div>
-          <div className="bg-white/5 border border-white/10 rounded-xl p-3 flex flex-col items-center justify-center">
+          <div className="bg-white/5 rounded-xl p-3 flex flex-col items-center justify-center">
             <Medal className="w-4 h-4 text-white/40 mb-1" />
             <span className="text-white font-black text-lg">{playerData.matches}</span>
             <span className="text-white/40 text-[10px] uppercase font-bold tracking-widest">Partidas</span>

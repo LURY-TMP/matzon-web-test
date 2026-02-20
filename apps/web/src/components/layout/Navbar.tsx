@@ -38,7 +38,7 @@ export function Navbar() {
       <header className="relative w-full max-w-7xl mx-auto bg-black flex flex-col  w-full">
 
         {/* NAVBAR */}
-        <nav className="w-full z-50 bg-black/40 backdrop-blur-lg border-b border-white/10 h-20 relative ">
+        <nav className="w-full z-50 bg-black/40 backdrop-blur-lg h-20 relative ">
           <div className="w-full px-4 sm:px-6 lg:px-8 h-full relative">
             <div className="flex items-center justify-between h-full">
 
