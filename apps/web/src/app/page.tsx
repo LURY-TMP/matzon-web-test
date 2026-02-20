@@ -2,6 +2,7 @@ import { Navbar } from '@/components/layout/Navbar';
 import { LandingHero } from '@/components/layout/LandingHero';
 import { Leaderboard } from '@/components/gaming/Leaderboard';
 import { PlayerCard } from '@/components/social/PlayerCard';
+import { TournamentBracket } from '@/components/tournament/TournamentBracket';
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
           <PlayerCard />
         </div>
       </div>
+      <TournamentBracket />
     </main>
   );
 }
