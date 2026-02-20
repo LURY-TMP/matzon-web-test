@@ -35,10 +35,10 @@ export function Navbar() {
 
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6">
-      <header className="relative w-full max-w-7xl mx-auto bg-black flex flex-col rounded-[30px] sm:rounded-[40px] overflow-hidden">
+      <header className="relative w-full max-w-7xl mx-auto flex flex-col rounded-[30px] sm:rounded-[40px] overflow-hidden" style={{ backgroundColor: "var(--bg-secondary)" }}>
 
         {/* NAVBAR */}
-        <nav className="w-full z-50 bg-black/40 backdrop-blur-lg h-20 relative ">
+        <nav className="w-full z-50 backdrop-blur-xl h-20 relative ">
           <div className="w-full px-4 sm:px-6 lg:px-8 h-full relative">
             <div className="flex items-center justify-between h-full">
 
