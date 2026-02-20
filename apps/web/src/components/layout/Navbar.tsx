@@ -23,19 +23,14 @@ export function Navbar() {
     { icon: User, label: 'Perfil' },
   ];
 
-  const netflixContainerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.4, delayChildren: 0.2 } }
-  };
-
-  const netflixTextVariants = {
-    hidden: { opacity: 0, scale: 3, filter: 'blur(20px)' },
-    visible: { opacity: 1, scale: 1, filter: 'blur(0px)', transition: { duration: 1.5, ease: [0.16, 1, 0.3, 1] } }
-  };
-
   const netflixGlowVariants = {
     hidden: { opacity: 0, scale: 0.5 },
     visible: { opacity: 0.4, scale: 1.5, transition: { duration: 2, ease: "easeOut" } }
+  };
+
+  const bannerImageVariants = {
+    hidden: { opacity: 0, scale: 0.95, filter: 'blur(10px)' },
+    visible: { opacity: 1, scale: 1, filter: 'blur(0px)', transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } }
   };
 
   return (
@@ -125,26 +120,24 @@ export function Navbar() {
           </div>
         </nav>
 
-        <div className="flex-1 flex flex-col items-center justify-center text-center px-4 relative z-10 pb-24 sm:pb-32 mt-[-20px]">
-          <motion.div variants={netflixGlowVariants} initial="hidden" animate="visible" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[600px] sm:h-[400px] bg-cyan-600/40 blur-[100px] rounded-full pointer-events-none" />
+        <div className="flex-1 flex flex-col items-center justify-center px-4 relative z-10 pb-20 sm:pb-24 mt-[-10px]">
+          <motion.div variants={netflixGlowVariants} initial="hidden" animate="visible" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[600px] sm:h-[400px] bg-cyan-600/30 blur-[100px] rounded-full pointer-events-none" />
 
-          <motion.div variants={netflixContainerVariants} initial="hidden" animate="visible" className="relative z-10">
-            <motion.div variants={netflixTextVariants} className="mb-6 flex justify-center">
-              <span className="flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 backdrop-blur-md text-cyan-400 text-sm font-bold tracking-wider uppercase drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">
-                <Zap className="w-4 h-4" /> A nova era da competição
-              </span>
-            </motion.div>
-
-            <motion.h1 variants={netflixTextVariants} className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tight leading-none mb-6 text-white drop-shadow-[0_0_40px_rgba(34,211,238,0.4)]">
-              DOMINE O<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">
-                UNIVERSO MATZON
-              </span>
-            </motion.h1>
-
-            <motion.p variants={netflixTextVariants} className="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto drop-shadow-lg">
-              A infraestrutura definitiva para jogadores competitivos. Suba no ranking, conquiste torneios e construa o seu legado.
-            </motion.p>
+          <motion.div
+            variants={bannerImageVariants}
+            initial="hidden"
+            animate="visible"
+            className="relative z-10 w-full max-w-6xl aspect-video sm:aspect-[21/9] rounded-[30px] sm:rounded-[50px] overflow-hidden border border-white/10 shadow-2xl mx-auto"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop"
+              alt="MATZON Arena eSports"
+              className="w-full h-full object-cover scale-105 hover:scale-100 transition-transform duration-[2s]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
+            <div className="absolute top-6 left-6 flex items-center gap-2 px-4 py-2 rounded-full bg-red-600/90 backdrop-blur-md text-white text-sm font-black tracking-wider uppercase">
+              <Zap className="w-4 h-4 fill-current" /> Em Destaque
+            </div>
           </motion.div>
         </div>
 
