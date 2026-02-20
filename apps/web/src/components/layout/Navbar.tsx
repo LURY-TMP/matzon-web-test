@@ -33,7 +33,7 @@ export function Navbar() {
     visible: { opacity: 1, scale: 1, filter: 'blur(0px)', transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } }
   };
 
-  const headerBg = isLightMode ? '#FFFFFF' : '#1A2130';
+  const headerBg = isLightMode ? '#FFFFFF' : 'rgba(255,255,255,0.04)';
   const logoBorderColor = isLightMode ? '#000000' : '#FFFFFF';
   const logoBallBg = isLightMode ? '#000000' : '#FFFFFF';
   const logoTextColor = isLightMode ? '#FFFFFF' : '#000000';
