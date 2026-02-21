@@ -9,11 +9,14 @@ import { Footer } from '@/components/layout/Footer';
 export default function Home() {
   return (
     <main className="min-h-screen overflow-x-hidden" style={{ backgroundColor: 'var(--bg-primary)' }}>
-      {/* CinematicHero atrás do Navbar */}
-      <div className="relative" style={{ colorScheme: 'dark', backgroundColor: '#000' }}>
-        <div className="absolute top-0 left-0 w-full z-50">
-          <Navbar />
-        </div>
+
+      {/* Navbar fixo - flutua sobre tudo */}
+      <div className="fixed top-0 left-0 w-full z-[100]">
+        <Navbar />
+      </div>
+
+      {/* CinematicHero */}
+      <div style={{ colorScheme: 'dark', backgroundColor: '#000' }}>
         <CinematicHero />
       </div>
 
