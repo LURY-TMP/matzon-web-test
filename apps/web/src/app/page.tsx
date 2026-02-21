@@ -10,8 +10,13 @@ import { CarouselFeatures } from '@/components/ui/CarouselFeatures';
 export default function Home() {
   return (
     <main className="min-h-screen overflow-x-hidden" style={{ backgroundColor: 'var(--bg-primary)' }}>
-      <Navbar />
-      <CinematicHero />
+      {/* CinematicHero atrás do Navbar */}
+      <div className="relative">
+        <div className="absolute top-0 left-0 w-full z-50">
+          <Navbar />
+        </div>
+        <CinematicHero />
+      </div>
       <CarouselFeatures />
 
       {/* Main content */}
