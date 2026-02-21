@@ -24,7 +24,7 @@ export function CinematicHero() {
   useEffect(() => { setHasAnimated(true); }, []);
 
   return (
-    <section className="relative w-full overflow-hidden" style={{ height: '92vh' }}>
+    <section suppressHydrationWarning className="relative w-full overflow-hidden" style={{ height: '92vh' }}>
       <style>{`
         .swiper-slide-thumb-active { border: 2px solid #0A84FF !important; opacity: 1 !important; }
         .thumbs-swiper .swiper-slide { opacity: 0.4; transition: all 0.3s ease; cursor: pointer; border: 2px solid transparent; border-radius: 12px; }
@@ -49,7 +49,7 @@ export function CinematicHero() {
 
             <div className="absolute inset-0 flex items-center z-10 px-8 sm:px-16 lg:px-24">
               <div className="max-w-2xl">
-                <div className="flex items-center gap-2 mb-4 text-sm font-bold uppercase tracking-widest" style={{ color: '#0A84FF' }}>
+                <div suppressHydrationWarning className="flex items-center gap-2 mb-4 text-sm font-bold uppercase tracking-widest" style={{ color: "#0A84FF" }}>
                   <Zap className="w-4 h-4" /> {slide.location}
                 </div>
 
