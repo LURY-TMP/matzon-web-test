@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Eye, EyeOff, Zap } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
@@ -24,13 +24,18 @@ export default function LoginPage() {
       <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: [0.22,1,0.36,1] }}
         style={{ width: '100%', maxWidth: 420, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 32, padding: 'clamp(32px, 5vw, 48px)', backdropFilter: 'blur(20px)' }}>
 
-        {/* Logo */}
-        <div style={{ textAlign: 'center', marginBottom: 40 }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 56, height: 56, borderRadius: 16, background: 'var(--gradient-premium)', marginBottom: 16, boxShadow: 'var(--shadow-glow-accent)' }}>
-            <Zap style={{ width: 28, height: 28, color: '#fff' }} />
+        {/* Logo Oficial */}
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 40 }}>
+          <div style={{ transform: 'scale(0.5)', transformOrigin: 'center', display: 'flex', alignItems: 'center', gap: 16, height: 86 }}>
+            <div style={{ width: 148, height: 86, borderRadius: 999, display: 'flex', alignItems: 'center', padding: 6, border: '7px solid #FFFFFF', flexShrink: 0 }}>
+              <motion.div
+                style={{ width: 60, height: 60, borderRadius: '50%', backgroundColor: '#FFFFFF', display: 'flex', justifyContent: 'center', alignItems: 'center', x: 62 }}
+              >
+                <span style={{ fontSize: 14, fontWeight: 900, letterSpacing: 0.5, color: '#000', userSelect: 'none' }}>MATZ</span>
+              </motion.div>
+            </div>
+            <div style={{ fontSize: 95, fontWeight: 900, lineHeight: 0.8, marginLeft: -4, color: '#FFFFFF', userSelect: 'none' }}>N</div>
           </div>
-          <h1 style={{ margin: 0, fontSize: 28, fontWeight: 700, color: 'var(--text-primary)' }}>MATZON</h1>
-          <p style={{ margin: '6px 0 0', fontSize: 14, color: 'var(--text-tertiary)' }}>MATCHZONE UNIVERSO</p>
         </div>
 
         {/* Toggle */}
