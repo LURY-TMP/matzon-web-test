@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trophy, Home, LayoutGrid, User, MessageCircle, Zap } from 'lucide-react';
+import { Trophy, Home, LayoutGrid, User, MessageCircle, Zap, Swords, Users, CalendarDays, Settings, Shield, Wallet } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export function Navbar() {
@@ -27,10 +27,16 @@ export function Navbar() {
   const floatingMenuItems = [
     { icon: Home, label: 'Início', href: '/' },
     { icon: LayoutGrid, label: 'Dashboard', href: '/dashboard' },
-    { icon: Trophy, label: 'Torneios', href: '/torneios' },
-    { icon: User, label: 'Perfil', href: '/perfil' },
-    { icon: MessageCircle, label: 'Chat', href: '/chat' },
     { icon: Zap, label: 'Match', href: '/matchmaking' },
+    { icon: Swords, label: 'Duelo', href: '/duelo' },
+    { icon: Trophy, label: 'Torneios', href: '/torneios' },
+    { icon: CalendarDays, label: 'Eventos', href: '/eventos' },
+    { icon: Users, label: 'Comunidade', href: '/comunidade' },
+    { icon: MessageCircle, label: 'Chat', href: '/chat' },
+    { icon: User, label: 'Perfil', href: '/perfil' },
+    { icon: Wallet, label: 'Wallet', href: '/wallet' },
+    { icon: Settings, label: 'Definições', href: '/configuracoes' },
+    { icon: Shield, label: 'Admin', href: '/admin' },
   ];
 
   const navigate = (href: string) => {
