@@ -45,7 +45,7 @@ const R1Y = [0, IH, IH * 2, IH * 3];
 const R2Y = [IH / 2, IH * 2 + IH / 2];
 const SFY = IH + IH / 2;
 const FY = SFY;
-const CHAMPION_Y = FY - 140;
+const CHAMPION_Y = FY - 175;
 
 const mc = (y: number) => y + MH / 2;
 
