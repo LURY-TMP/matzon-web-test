@@ -1,3 +1,4 @@
+import { CinematicHero } from '@/components/layout/CinematicHero';
 import { Navbar } from '@/components/layout/Navbar';
 import { Leaderboard } from '@/components/gaming/Leaderboard';
 import { PlayerCard } from '@/components/social/PlayerCard';
@@ -10,6 +11,7 @@ export default function Home() {
   return (
     <main className="min-h-screen overflow-x-hidden" style={{ backgroundColor: 'var(--bg-primary)' }}>
       <Navbar />
+      <CinematicHero />
       <CarouselFeatures />
 
       {/* Main content */}
