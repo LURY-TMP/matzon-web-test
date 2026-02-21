@@ -45,7 +45,7 @@ const R1Y = [0, IH, IH * 2, IH * 3];
 const R2Y = [IH / 2, IH * 2 + IH / 2];
 const SFY = IH + IH / 2;
 const FY = SFY;
-const CHAMPION_Y = FY - 175;
+const CHAMPION_Y = FY - 140;
 
 const mc = (y: number) => y + MH / 2;
 
@@ -137,7 +137,7 @@ export function TournamentBracket() {
             <line x1={X1+MW+CW/2} y1={mc(SFY)} x2={X2} y2={mc(SFY)} stroke={LINE} strokeWidth={1.5}/>
 
             {/* Champion → Final line */}
-            <line x1={X3+MW/2} y1={CHAMPION_Y + 110} x2={X3+MW/2} y2={FY} stroke={LINE} strokeWidth={1.5}/>
+            <line x1={X3+MW/2} y1={CHAMPION_Y + 112} x2={X3+MW/2} y2={FY} stroke={LINE} strokeWidth={1.5}/>
 
             {/* LEFT: SF → FINAL */}
             <line x1={X2+MW} y1={mc(SFY)} x2={X3} y2={mc(FY)} stroke={LINE} strokeWidth={1.5}/>
