@@ -1,178 +1,313 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import { Search, Plus, Sparkles, ChevronLeft, Phone, Video, Image as ImageIcon, Camera, Smile, Mic, Send, Play, MessageCircle, Users } from 'lucide-react';
+import React, { useState, useRef } from 'react';
 
-type Message = { id: string; text?: string; isAudio?: boolean; sender: 'me' | 'other' | 'ai'; isProcessing?: boolean };
-type Chat = { id: string; name: string; isOnline: boolean; isAI: boolean; avatar: string; messages: Message[] };
+type Message = { id: string; content: string; type: 'sent' | 'received' | 'ai-response'; isAudio?: boolean; isProcessing?: boolean };
+type ChatInfo = { name: string; isOnline: boolean; isAI: boolean; avatar: string };
 
 export function ChatOfficial() {
   const [activeView, setActiveView] = useState<'home' | 'chat'>('home');
-  const [activeChat, setActiveChat] = useState<Chat | null>(null);
+  const [activeChat, setActiveChat] = useState<ChatInfo | null>(null);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isRecording, setIsRecording] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [activeChat?.messages]);
+  const scrollToBottom = () => {
+    setTimeout(() => messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' }), 50);
+  };
 
-  const initialChats: Chat[] = [
-    { id: 'ai', name: 'Agente MZ', isOnline: true, isAI: true, avatar: 'ai', messages: [{ id: '1', text: 'Estou pronto para ajudar no torneio.', sender: 'ai' }] },
-    { id: 'joao', name: 'João Matzon', isOnline: true, isAI: false, avatar: 'https://ui-avatars.com/api/?name=João+Matzon&background=007AFF&color=fff', messages: [{ id: '1', text: 'Vamos jogar hoje? 🎮', sender: 'other' }] },
-    { id: 'ana', name: 'Ana Design', isOnline: false, isAI: false, avatar: 'https://ui-avatars.com/api/?name=Ana+D&background=FF2D55&color=fff', messages: [{ id: '1', text: 'Enviei os assets SVG.', sender: 'other' }] },
-  ];
-
-  const [chats, setChats] = useState<Chat[]>(initialChats);
-
-  const openChat = (chatId: string) => {
-    const chat = chats.find(c => c.id === chatId);
-    if (chat) { setActiveChat(chat); setActiveView('chat'); }
+  const openChat = (info: ChatInfo) => {
+    setActiveChat(info);
+    setMessages([]);
+    setActiveView('chat');
   };
 
   const closeChat = () => {
     setActiveView('home');
-    setTimeout(() => setActiveChat(null), 400);
-  };
-
-  const handleSendMessage = (text: string, isAudio = false) => {
-    if ((!text && !isAudio) || !activeChat) return;
-    const newMessage: Message = { id: Date.now().toString(), text: isAudio ? undefined : text, isAudio, sender: 'me' };
-    const updatedChat = { ...activeChat, messages: [...activeChat.messages, newMessage] };
-    setActiveChat(updatedChat);
-    setChats(chats.map(c => c.id === activeChat.id ? updatedChat : c));
+    setIsRecording(false);
     setInputValue('');
-    if (activeChat.isAI) simulateAIResponse(updatedChat);
   };
 
-  const simulateAIResponse = (currentChat: Chat) => {
-    const pid = Date.now().toString() + 'ai';
-    setActiveChat(prev => prev ? { ...prev, messages: [...prev.messages, { id: pid, sender: 'ai', isProcessing: true }] } : prev);
-    setTimeout(() => {
-      setActiveChat(prev => {
-        if (!prev) return prev;
-        return { ...prev, messages: [...prev.messages.filter(m => m.id !== pid), { id: Date.now().toString(), text: 'Entendido. A sua mensagem foi processada com sucesso no sistema Matzon.', sender: 'ai' }] };
-      });
-    }, 1500);
+  const sendMessage = (text: string, isAudio = false) => {
+    if (!text && !isAudio) return;
+    const newMsg: Message = { id: Date.now().toString(), content: text, type: 'sent', isAudio };
+    setMessages(prev => [...prev, newMsg]);
+    setInputValue('');
+    scrollToBottom();
+
+    if (activeChat?.isAI) {
+      const pid = Date.now().toString() + 'p';
+      setTimeout(() => {
+        setMessages(prev => [...prev, { id: pid, content: '', type: 'ai-response', isProcessing: true }]);
+        scrollToBottom();
+        setTimeout(() => {
+          setMessages(prev => prev.map(m => m.id === pid ? { ...m, content: 'Entendido. A mensagem foi processada com sucesso no sistema Matzon.', isProcessing: false } : m));
+          scrollToBottom();
+        }, 1500);
+      }, 300);
+    }
   };
 
-  const handleMicClick = () => {
+  const handleMic = () => {
     if (!isRecording) { setIsRecording(true); }
-    else { setIsRecording(false); handleSendMessage('', true); }
+    else { setIsRecording(false); sendMessage('', true); }
   };
 
-  const aiGradient = "bg-gradient-to-br from-[#FF2D55] via-[#5E5CE6] to-[#007AFF]";
-  const aiTextGradient = "bg-gradient-to-br from-[#FF2D55] via-[#5E5CE6] to-[#007AFF] text-transparent bg-clip-text";
+  const aiGrad = 'linear-gradient(135deg, #FF2D55, #5E5CE6, #007AFF)';
 
   return (
-    <div className="relative w-full h-[100dvh] bg-black overflow-hidden font-sans text-black sm:max-w-md sm:mx-auto sm:border-x sm:border-white/20">
-      {/* HOME VIEW */}
-      <div className={`absolute inset-0 bg-white flex flex-col transition-all duration-400 z-10 ${activeView === 'chat' ? '-translate-x-1/4 brightness-[0.8]' : 'translate-x-0'}`}>
-        <header className="pt-5 pb-2 px-4 flex justify-between items-center bg-white/85 backdrop-blur-xl z-20">
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <img src="https://ui-avatars.com/api/?name=Eu&background=333&color=fff" className="w-8 h-8 rounded-full" alt="Perfil" />
-              <span className="absolute -top-0.5 -right-1 bg-red-500 text-white text-[10px] px-1 rounded-full border border-white">3</span>
+    <div style={{ position: 'relative', width: '100%', height: '100dvh', background: '#000', overflow: 'hidden', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+
+      {/* ===== HOME VIEW ===== */}
+      <div style={{
+        position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+        background: '#fff', display: 'flex', flexDirection: 'column',
+        transform: activeView === 'chat' ? 'translateX(-25%)' : 'translateX(0)',
+        filter: activeView === 'chat' ? 'brightness(0.8)' : 'brightness(1)',
+        transition: 'transform 0.4s cubic-bezier(0.32,0.72,0,1), filter 0.4s',
+        zIndex: 10,
+      }}>
+        {/* Header */}
+        <header style={{ padding: '14px 16px 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backdropFilter: 'blur(20px)', background: 'rgba(255,255,255,0.85)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <div style={{ position: 'relative' }}>
+              <img src="https://ui-avatars.com/api/?name=Eu&background=333&color=fff" style={{ width: 32, height: 32, borderRadius: '50%' }} alt="Perfil" />
+              <span style={{ position: 'absolute', top: -2, right: -4, background: 'red', color: 'white', fontSize: 10, padding: '1px 4px', borderRadius: 10, border: '1px solid white' }}>3</span>
             </div>
-            <h1 className="text-2xl font-bold tracking-tight">Conversas</h1>
+            <h1 style={{ fontSize: 24, fontWeight: 700, margin: 0 }}>Conversas</h1>
           </div>
-          <div className="flex gap-3">
-            <button className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center"><Camera className="w-5 h-5" /></button>
-            <button className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center"><Plus className="w-5 h-5" /></button>
+          <div style={{ display: 'flex', gap: 12 }}>
+            <button style={{ background: '#F5F5F5', border: 'none', width: 36, height: 36, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z"/></svg>
+            </button>
+            <button style={{ background: '#F5F5F5', border: 'none', width: 36, height: 36, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+            </button>
           </div>
-        </header>
-        <div className="px-4 py-2">
-          <div className="bg-[#F0F2F5] rounded-full px-3 py-2 flex items-center gap-2 text-gray-500">
-            <Search className="w-4 h-4" />
-            <input type="text" placeholder="Pesquisar" className="bg-transparent border-none w-full outline-none text-[16px]" />
+        </header>{/* Search */}
+        <div style={{ padding: '5px 16px' }}>
+          <div style={{ background: '#F0F2F5', borderRadius: 20, padding: '8px 12px', display: 'flex', alignItems: 'center', gap: 8, color: '#65676B' }}>
+            <svg width="16" height="16" fill="#8E8E93" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
+            <input type="text" placeholder="Pesquisar" style={{ border: 'none', background: 'transparent', width: '100%', fontSize: 16, outline: 'none' }} />
           </div>
         </div>
-        <div className="flex-1 overflow-y-auto hide-scrollbar pb-20">
-          {chats.map(chat => (
-            <div key={chat.id} onClick={() => openChat(chat.id)} className="flex items-center px-4 py-2.5 cursor-pointer active:bg-[#F0F2F5] transition-colors">
-              <div className="relative mr-3">
-                {chat.isAI ? (
-                  <div className="relative w-14 h-14">
-                    <div className={`absolute -inset-[2px] rounded-full opacity-60 blur-[3px] animate-spin ${aiGradient}`} style={{animationDuration:'4s'}}></div>
-                    <div className="absolute inset-0 bg-black rounded-full border border-white flex items-center justify-center z-10"><Sparkles className="w-6 h-6 text-white" /></div>
-                  </div>
-                ) : (
-                  <>
-                    <img src={chat.avatar} className="w-14 h-14 rounded-full object-cover" />
-                    {chat.isOnline && <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-[#31A24C] border-2 border-white rounded-full"></div>}
-                  </>
-                )}
+
+        <div style={{ flex: 1, overflowY: 'auto' }}>
+          {/* Stories */}
+          <div style={{ display: 'flex', gap: 12, padding: 16, overflowX: 'auto', borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
+            {/* My Story */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, minWidth: 60, cursor: 'pointer' }}>
+              <div style={{ width: 56, height: 56, borderRadius: '50%', border: '2px solid #E4E6EB', padding: 2, position: 'relative' }}>
+                <img src="https://ui-avatars.com/api/?name=Eu&background=333&color=fff" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', border: '2px solid white' }} />
+                <span style={{ position: 'absolute', bottom: 0, right: 0, background: '#0084FF', color: 'white', width: 18, height: 18, borderRadius: '50%', border: '2px solid white', fontSize: 14, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</span>
               </div>
-              <div className="flex-1 flex flex-col justify-center overflow-hidden">
-                <div className="flex justify-between items-center mb-0.5">
-                  <span className={`font-semibold text-[17px] ${chat.isAI ? aiTextGradient : 'text-black'}`}>{chat.name}</span>
-                  <span className="text-[12px] text-gray-500">Agora</span>
+              <span style={{ fontSize: 12, color: '#65676B' }}>Sua nota</span>
+            </div>
+            {/* AI Story */}
+            <div onClick={() => openChat({ name: 'Agente MZ', isOnline: true, isAI: true, avatar: '' })} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, minWidth: 60, cursor: 'pointer' }}>
+              <div style={{ width: 56, height: 56, borderRadius: '50%', background: aiGrad, padding: 2 }}>
+                <div style={{ background: '#000', width: '100%', height: '100%', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid white' }}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/></svg>
                 </div>
-                <p className="text-[14px] text-gray-500 truncate">{chat.messages[chat.messages.length - 1]?.text || 'Mensagem de voz'}</p>
               </div>
+              <span style={{ fontSize: 12, fontWeight: 700, background: aiGrad, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Agente MZ</span>
             </div>
-          ))}
+            {/* João Story */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, minWidth: 60, cursor: 'pointer' }}>
+              <div style={{ width: 56, height: 56, borderRadius: '50%', border: '2px solid #E4E6EB', padding: 2 }}>
+                <img src="https://ui-avatars.com/api/?name=Joao+M&background=007AFF&color=fff" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', border: '2px solid white' }} />
+              </div>
+              <span style={{ fontSize: 12, color: '#65676B' }}>João</span>
+            </div>
+            {/* Ana Story */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, minWidth: 60, cursor: 'pointer' }}>
+              <div style={{ width: 56, height: 56, borderRadius: '50%', border: '2px solid #0084FF', padding: 2 }}>
+                <img src="https://ui-avatars.com/api/?name=Ana+D&background=FF2D55&color=fff" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', border: '2px solid white' }} />
+              </div>
+              <span style={{ fontSize: 12, color: '#65676B' }}>Ana</span>
+            </div>
+          </div>
+
+          {/* Chat List */}
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+            {/* Agente MZ */}
+            <li onClick={() => openChat({ name: 'Agente MZ', isOnline: true, isAI: true, avatar: '' })}
+              style={{ display: 'flex', alignItems: 'center', padding: '10px 16px', cursor: 'pointer' }}>
+              <div style={{ position: 'relative', marginRight: 12 }}>
+                <div style={{ position: 'absolute', top: -2, left: -2, right: -2, bottom: -2, borderRadius: '50%', background: aiGrad, opacity: 0.6, filter: 'blur(3px)' }} />
+                <div style={{ width: 56, height: 56, background: '#000', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: 1 }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/></svg>
+                </div>
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 2 }}>
+                  <span style={{ fontWeight: 600, fontSize: 17, background: aiGrad, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Agente MZ</span>
+                  <span style={{ fontSize: 12, color: '#65676B' }}>Agora</span>
+                </div>
+                <p style={{ fontSize: 14, color: '#65676B', margin: 0 }}>Estou pronto para ajudar no torneio.</p>
+              </div>
+            </li>
+
+            {/* João */}
+            <li onClick={() => openChat({ name: 'João Matzon', isOnline: true, isAI: false, avatar: 'https://ui-avatars.com/api/?name=João+Matzon&background=007AFF&color=fff' })}
+              style={{ display: 'flex', alignItems: 'center', padding: '10px 16px', cursor: 'pointer' }}>
+              <div style={{ position: 'relative', marginRight: 12 }}>
+                <img src="https://ui-avatars.com/api/?name=João+Matzon&background=007AFF&color=fff" style={{ width: 56, height: 56, borderRadius: '50%' }} />
+                <div style={{ position: 'absolute', bottom: 0, right: 0, width: 14, height: 14, background: '#31A24C', border: '2px solid white', borderRadius: '50%' }} />
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 2 }}>
+                  <span style={{ fontWeight: 600, fontSize: 17 }}>João Matzon</span>
+                  <span style={{ fontSize: 12, color: '#65676B' }}>14:02</span>
+                </div>
+                <p style={{ fontSize: 14, color: '#8E8E93', margin: 0 }}>Vamos jogar hoje? 🎮</p>
+              </div>
+            </li>
+
+            {/* Ana */}
+            <li onClick={() => openChat({ name: 'Ana Design', isOnline: true, isAI: false, avatar: 'https://ui-avatars.com/api/?name=Ana+D&background=FF2D55&color=fff' })}
+              style={{ display: 'flex', alignItems: 'center', padding: '10px 16px', cursor: 'pointer' }}>
+              <div style={{ position: 'relative', marginRight: 12 }}>
+                <img src="https://ui-avatars.com/api/?name=Ana+D&background=FF2D55&color=fff" style={{ width: 56, height: 56, borderRadius: '50%' }} />
+                <div style={{ position: 'absolute', bottom: 0, right: 0, width: 14, height: 14, background: '#31A24C', border: '2px solid white', borderRadius: '50%' }} />
+              </div>
+              <div style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 2 }}>
+                    <span style={{ fontWeight: 700, fontSize: 17 }}>Ana Design</span>
+                    <span style={{ fontSize: 12, color: '#65676B' }}>13:45</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <p style={{ fontSize: 14, color: '#000', fontWeight: 700, margin: 0 }}>Enviei os assets SVG.</p>
+                    <span style={{ width: 10, height: 10, background: '#0084FF', borderRadius: '50%', flexShrink: 0 }} />
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
         </div>
-        <nav className="absolute bottom-0 w-full h-[50px] bg-white/95 backdrop-blur-md border-t border-black/5 flex justify-around">
-          <button className="flex flex-col items-center justify-center text-[#0084FF] gap-1 flex-1"><MessageCircle className="w-6 h-6 fill-current" /><span className="text-[10px] font-medium">Chats</span></button>
-          <button className="flex flex-col items-center justify-center text-gray-500 gap-1 flex-1"><Users className="w-6 h-6" /><span className="text-[10px] font-medium">Pessoas</span></button>
+
+        {/* Tab Bar */}
+        <nav style={{ height: 50, background: 'rgba(255,255,255,0.95)', borderTop: '1px solid rgba(0,0,0,0.1)', display: 'flex', justifyContent: 'space-around' }}>
+          <button style={{ background: 'none', border: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#0084FF', flex: 1, fontSize: 10, gap: 2, cursor: 'pointer' }}>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+            <span>Chats</span>
+          </button>
+          <button style={{ background: 'none', border: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#65676B', flex: 1, fontSize: 10, gap: 2, cursor: 'pointer' }}>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            <span>Pessoas</span>
+          </button>
         </nav>
       </div>
 
-      {/* CHAT VIEW */}
-      <div className={`absolute inset-0 bg-white flex flex-col transition-transform duration-400 z-20 ${activeView === 'chat' ? 'translate-x-0' : 'translate-x-full'}`}>
-        <header className="pt-5 h-[80px] px-2 flex items-center justify-between bg-white/85 backdrop-blur-xl border-b border-black/5 absolute top-0 w-full z-30">
-          <button onClick={closeChat} className="p-2 text-[#0084FF]"><ChevronLeft className="w-7 h-7" /></button>
-          <div className="flex flex-1 items-center ml-1">
-            <div className="relative mr-2.5">
+      {/* ===== CHAT VIEW ===== */}
+      <div style={{
+        position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+        background: '#fff', display: 'flex', flexDirection: 'column',
+        transform: activeView === 'chat' ? 'translateX(0)' : 'translateX(100%)',
+        transition: 'transform 0.4s cubic-bezier(0.32,0.72,0,1)',
+        zIndex: 20,
+      }}>
+        {/* Chat Header */}
+        <header style={{ position: 'absolute', top: 0, width: '100%', height: 60, padding: '0 12px 0 8px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', backdropFilter: 'blur(20px)', background: 'rgba(255,255,255,0.85)', borderBottom: '1px solid rgba(0,0,0,0.05)', zIndex: 10 }}>
+          <button onClick={closeChat} style={{ background: 'none', border: 'none', padding: 5, color: '#007AFF', cursor: 'pointer' }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#007AFF" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <div style={{ display: 'flex', alignItems: 'center', flex: 1, marginLeft: 4 }}>
+            <div style={{ position: 'relative', marginRight: 10 }}>
               {activeChat?.isAI ? (
-                <div className="w-9 h-9 rounded-full bg-black flex items-center justify-center"><Sparkles className="w-5 h-5 text-white" /></div>
+                <div style={{ width: 36, height: 36, background: '#000', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/></svg>
+                </div>
               ) : (
                 <>
-                  <img src={activeChat?.avatar} className="w-9 h-9 rounded-full object-cover" />
-                  {activeChat?.isOnline && <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-[#31A24C] border-2 border-white rounded-full"></div>}
+                  <img src={activeChat?.avatar} style={{ width: 36, height: 36, borderRadius: '50%' }} />
+                  {activeChat?.isOnline && <div style={{ position: 'absolute', bottom: 0, right: 0, width: 10, height: 10, background: '#31A24C', border: '2px solid white', borderRadius: '50%' }} />}
                 </>
               )}
             </div>
-            <div className="flex flex-col">
-              <span className={`font-semibold text-[16px] leading-tight ${activeChat?.isAI ? aiTextGradient : 'text-black'}`}>{activeChat?.name}</span>
-              <span className="text-[11px] text-gray-500">{activeChat?.isAI ? 'Apple Intelligence' : (activeChat?.isOnline ? 'Online agora' : 'Offline')}</span>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <span style={{ fontWeight: 600, fontSize: 16, ...(activeChat?.isAI ? { background: aiGrad, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' } : { color: '#000' }) }}>
+                {activeChat?.name}
+              </span>
+              <span style={{ fontSize: 11, color: '#65676B' }}>{activeChat?.isAI ? 'Apple Intelligence' : (activeChat?.isOnline ? 'Online agora' : 'Offline')}</span>
             </div>
           </div>
-          <div className="flex gap-4 pr-3 text-[#0084FF]"><Phone className="w-[22px] h-[22px]" /><Video className="w-[22px] h-[22px]" /></div>
+          <div style={{ display: 'flex', gap: 15 }}>
+            <button style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+              <svg width="22" height="22" fill="#007AFF" viewBox="0 0 24 24"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>
+            </button>
+            <button style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+              <svg width="22" height="22" fill="#007AFF" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+            </button>
+          </div>
         </header>
 
-        <div className="flex-1 overflow-y-auto px-3 pt-[100px] pb-[80px] flex flex-col gap-1 bg-white hide-scrollbar">
-          {activeChat?.messages.map((msg) => (
-            <div key={msg.id} className={`max-w-[75%] px-3.5 py-2.5 text-[16px] leading-[1.3]
-              ${msg.sender === 'me' ? 'bg-gradient-to-br from-[#0084FF] to-[#00C6FF] text-white self-end rounded-[18px] rounded-br-[4px]'
-                : msg.sender === 'ai' ? 'bg-[#F2F2F7] text-black self-start rounded-[18px] rounded-bl-[4px]'
-                : 'bg-[#E4E6EB] text-black self-start rounded-[18px] rounded-bl-[4px]'}`}>
-              {msg.isProcessing ? <span className={`font-semibold ${aiTextGradient}`}>Processando...</span>
-                : msg.isAudio ? <div className="flex items-center gap-2 min-w-[120px]"><Play className="w-5 h-5 fill-current" /><span className="text-[11px]">0:04</span></div>
-                : msg.text}
+        {/* Messages */}
+        <div style={{ flex: 1, padding: '70px 12px 80px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 20, marginBottom: 20, opacity: 0.7 }}>
+            {activeChat?.isAI ? (
+              <div style={{ width: 80, height: 80, background: '#000', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 8, padding: 15 }}>
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/></svg>
+              </div>
+            ) : (
+              <img src={activeChat?.avatar} style={{ width: 80, height: 80, borderRadius: '50%', marginBottom: 8 }} />
+            )}
+            <h3 style={{ fontWeight: 700, fontSize: 18, margin: '0 0 4px', ...(activeChat?.isAI ? { background: aiGrad, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' } : {}) }}>{activeChat?.name}</h3>
+            <p style={{ fontSize: 14, color: '#65676B', margin: 0 }}>Matzon MatchZone</p>
+          </div>{messages.map(msg => (
+            <div key={msg.id} style={{
+              maxWidth: '70%', padding: '8px 12px', borderRadius: 18, fontSize: 16, lineHeight: 1.3,
+              alignSelf: msg.type === 'sent' ? 'flex-end' : 'flex-start',
+              background: msg.type === 'sent' ? 'linear-gradient(to right bottom, #0084FF, #00C6FF)' : (msg.type === 'ai-response' ? 'linear-gradient(135deg, #F2F2F7, #E5E5EA)' : '#E4E6EB'),
+              color: msg.type === 'sent' ? 'white' : 'black',
+              borderBottomRightRadius: msg.type === 'sent' ? 4 : 18,
+              borderBottomLeftRadius: msg.type !== 'sent' ? 4 : 18,
+              border: msg.type === 'ai-response' ? '1px solid rgba(0,0,0,0.05)' : 'none',
+            }}>
+              {msg.isProcessing ? (
+                <span style={{ fontWeight: 600, background: 'linear-gradient(90deg, #5E5CE6, #007AFF)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Processando...</span>
+              ) : msg.isAudio ? (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 140 }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  <div style={{ flex: 1, height: 20, opacity: 0.8, background: "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20' fill='white'><rect x='0' y='8' width='4' height='4' rx='2'/><rect x='8' y='5' width='4' height='10' rx='2'/><rect x='16' y='2' width='4' height='16' rx='2'/><rect x='24' y='6' width='4' height='8' rx='2'/><rect x='32' y='4' width='4' height='12' rx='2'/></svg>\") no-repeat center" }} />
+                  <span style={{ fontSize: 11, fontWeight: 500 }}>0:04</span>
+                </div>
+              ) : msg.content}
             </div>
           ))}
           <div ref={messagesEndRef} />
         </div>
 
-        <footer className="absolute bottom-0 w-full px-2 py-2 bg-white/90 backdrop-blur-md flex items-center gap-2 z-30 border-t border-black/5">
-          <button className="p-1.5 text-[#0084FF]"><ImageIcon className="w-6 h-6" /></button>
-          <button className="p-1.5 text-[#0084FF]"><Camera className="w-6 h-6" /></button>
-          <div className="flex-1 bg-[#F0F2F5] rounded-[20px] px-3 py-1.5 flex items-center gap-2">
-            <input type="text" placeholder={isRecording ? "Gravando..." : "Aa"} disabled={isRecording}
-              className="bg-transparent border-none w-full text-[16px] outline-none h-6"
-              value={inputValue} onChange={(e) => setInputValue(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleSendMessage(inputValue)} />
-            <button className="text-[#0084FF]"><Smile className="w-6 h-6" /></button>
+        {/* Footer */}
+        <footer style={{ position: 'absolute', bottom: 0, width: '100%', padding: '8px', display: 'flex', alignItems: 'center', gap: 8, backdropFilter: 'blur(20px)', background: 'rgba(255,255,255,0.85)', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
+          <button style={{ background: 'none', border: 'none', color: '#007AFF', padding: 4, cursor: 'pointer' }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          </button>
+          <button style={{ background: 'none', border: 'none', color: '#007AFF', padding: 4, cursor: 'pointer' }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+          </button>
+          <div style={{ flex: 1, background: '#F0F2F5', borderRadius: 20, padding: '6px 12px', display: 'flex', alignItems: 'center', gap: 8 }}>
+            <input type="text" placeholder={isRecording ? 'Gravando... (Toque para parar)' : 'Aa'} disabled={isRecording}
+              value={inputValue} onChange={e => setInputValue(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && sendMessage(inputValue)}
+              style={{ border: 'none', background: 'transparent', width: '100%', fontSize: 16, outline: 'none', height: 24 }} />
+            <button style={{ background: 'none', border: 'none', color: '#007AFF', padding: 0, cursor: 'pointer' }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg>
+            </button>
           </div>
-          {inputValue.trim().length > 0
-            ? <button onClick={() => handleSendMessage(inputValue)} className="p-1.5 text-[#0084FF]"><Send className="w-6 h-6 fill-current" /></button>
-            : <button onClick={handleMicClick} className={`p-1.5 ${isRecording ? 'text-[#FF3B30] scale-125' : 'text-[#0084FF]'} transition-all`}><Mic className="w-6 h-6 fill-current" /></button>
-          }
+          {inputValue.trim().length > 0 ? (
+            <button onClick={() => sendMessage(inputValue)} style={{ background: 'none', border: 'none', color: '#007AFF', padding: 4, cursor: 'pointer' }}>
+              <svg width="24" height="24" fill="#007AFF" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            </button>
+          ) : (
+            <button onClick={handleMic} style={{ background: 'none', border: 'none', color: isRecording ? '#FF3B30' : '#007AFF', padding: 4, cursor: 'pointer', transform: isRecording ? 'scale(1.2)' : 'scale(1)', transition: 'all 0.2s' }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+            </button>
+          )}
         </footer>
       </div>
-      <style dangerouslySetInnerHTML={{__html: '.hide-scrollbar::-webkit-scrollbar{display:none}.hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none}'}} />
     </div>
   );
 }
