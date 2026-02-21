@@ -142,31 +142,7 @@ export function Navbar() {
           </div>
         </nav>
 
-        {/* BANNER */}
-        <div className="relative w-full overflow-hidden rounded-b-[30px] sm:rounded-b-[40px]">
-          <motion.div
-            variants={glowVariants}
-            initial="hidden"
-            animate="visible"
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-cyan-600/30 blur-[100px] rounded-full pointer-events-none z-10"
-          />
-          <motion.div
-            variants={bannerVariants}
-            initial="hidden"
-            animate="visible"
-            className="relative w-full aspect-video sm:aspect-[21/9]"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop"
-              alt="MATZON Arena eSports"
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-[2s]"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
-            <div suppressHydrationWarning className="absolute top-3 left-3 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full backdrop-blur-md text-white text-[7px] font-black tracking-wider uppercase" style={{ backgroundColor: 'rgba(220,38,38,0.85)' }}>
-              <Zap className="w-2 h-2 fill-current" /><span suppressHydrationWarning>Em Destaque</span>
-            </div>
-          </motion.div>
-        </div>
+
 
       </header>
     </div>
