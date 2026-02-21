@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trophy, Home, LayoutGrid, User, MessageCircle } from 'lucide-react';
+import { Trophy, Home, LayoutGrid, User, MessageCircle, Zap } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export function Navbar() {
@@ -30,6 +30,7 @@ export function Navbar() {
     { icon: Trophy, label: 'Torneios', href: '/torneios' },
     { icon: User, label: 'Perfil', href: '/perfil' },
     { icon: MessageCircle, label: 'Chat', href: '/chat' },
+    { icon: Zap, label: 'Match', href: '/matchmaking' },
   ];
 
   const navigate = (href: string) => {

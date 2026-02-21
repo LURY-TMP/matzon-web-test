@@ -1,0 +1,13 @@
+import { Navbar } from '@/components/layout/Navbar';
+import { MatchmakingView } from '@/components/matchmaking/MatchmakingView';
+
+export const metadata = { title: 'Matchmaking | MATZON' };
+
+export default function MatchmakingPage() {
+  return (
+    <main className="min-h-screen overflow-x-hidden" style={{ backgroundColor: 'var(--bg-primary)' }}>
+      <div className="fixed top-0 left-0 w-full z-[100]"><Navbar /></div>
+      <MatchmakingView />
+    </main>
+  );
+}
