@@ -3,24 +3,21 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trophy, Home, LayoutGrid, User } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [logoHover, setLogoHover] = useState(false);
   const [visible, setVisible] = useState(true);
   const [lastY, setLastY] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
       const currentY = window.scrollY;
-      if (currentY < 80) {
-        setVisible(true);
-      } else if (currentY > lastY + 5) {
-        setVisible(false);
-        setIsOpen(false);
-      } else if (currentY < lastY - 5) {
-        setVisible(true);
-      }
+      if (currentY < 80) setVisible(true);
+      else if (currentY > lastY + 5) { setVisible(false); setIsOpen(false); }
+      else if (currentY < lastY - 5) setVisible(true);
       setLastY(currentY);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -28,11 +25,16 @@ export function Navbar() {
   }, [lastY]);
 
   const floatingMenuItems = [
-    { icon: Home, label: 'Início' },
-    { icon: LayoutGrid, label: 'Dashboard' },
-    { icon: Trophy, label: 'Torneios' },
-    { icon: User, label: 'Perfil' },
+    { icon: Home, label: 'Início', href: '/' },
+    { icon: LayoutGrid, label: 'Dashboard', href: '/dashboard' },
+    { icon: Trophy, label: 'Torneios', href: '/torneios' },
+    { icon: User, label: 'Perfil', href: '/perfil' },
   ];
+
+  const navigate = (href: string) => {
+    setIsOpen(false);
+    router.push(href);
+  };
 
   return (
     <motion.div
@@ -43,9 +45,10 @@ export function Navbar() {
       <div className="relative w-full max-w-7xl mx-auto flex items-center justify-between h-20">
 
         {/* LOGO */}
-        <a href="/" className="scale-[0.55] sm:scale-[0.65] origin-left block"
+        <div className="scale-[0.55] sm:scale-[0.65] origin-left cursor-pointer"
           onMouseEnter={() => setLogoHover(true)}
           onMouseLeave={() => setLogoHover(false)}
+          onClick={() => navigate('/')}
         >
           <div className="flex items-center gap-[16px]">
             <div className="w-[148px] h-[86px] rounded-full flex items-center p-[6px] pointer-events-none"
@@ -68,7 +71,7 @@ export function Navbar() {
               N
             </motion.div>
           </div>
-        </a>
+        </div>
 
         {/* HAMBURGUER */}
         <div className="flex flex-col items-end z-[999]">
@@ -95,6 +98,7 @@ export function Navbar() {
                     animate={{ opacity: 1, x: 0, scale: 1 }}
                     exit={{ opacity: 0, x: 20, scale: 0.8 }}
                     transition={{ delay: index * 0.06, type: "spring", stiffness: 260, damping: 20 }}
+                    onClick={() => navigate(item.href)}
                     className="flex items-center gap-3 px-4 h-[46px] rounded-full cursor-pointer shadow-xl hover:scale-105 transition-transform"
                     style={{ backgroundColor: '#FFFFFF', minWidth: 140 }}
                   >
