@@ -83,3 +83,13 @@ input::placeholder { color: var(--text-tertiary); }
 input:focus { outline: none; }
 
 .font-mono { font-family: 'DM Mono', monospace; }
+
+/* CinematicHero sempre escuro */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg-primary: #000000;
+  --text-primary: #F5F5F7;
+}
+body.light-mode [data-theme="dark"] * {
+  color: inherit;
+}
