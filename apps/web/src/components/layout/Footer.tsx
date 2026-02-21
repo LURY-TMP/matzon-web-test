@@ -69,6 +69,7 @@ export function Footer() {
           <div className="lg:col-span-1">
             <div className="flex items-center gap-1 mb-4">
               <span className="text-2xl font-black" style={{ color: 'var(--text-primary)' }}>MATZ</span>
+            <span className="text-2xl font-black" style={{ color: 'var(--text-primary)' }}>O</span>
               <span className="text-2xl font-black" style={{ color: '#0A84FF' }}>N</span>
             </div>
             <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--text-secondary)' }}>
