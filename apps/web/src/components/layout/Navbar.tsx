@@ -126,12 +126,11 @@ export function Navbar() {
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: -20, scale: 0.5 }}
                           transition={{ delay: index * 0.1, type: "spring", stiffness: 260, damping: 20 }}
-                          className="flex items-center gap-3 px-4 h-[50px] rounded-full cursor-pointer shadow-xl hover:scale-105 transition-transform"
-                          style={{ backgroundColor: menuBg, minWidth: 140 }}
+                          className="w-[50px] h-[50px] rounded-full flex justify-center items-center cursor-pointer shadow-xl hover:scale-110 transition-transform"
+                          style={{ backgroundColor: menuBg }}
                           title={item.label}
                         >
-                          <item.icon className="w-5 h-5 flex-shrink-0" style={{ color: menuIconColor }} />
-                          <span className="text-sm font-semibold" style={{ color: menuIconColor }}>{item.label}</span>
+                          <item.icon className="w-5 h-5" style={{ color: menuIconColor }} />
                         </motion.li>
                       ))}
                     </motion.ul>
