@@ -139,10 +139,6 @@ export function TournamentBracket() {
             {/* LEFT: SF → FINAL */}
             <line x1={X2+MW} y1={mc(SFY)} x2={X3} y2={mc(FY)} stroke={LINE} strokeWidth={1.5}/>
 
-            {/* Champion line (from top of final box upward) */}
-            <line x1={X3+MW/2} y1={FY} x2={X3+MW/2} y2={CHAMPION_Y+MH} stroke={LINE} strokeWidth={1.5}/>
-
-            {/* RIGHT: SF → FINAL */}
             <line x1={X3+MW} y1={mc(FY)} x2={X4} y2={mc(SFY)} stroke={LINE} strokeWidth={1.5}/>
 
             {/* RIGHT: R2 → SF */}
