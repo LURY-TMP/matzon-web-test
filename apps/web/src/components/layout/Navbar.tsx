@@ -1,12 +1,31 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trophy, Home, LayoutGrid, User } from 'lucide-react';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [logoHover, setLogoHover] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [lastY, setLastY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      if (currentY < 80) {
+        setVisible(true);
+      } else if (currentY > lastY + 5) {
+        setVisible(false);
+        setIsOpen(false);
+      } else if (currentY < lastY - 5) {
+        setVisible(true);
+      }
+      setLastY(currentY);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastY]);
 
   const floatingMenuItems = [
     { icon: Home, label: 'Início' },
@@ -16,33 +35,30 @@ export function Navbar() {
   ];
 
   return (
-    <div className="w-full px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6">
+    <motion.div
+      className="w-full px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6"
+      animate={{ y: visible ? 0 : -120, opacity: visible ? 1 : 0 }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+    >
       <div className="relative w-full max-w-7xl mx-auto flex items-center justify-between h-20">
 
-        {/* LOGO — clicável, volta ao home */}
+        {/* LOGO */}
         <a href="/" className="scale-[0.55] sm:scale-[0.65] origin-left block"
           onMouseEnter={() => setLogoHover(true)}
           onMouseLeave={() => setLogoHover(false)}
         >
           <div className="flex items-center gap-[16px]">
-            {/* Bolinha MATZ */}
-            <div
-              className="w-[148px] h-[86px] rounded-full flex items-center p-[6px] pointer-events-none"
-              style={{ border: '7px solid #FFFFFF', transition: 'border-color 0.5s' }}
-            >
+            <div className="w-[148px] h-[86px] rounded-full flex items-center p-[6px] pointer-events-none"
+              style={{ border: '7px solid #FFFFFF' }}>
               <motion.div
                 className="w-[60px] h-[60px] rounded-full flex justify-center items-center"
                 style={{ backgroundColor: '#FFFFFF' }}
                 animate={{ x: logoHover ? 0 : 62 }}
                 transition={{ type: "spring", stiffness: 150, damping: 20 }}
               >
-                <span className="text-[14px] font-black tracking-[0.5px] select-none" style={{ color: '#000000' }}>
-                  MATZ
-                </span>
+                <span className="text-[14px] font-black tracking-[0.5px] select-none" style={{ color: '#000000' }}>MATZ</span>
               </motion.div>
             </div>
-
-            {/* N — move em simultâneo */}
             <motion.div
               className="text-[95px] font-black leading-[0.8] -ml-1 select-none"
               style={{ color: '#FFFFFF', transformOrigin: 'center center' }}
@@ -71,7 +87,7 @@ export function Navbar() {
 
           <AnimatePresence>
             {isOpen && (
-              <motion.ul className="absolute top-[70px] right-0 flex flex-col gap-[10px] m-0 p-0 list-none">
+              <motion.ul className="absolute top-[60px] right-0 flex flex-col gap-[10px] m-0 p-0 list-none">
                 {floatingMenuItems.map((item, index) => (
                   <motion.li
                     key={item.label}
@@ -92,6 +108,6 @@ export function Navbar() {
         </div>
 
       </div>
-    </div>
+    </motion.div>
   );
 }
