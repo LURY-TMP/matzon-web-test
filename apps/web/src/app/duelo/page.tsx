@@ -1,4 +1,5 @@
 'use client';
+import { useAuthGuard } from '@/hooks/useAuthGuard';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Swords, Search, Trophy, Zap, Clock } from 'lucide-react';
@@ -12,6 +13,9 @@ const opponents = [
 ];
 
 export default function DueloPage() {
+  const isLoggedIn = useAuthGuard();
+  if (!isLoggedIn) return null;
+
   const [selected, setSelected] = useState<typeof opponents[0] | null>(null);
   const [challenged, setChallenged] = useState(false);
 

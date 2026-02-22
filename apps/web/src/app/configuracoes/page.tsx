@@ -1,4 +1,5 @@
 'use client';
+import { useAuthGuard } from '@/hooks/useAuthGuard';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { User, Bell, Shield, Palette, Globe, ChevronRight, Moon, Wifi, Trash2 } from 'lucide-react';
@@ -13,6 +14,9 @@ const sections = [
 ];
 
 export default function ConfiguracoesPage() {
+  const isLoggedIn = useAuthGuard();
+  if (!isLoggedIn) return null;
+
   const [toggles, setToggles] = useState<Record<string, boolean>>({ 'Push notifications': true, 'Tema escuro': true, 'Perfil público': true });
   const toggle = (key: string) => setToggles(p => ({ ...p, [key]: !p[key] }));
 

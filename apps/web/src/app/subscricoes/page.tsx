@@ -1,4 +1,5 @@
 'use client';
+import { useAuthGuard } from '@/hooks/useAuthGuard';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check, Zap, Crown, Star } from 'lucide-react';
@@ -23,6 +24,9 @@ const plans = [
 ];
 
 export default function SubscricoesPage() {
+  const isLoggedIn = useAuthGuard();
+  if (!isLoggedIn) return null;
+
   const [billing, setBilling] = useState<'monthly' | 'yearly'>('monthly');
 
   return (<div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-primary)' }}>

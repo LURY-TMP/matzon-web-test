@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trophy, Home, LayoutGrid, User, MessageCircle, Zap, Swords, Users, CalendarDays, Settings, Shield, Wallet } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,6 +12,7 @@ export function Navbar() {
   const [visible, setVisible] = useState(true);
   const [lastY, setLastY] = useState(0);
   const router = useRouter();
+  const { isLoggedIn, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,6 +26,7 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastY]);
 
+  const handleLogout = () => { logout(); navigate('/login'); };
   const floatingMenuItems = [
     { icon: Home, label: 'Início', href: '/' },
     { icon: LayoutGrid, label: 'Dashboard', href: '/dashboard' },
@@ -80,6 +83,17 @@ export function Navbar() {
             </motion.div>
           </div>
         </div>
+
+        {/* LOGIN / LOGOUT */}
+        {!isLoggedIn ? (
+          <motion.button
+            onClick={() => navigate('/login')}
+            className="px-5 py-2 rounded-full text-sm font-bold text-black bg-white mr-3"
+            whileTap={{ scale: 0.95 }}
+          >
+            Entrar
+          </motion.button>
+        ) : null}
 
         {/* HAMBURGUER */}
         <div className="flex flex-col items-end z-[999]">

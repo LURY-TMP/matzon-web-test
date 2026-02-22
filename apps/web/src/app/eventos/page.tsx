@@ -1,4 +1,5 @@
 'use client';
+import { useAuthGuard } from '@/hooks/useAuthGuard';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Trophy, Calendar, Users, Clock, Filter, Star } from 'lucide-react';
@@ -21,6 +22,9 @@ const statusConfig: Record<string, { label: string; color: string }> = {
 };
 
 export default function EventosPage() {
+  const isLoggedIn = useAuthGuard();
+  if (!isLoggedIn) return null;
+
   const [filter, setFilter] = useState('all');
 
   return (

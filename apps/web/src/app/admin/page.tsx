@@ -1,4 +1,5 @@
 'use client';
+import { useAuthGuard } from '@/hooks/useAuthGuard';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Shield, Users, Trophy, AlertTriangle, BarChart2, Settings, Ban, CheckCircle } from 'lucide-react';
@@ -19,6 +20,9 @@ const reports = [
 ];
 
 export default function AdminPage() {
+  const isLoggedIn = useAuthGuard();
+  if (!isLoggedIn) return null;
+
   const [tab, setTab] = useState('overview');
 
   return (

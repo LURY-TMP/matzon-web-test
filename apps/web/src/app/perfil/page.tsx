@@ -6,6 +6,9 @@ export const metadata = {
 };
 
 export default function ProfilePage() {
+  const isLoggedIn = useAuthGuard();
+  if (!isLoggedIn) return null;
+
   return (
     <main className="min-h-screen bg-black">
       <ProfileOfficial />

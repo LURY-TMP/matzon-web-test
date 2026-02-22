@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -12,7 +13,8 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const router = useRouter();
 
-  const handleSubmit = () => router.push('/dashboard');
+  const { login } = useAuth();
+  const handleSubmit = () => { login(); router.push('/dashboard'); };
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, position: 'relative', overflow: 'hidden' }}>

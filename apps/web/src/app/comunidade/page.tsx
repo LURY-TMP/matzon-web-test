@@ -1,4 +1,5 @@
 'use client';
+import { useAuthGuard } from '@/hooks/useAuthGuard';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Users, Search, Trophy, Flame, Plus, Shield } from 'lucide-react';
@@ -14,6 +15,9 @@ const clans = [
 ];
 
 export default function ComunidadePage() {
+  const isLoggedIn = useAuthGuard();
+  if (!isLoggedIn) return null;
+
   const [search, setSearch] = useState('');
   const [tab, setTab] = useState('clans');
   const filtered = clans.filter(c => c.name.toLowerCase().includes(search.toLowerCase()));

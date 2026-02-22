@@ -1,4 +1,5 @@
 'use client';
+import { useAuthGuard } from '@/hooks/useAuthGuard';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Wallet, Plus, ArrowUpRight, ArrowDownLeft, Trophy, CreditCard, Clock } from 'lucide-react';
@@ -13,6 +14,9 @@ const transactions = [
 ];
 
 export default function WalletPage() {
+  const isLoggedIn = useAuthGuard();
+  if (!isLoggedIn) return null;
+
   const [tab, setTab] = useState('all');
 
   return (
