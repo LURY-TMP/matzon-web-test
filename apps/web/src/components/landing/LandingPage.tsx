@@ -77,7 +77,7 @@ export function LandingPage() {
             <div style={{ fontSize: 13, color: '#808085', marginBottom: 20 }}>{player.game} · 2026 · {player.wins} vitórias</div>
 
             <p style={{ fontSize: 15, color: '#808085', lineHeight: 1.7, marginBottom: 32 }}>
-              Um dos melhores jogadores competitivos da Europa. Especialista em clutch plays e estratégia avançada. ELO máximo atingido: {player.elo.toLocaleString()}.
+              Um dos melhores jogadores competitivos da Europa. Especialista em clutch plays e estratégia avançada. ELO máximo atingido: {player.elo}.
             </p>
 
             <div style={{ display: 'flex', gap: 12, marginBottom: 40 }}>
