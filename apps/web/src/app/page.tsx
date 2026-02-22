@@ -4,7 +4,7 @@ import { Footer } from '@/components/layout/Footer';
 
 export default function Home() {
   return (
-    <main style={{ backgroundColor: 'var(--bg-primary)' }}>
+    <main style={{ backgroundColor: '#0B0B0F' }}>
       <div className="fixed top-0 left-0 w-full z-[100]"><Navbar /></div>
       <LandingPage />
       <Footer />
