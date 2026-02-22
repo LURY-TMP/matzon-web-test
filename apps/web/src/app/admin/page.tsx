@@ -20,7 +20,8 @@ const reports = [
 ];
 
 export default function AdminPage() {
-  const isLoggedIn = useAuthGuard();
+  const { isLoggedIn, isLoading } = useAuthGuard();
+  if (isLoading) return null;
   if (!isLoggedIn) return null;
 
   const [tab, setTab] = useState('overview');

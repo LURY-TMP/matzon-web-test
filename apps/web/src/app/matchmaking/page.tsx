@@ -5,7 +5,8 @@ import { MatchmakingView } from '@/components/matchmaking/MatchmakingView';
 
 
 export default function MatchmakingPage() {
-  const isLoggedIn = useAuthGuard();
+  const { isLoggedIn, isLoading } = useAuthGuard();
+  if (isLoading) return null;
   if (!isLoggedIn) return null;
 
   return (

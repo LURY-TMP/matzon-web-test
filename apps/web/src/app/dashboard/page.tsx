@@ -6,7 +6,8 @@ import { Footer } from '@/components/layout/Footer';
 
 
 export default function DashboardPage() {
-  const isLoggedIn = useAuthGuard();
+  const { isLoggedIn, isLoading } = useAuthGuard();
+  if (isLoading) return null;
   if (!isLoggedIn) return null;
 
   return (

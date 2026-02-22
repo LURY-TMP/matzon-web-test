@@ -15,7 +15,8 @@ const clans = [
 ];
 
 export default function ComunidadePage() {
-  const isLoggedIn = useAuthGuard();
+  const { isLoggedIn, isLoading } = useAuthGuard();
+  if (isLoading) return null;
   if (!isLoggedIn) return null;
 
   const [search, setSearch] = useState('');

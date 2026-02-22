@@ -13,7 +13,8 @@ const opponents = [
 ];
 
 export default function DueloPage() {
-  const isLoggedIn = useAuthGuard();
+  const { isLoggedIn, isLoading } = useAuthGuard();
+  if (isLoading) return null;
   if (!isLoggedIn) return null;
 
   const [selected, setSelected] = useState<typeof opponents[0] | null>(null);

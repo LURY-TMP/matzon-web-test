@@ -14,7 +14,8 @@ const sections = [
 ];
 
 export default function ConfiguracoesPage() {
-  const isLoggedIn = useAuthGuard();
+  const { isLoggedIn, isLoading } = useAuthGuard();
+  if (isLoading) return null;
   if (!isLoggedIn) return null;
 
   const [toggles, setToggles] = useState<Record<string, boolean>>({ 'Push notifications': true, 'Tema escuro': true, 'Perfil público': true });

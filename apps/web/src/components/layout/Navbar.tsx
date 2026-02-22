@@ -26,7 +26,6 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastY]);
 
-  const handleLogout = () => { logout(); navigate('/login'); };
   const floatingMenuItems = [
     { icon: Home, label: 'Início', href: '/' },
     { icon: LayoutGrid, label: 'Dashboard', href: '/dashboard' },
@@ -46,6 +45,8 @@ export function Navbar() {
     setIsOpen(false);
     router.push(href);
   };
+
+  const handleLogout = () => { logout(); navigate('/login'); };
 
   return (
     <motion.div

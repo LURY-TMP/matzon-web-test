@@ -22,7 +22,8 @@ const statusConfig: Record<string, { label: string; color: string }> = {
 };
 
 export default function EventosPage() {
-  const isLoggedIn = useAuthGuard();
+  const { isLoggedIn, isLoading } = useAuthGuard();
+  if (isLoading) return null;
   if (!isLoggedIn) return null;
 
   const [filter, setFilter] = useState('all');

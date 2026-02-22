@@ -4,7 +4,8 @@ import { ProfileOfficial } from '@/components/profile/ProfileOfficial';
 
 
 export default function ProfilePage() {
-  const isLoggedIn = useAuthGuard();
+  const { isLoggedIn, isLoading } = useAuthGuard();
+  if (isLoading) return null;
   if (!isLoggedIn) return null;
 
   return (

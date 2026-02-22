@@ -24,7 +24,8 @@ const plans = [
 ];
 
 export default function SubscricoesPage() {
-  const isLoggedIn = useAuthGuard();
+  const { isLoggedIn, isLoading } = useAuthGuard();
+  if (isLoading) return null;
   if (!isLoggedIn) return null;
 
   const [billing, setBilling] = useState<'monthly' | 'yearly'>('monthly');

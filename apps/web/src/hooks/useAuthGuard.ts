@@ -4,12 +4,12 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 
 export function useAuthGuard() {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, isLoading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoggedIn) router.replace('/login');
-  }, [isLoggedIn, router]);
+    if (!isLoading && !isLoggedIn) router.replace('/login');
+  }, [isLoggedIn, isLoading, router]);
 
-  return isLoggedIn;
+  return { isLoggedIn, isLoading };
 }
