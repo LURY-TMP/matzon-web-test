@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useRequireAuth } from '@/hooks/useRequireAuth';
 import { motion } from 'framer-motion';
 import { LayoutGrid, Swords, Trophy, Users, Settings, LogOut, Bell, Search, Activity, Target, Flame, ChevronRight } from 'lucide-react';
 
@@ -18,6 +19,8 @@ const cv = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { stagge
 const iv = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } };
 
 export function DashboardView() {
+  const { isLoading } = useRequireAuth();
+  if (isLoading) return <div style={{ minHeight: '100vh', backgroundColor: '#0a0a0c' }} />;
   return (
     <div className="min-h-screen flex flex-col md:flex-row" style={{ backgroundColor: 'var(--bg-primary)' }}>
       <aside className="hidden md:flex w-20 lg:w-64 flex-col justify-between h-screen sticky top-0"
