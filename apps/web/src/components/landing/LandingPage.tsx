@@ -1,22 +1,30 @@
 'use client';
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Plus, Star, X } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Play, Plus, Star } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 
 export function LandingPage() {
   const router = useRouter();
+  const { isLoggedIn, openAuthModal } = useAuth();
   const [activeTab, setActiveTab] = useState('Torneios');
   const [activePlayer, setActivePlayer] = useState(0);
-  const [showLogin, setShowLogin] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+
+  const tabs = [
+    { label: 'Torneios', href: '/torneios' },
+    { label: 'Comunidade', href: '/comunidade' },
+    { label: 'Eventos', href: '/eventos' },
+    { label: 'Ranking', href: '/ranking' },
+  ];
+
   const players = [
     { name: 'Faker_EU', game: 'Valorant', elo: 4850, wins: 342, img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&auto=format&fit=crop', color: '#2563FF' },
     { name: 'S1mple', game: 'CS2', elo: 4720, wins: 298, img: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&auto=format&fit=crop', color: '#7C3AED' },
     { name: 'NiKo', game: 'CS2', elo: 4680, wins: 276, img: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=600&auto=format&fit=crop', color: '#06B6D4' },
   ];
   const player = players[activePlayer];
+
   const tournaments = [
     { name: 'Champions Cup', prize: '5.000', img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&auto=format&fit=crop', rating: 4.8, sub: true },
     { name: 'Pro League S3', prize: '10.000', img: 'https://images.unsplash.com/photo-1560253023-3ec5d502959f?w=400&auto=format&fit=crop', rating: 4.7, sub: false },
@@ -24,49 +32,32 @@ export function LandingPage() {
     { name: 'Elite Invitational', prize: '25.000', img: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=400&auto=format&fit=crop', rating: 4.9, sub: true },
     { name: 'Weekend Brawl', prize: '500', img: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=400&auto=format&fit=crop', rating: 4.4, sub: false },
   ];
+
+  const handleCTA = () => isLoggedIn ? router.push('/dashboard') : openAuthModal();
+
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#0a0a0c', color: '#fff' }}>
-      <AnimatePresence>
-        {showLogin && (
-          <>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setShowLogin(false)} style={{ position: 'fixed', inset: 0, zIndex: 998, background: 'rgba(0,0,0,0.4)' }} />
-            <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }} style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 999, background: 'rgba(12,12,18,0.92)', backdropFilter: 'blur(40px)', WebkitBackdropFilter: 'blur(40px)', borderBottom: '1px solid rgba(255,255,255,0.08)', padding: '72px 20px 28px' }}>
-              <div style={{ maxWidth: 380, margin: '0 auto' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
-                  <div>
-                    <h2 style={{ fontSize: 20, fontWeight: 800, color: '#fff', margin: '0 0 3px' }}>Entrar na MATZON</h2>
-                    <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', margin: 0 }}>Acede a toda a plataforma</p>
-                  </div>
-                  <button onClick={() => setShowLogin(false)} style={{ background: 'rgba(255,255,255,0.08)', border: 'none', borderRadius: '50%', width: 30, height: 30, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'rgba(255,255,255,0.6)', flexShrink: 0 }}>
-                    <X style={{ width: 14, height: 14 }} />
-                  </button>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} style={{ width: '100%', padding: '12px 14px', borderRadius: 10, background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: 14, outline: 'none', boxSizing: 'border-box' }} />
-                  <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} style={{ width: '100%', padding: '12px 14px', borderRadius: 10, background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: 14, outline: 'none', boxSizing: 'border-box' }} />
-                  <div style={{ display: 'flex', gap: 10, marginTop: 2 }}>
-                    <button onClick={() => { setShowLogin(false); router.push('/dashboard'); }} style={{ flex: 1, padding: '12px', borderRadius: 10, background: 'linear-gradient(135deg, #2563FF, #7C3AED)', border: 'none', color: '#fff', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>Entrar</button>
-                    <button style={{ flex: 1, padding: '12px', borderRadius: 10, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>Registar</button>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '72px 16px 12px' }}>
         <nav style={{ display: 'flex', gap: 20, overflowX: 'auto' }}>
-          {['Torneios', 'Clas', 'Eventos', 'Ranking'].map(tab => (
-            <button key={tab} onClick={() => setActiveTab(tab)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 13, fontWeight: 600, color: activeTab === tab ? '#fff' : '#808085', borderBottom: activeTab === tab ? '2px solid #2563FF' : '2px solid transparent', paddingBottom: 4, whiteSpace: 'nowrap' }}>{tab}</button>
+          {tabs.map(tab => (
+            <button key={tab.label} onClick={() => { setActiveTab(tab.label); router.push(tab.href); }}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 13, fontWeight: 600, color: activeTab === tab.label ? '#fff' : '#808085', borderBottom: activeTab === tab.label ? '2px solid #2563FF' : '2px solid transparent', paddingBottom: 4, whiteSpace: 'nowrap' }}>
+              {tab.label}
+            </button>
           ))}
         </nav>
       </header>
+
       <section style={{ position: 'relative', paddingBottom: 48 }}>
         <div style={{ position: 'relative', width: '100%', height: 'clamp(280px, 50vw, 480px)' }}>
-          <motion.img key={activePlayer} src={player.img} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
+          <motion.img key={activePlayer} src={player.img} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center bottom, ' + player.color + '60 0%, transparent 70%)' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 40%, #0a0a0c 100%)' }} />
-          <button style={{ position: 'absolute', top: 16, left: 16, width: 44, height: 44, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}><Play style={{ width: 16, height: 16, color: '#fff', fill: '#fff' }} /></button>
+          <button style={{ position: 'absolute', top: 16, left: 16, width: 44, height: 44, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+            <Play style={{ width: 16, height: 16, color: '#fff', fill: '#fff' }} />
+          </button>
           <div style={{ position: 'absolute', right: 12, top: 12, display: 'flex', flexDirection: 'column', gap: 6 }}>
             <div style={{ width: 64, height: 44, borderRadius: 8, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.15)' }}><img src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?w=200" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8 }} /></div>
             <div style={{ width: 64, height: 44, borderRadius: 8, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.15)' }}><img src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=200" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8 }} /></div>
@@ -76,6 +67,7 @@ export function LandingPage() {
             </div>
           </div>
         </div>
+
         <div style={{ padding: '0 16px', marginTop: -24 }}>
           <span style={{ fontSize: 10, color: '#808085', letterSpacing: '0.18em', textTransform: 'uppercase', fontWeight: 600 }}>Top Jogador do Mes</span>
           <h1 style={{ fontSize: 'clamp(32px, 8vw, 60px)', fontWeight: 800, lineHeight: 1.0, margin: '8px 0 12px', letterSpacing: '-0.02em' }}>{player.name}</h1>
@@ -86,22 +78,27 @@ export function LandingPage() {
           </div>
           <div style={{ fontSize: 13, color: '#808085', marginBottom: 20, lineHeight: 1.6 }}>{player.game} - Especialista em clutch plays.</div>
           <div style={{ display: 'flex', gap: 12, marginBottom: 24 }}>
-            <button onClick={() => setShowLogin(true)} style={{ flex: 1, background: 'linear-gradient(135deg, #2563FF, #7C3AED)', color: '#fff', border: 'none', padding: '14px', borderRadius: 30, fontSize: 15, fontWeight: 700, cursor: 'pointer' }}>Comecar agora</button>
-            <button style={{ background: 'rgba(255,255,255,0.08)', color: '#fff', border: 'none', width: 48, height: 48, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}><Plus style={{ width: 20, height: 20 }} /></button>
+            <button onClick={handleCTA} style={{ flex: 1, background: 'linear-gradient(135deg, #2563FF, #7C3AED)', color: '#fff', border: 'none', padding: '14px', borderRadius: 30, fontSize: 15, fontWeight: 700, cursor: 'pointer' }}>
+              {isLoggedIn ? 'Ir para Dashboard' : 'Comecar agora'}
+            </button>
+            <button onClick={handleCTA} style={{ background: 'rgba(255,255,255,0.08)', color: '#fff', border: 'none', width: 48, height: 48, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
+              <Plus style={{ width: 20, height: 20 }} />
+            </button>
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
             {players.map((_, i) => (<button key={i} onClick={() => setActivePlayer(i)} style={{ width: i === activePlayer ? 24 : 8, height: 8, borderRadius: 4, border: 'none', cursor: 'pointer', transition: 'all 0.3s', background: i === activePlayer ? '#2563FF' : 'rgba(255,255,255,0.2)' }} />))}
           </div>
         </div>
       </section>
+
       <section style={{ padding: '0 16px 48px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
           <h2 style={{ fontSize: 18, fontWeight: 700 }}>Torneios em Destaque</h2>
-          <button style={{ background: 'none', border: 'none', color: '#2563FF', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>Ver todos</button>
+          <button onClick={() => router.push('/torneios')} style={{ background: 'none', border: 'none', color: '#2563FF', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>Ver todos</button>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: 10 }}>
           {tournaments.map((t, i) => (
-            <div key={i} style={{ background: '#18181c', borderRadius: 14, overflow: 'hidden', position: 'relative', height: 180, cursor: 'pointer' }}>
+            <div key={i} onClick={() => router.push('/torneios')} style={{ background: '#18181c', borderRadius: 14, overflow: 'hidden', position: 'relative', height: 180, cursor: 'pointer' }}>
               <img src={t.img} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.75 }} />
               {t.sub && <span style={{ position: 'absolute', top: 8, left: 8, background: 'rgba(255,159,10,0.9)', color: '#fff', fontSize: 9, padding: '2px 7px', borderRadius: 8, fontWeight: 700 }}>Premium</span>}
               <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', padding: '28px 10px 10px', background: 'linear-gradient(to top, rgba(0,0,0,0.95), transparent)' }}>
@@ -113,6 +110,7 @@ export function LandingPage() {
           ))}
         </div>
       </section>
+
       <section style={{ padding: '0 16px 60px', textAlign: 'center' }}>
         <h2 style={{ fontSize: 22, fontWeight: 800, marginBottom: 8 }}>Escolhe o teu plano</h2>
         <p style={{ color: '#808085', fontSize: 13, marginBottom: 28 }}>Compete sem limites.</p>
@@ -130,11 +128,12 @@ export function LandingPage() {
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: plan.featured ? 16 : 0 }}>
                 {plan.features.map((f, fi) => (<span key={fi} style={{ fontSize: 11, color: '#9CA3AF', background: 'rgba(255,255,255,0.05)', padding: '3px 9px', borderRadius: 20 }}>{f}</span>))}
               </div>
-              {plan.featured && (<button onClick={() => setShowLogin(true)} style={{ width: '100%', background: 'linear-gradient(135deg, #2563FF, #7C3AED)', color: '#fff', border: 'none', padding: '13px', borderRadius: 16, fontWeight: 700, fontSize: 14, cursor: 'pointer' }}>Subscrever</button>)}
+              {plan.featured && (<button onClick={() => openAuthModal('register')} style={{ width: '100%', background: 'linear-gradient(135deg, #2563FF, #7C3AED)', color: '#fff', border: 'none', padding: '13px', borderRadius: 16, fontWeight: 700, fontSize: 14, cursor: 'pointer' }}>Subscrever</button>)}
             </div>
           ))}
         </div>
       </section>
+
     </div>
   );
 }
