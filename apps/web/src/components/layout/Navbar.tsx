@@ -133,7 +133,7 @@ export function Navbar() {
               </motion.ul>
             )}
           </AnimatePresence>
-        </div>}
+        </div>)}
 
       </div>
     </motion.div>
