@@ -8,14 +8,22 @@ const liveMatches = [
   { date: 'QUI 20:00', team1: 'Cyber Wolves', team2: 'Royal Flash', score: null, live: false, time: '20:00' },
 ];
 const standings = [
-  { pos:1, name:'MATZON FC', j:6, g:5, e:0, d:1, gd:'+12', pts:15, form:['W','W','W','D','W'], qual:'direct' },
-  { pos:2, name:'Elite Squad', j:6, g:4, e:1, d:1, gd:'+8', pts:13, form:['W','W','D','W','L'], qual:'direct' },
-  { pos:3, name:'Pro Lions', j:6, g:3, e:2, d:1, gd:'+4', pts:11, form:['D','W','W','D','W'], qual:'playoff' },
-  { pos:4, name:'Storm Kings', j:6, g:3, e:1, d:2, gd:'+2', pts:10, form:['W','L','W','W','D'], qual:'playoff' },
-  { pos:5, name:'Cyber Wolves', j:6, g:2, e:1, d:3, gd:'-3', pts:7, form:['L','W','L','W','L'], qual:'' },
-  { pos:6, name:'Royal Flash', j:6, g:1, e:2, d:3, gd:'-5', pts:5, form:['L','D','L','W','L'], qual:'' },
-  { pos:7, name:'Night Hawks', j:6, g:1, e:1, d:4, gd:'-8', pts:4, form:['L','L','W','D','L'], qual:'' },
-  { pos:8, name:'Alpha Dogs', j:6, g:0, e:2, d:4, gd:'-10', pts:2, form:['L','D','L','L','D'], qual:'eliminated' },
+  { pos:1,  name:'MATZON FC',    img:'https://i.pravatar.cc/40?img=1',  j:10, g:8, e:1, d:1, gf:24, gc:8,  gd:'+16', pts:25, form:['W','W','W','D','W'], qual:'direct' },
+  { pos:2,  name:'Elite Squad',  img:'https://i.pravatar.cc/40?img=2',  j:10, g:7, e:2, d:1, gf:20, gc:9,  gd:'+11', pts:23, form:['W','W','D','W','W'], qual:'direct' },
+  { pos:3,  name:'Pro Lions',    img:'https://i.pravatar.cc/40?img=3',  j:10, g:6, e:2, d:2, gf:18, gc:10, gd:'+8',  pts:20, form:['D','W','W','D','W'], qual:'direct' },
+  { pos:4,  name:'Storm Kings',  img:'https://i.pravatar.cc/40?img=4',  j:10, g:6, e:1, d:3, gf:16, gc:11, gd:'+5',  pts:19, form:['W','L','W','W','D'], qual:'direct' },
+  { pos:5,  name:'Cyber Wolves', img:'https://i.pravatar.cc/40?img=5',  j:10, g:5, e:2, d:3, gf:14, gc:11, gd:'+3',  pts:17, form:['L','W','W','W','L'], qual:'direct' },
+  { pos:6,  name:'Royal Flash',  img:'https://i.pravatar.cc/40?img=6',  j:10, g:5, e:1, d:4, gf:13, gc:12, gd:'+1',  pts:16, form:['L','D','L','W','W'], qual:'direct' },
+  { pos:7,  name:'Night Hawks',  img:'https://i.pravatar.cc/40?img=7',  j:10, g:5, e:1, d:4, gf:12, gc:11, gd:'+1',  pts:16, form:['W','L','W','D','L'], qual:'direct' },
+  { pos:8,  name:'Alpha Dogs',   img:'https://i.pravatar.cc/40?img=8',  j:10, g:4, e:2, d:4, gf:11, gc:12, gd:'-1',  pts:14, form:['L','D','L','W','W'], qual:'direct' },
+  { pos:9,  name:'Iron Wolves',  img:'https://i.pravatar.cc/40?img=9',  j:10, g:4, e:2, d:4, gf:10, gc:13, gd:'-3',  pts:14, form:['L','W','L','W','D'], qual:'playoff' },
+  { pos:10, name:'Flash Kings',  img:'https://i.pravatar.cc/40?img=10', j:10, g:4, e:1, d:5, gf:9,  gc:13, gd:'-4',  pts:13, form:['D','L','W','L','W'], qual:'playoff' },
+  { pos:11, name:'Dark Horse',   img:'https://i.pravatar.cc/40?img=11', j:10, g:3, e:3, d:4, gf:9,  gc:14, gd:'-5',  pts:12, form:['D','D','L','W','L'], qual:'playoff' },
+  { pos:12, name:'Red Bulls',    img:'https://i.pravatar.cc/40?img=12', j:10, g:3, e:2, d:5, gf:8,  gc:15, gd:'-7',  pts:11, form:['L','W','D','L','L'], qual:'playoff' },
+  { pos:13, name:'Blue Star',    img:'https://i.pravatar.cc/40?img=13', j:10, g:3, e:1, d:6, gf:7,  gc:16, gd:'-9',  pts:10, form:['L','L','W','L','D'], qual:'' },
+  { pos:14, name:'Storm Boys',   img:'https://i.pravatar.cc/40?img=14', j:10, g:2, e:2, d:6, gf:6,  gc:17, gd:'-11', pts:8,  form:['L','D','L','L','W'], qual:'' },
+  { pos:15, name:'Alpha Unit',   img:'https://i.pravatar.cc/40?img=15', j:10, g:1, e:2, d:7, gf:5,  gc:20, gd:'-15', pts:5,  form:['L','L','D','L','L'], qual:'eliminated' },
+  { pos:16, name:'Wolves FC',    img:'https://i.pravatar.cc/40?img=16', j:10, g:0, e:1, d:9, gf:2,  gc:29, gd:'-27', pts:1,  form:['L','L','L','D','L'], qual:'eliminated' },
 ];
 const fC = (r:string) => r==='W'?'#34A853':r==='D'?'#9AA4B6':'#EA4335';
 const qC = (q:string) => q==='direct'?'#4285F4':q==='playoff'?'#FA7B17':'transparent';
@@ -273,7 +281,7 @@ export function TorneiosView() {
               <table style={{ width:'100%', borderCollapse:'collapse', whiteSpace:'nowrap' }}>
                 <thead><tr>
                   <th style={{ fontSize:10, color:'#9AA4B6', fontWeight:600, padding:'12px 8px 12px 20px', borderBottom:'1px solid #222A3B', textAlign:'left' }}>POS</th>
-                  {['J','G','E','D','DG'].map(h=><th key={h} style={{ fontSize:10, color:'#9AA4B6', fontWeight:600, padding:'12px 8px', borderBottom:'1px solid #222A3B', textAlign:'center' }}>{h}</th>)}
+                  {['J','G','E','D','GM','GS','DG'].map(h=><th key={h} style={{ fontSize:10, color:'#9AA4B6', fontWeight:600, padding:'12px 8px', borderBottom:'1px solid #222A3B', textAlign:'center' }}>{h}</th>)}
                   <th style={{ fontSize:10, color:'#9AA4B6', fontWeight:600, padding:'12px 8px', borderBottom:'1px solid #222A3B', textAlign:'center', borderLeft:'1px solid #222A3B' }}>PTS</th>
                   <th style={{ fontSize:10, color:'#9AA4B6', fontWeight:600, padding:'12px 8px', borderBottom:'1px solid #222A3B', textAlign:'center' }}>FORMA</th>
                 </tr></thead>
@@ -283,11 +291,11 @@ export function TorneiosView() {
                       <td style={{ padding:'10px 8px 10px 0', borderBottom:'1px solid rgba(255,255,255,0.02)', borderLeft:`3px solid ${qC(s.qual)}` }}>
                         <div style={{ display:'flex', alignItems:'center', gap:10, paddingLeft:12 }}>
                           <span style={{ width:20, textAlign:'center', fontSize:12, color:'#9AA4B6' }}>{s.pos}</span>
-                          <div style={{ width:20, height:20, borderRadius:'50%', backgroundColor:'#005EFA', flexShrink:0 }}/>
+                          <img src={s.img} style={{ width:28, height:28, borderRadius:'50%', objectFit:'cover', flexShrink:0, border:'2px solid #222A3B' }}/>
                           <span style={{ fontWeight:600, fontSize:13 }}>{s.name}</span>
                         </div>
                       </td>
-                      {[s.j,s.g,s.e,s.d,s.gd].map((v,vi)=><td key={vi} style={{ padding:'10px 8px', fontSize:13, textAlign:'center', borderBottom:'1px solid rgba(255,255,255,0.02)', color:'#fff' }}>{v}</td>)}
+                      {[s.j,s.g,s.e,s.d,s.gf,s.gc,s.gd].map((v,vi)=><td key={vi} style={{ padding:'10px 8px', fontSize:13, textAlign:'center', borderBottom:'1px solid rgba(255,255,255,0.02)', color:'#fff' }}>{v}</td>)}
                       <td style={{ padding:'10px 8px', textAlign:'center', fontWeight:700, borderLeft:'1px solid #222A3B', borderBottom:'1px solid rgba(255,255,255,0.02)', fontSize:13 }}>{s.pts}</td>
                       <td style={{ padding:'10px 8px', borderBottom:'1px solid rgba(255,255,255,0.02)' }}>
                         <div style={{ display:'flex', gap:3, justifyContent:'center' }}>
