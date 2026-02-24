@@ -12,6 +12,10 @@ const flexPanels = [
 
 const featuredData = [
   { title: 'Champions Cup', sub: 'Premio: EUR 5.000', img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1000&auto=format&fit=crop', badge: 'Ao Vivo', badgeColor: '#30D158' },
+  { title: 'MATZON Grand Prix', sub: 'Premio: EUR 50.000', img: 'https://images.unsplash.com/photo-1614726365345-5df0b457319c?q=80&w=1000&auto=format&fit=crop', badge: 'So Convite', badgeColor: '#7C3AED' },
+  { title: 'World Masters 2026', sub: 'Premio: EUR 100.000', img: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?q=80&w=1000&auto=format&fit=crop', badge: 'Internacional', badgeColor: '#FFD60A' },
+  { title: 'Night Cup Series', sub: 'Premio: EUR 3.000', img: 'https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=1000&auto=format&fit=crop', badge: 'Esgotado', badgeColor: '#FF453A' },
+  { title: 'Iberian Open', sub: 'Premio: EUR 8.000', img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop', badge: 'Aberto', badgeColor: '#2563FF' },
   { title: 'Pro League S3', sub: 'Premio: EUR 10.000', img: 'https://images.unsplash.com/photo-1560253023-3ec5d502959f?q=80&w=1000&auto=format&fit=crop', badge: 'Aberto', badgeColor: '#2563FF' },
   { title: 'Elite Invitational', sub: 'Premio: EUR 25.000', img: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=1000&auto=format&fit=crop', badge: 'So Convite', badgeColor: '#7C3AED' },
   { title: 'Winter Clash', sub: 'Premio: EUR 2.500', img: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1000&auto=format&fit=crop', badge: 'Esgotado', badgeColor: '#FF453A' },
