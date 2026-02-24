@@ -139,23 +139,58 @@ export function DashboardOfficial() {
         </div>
       </section>
 
-      {/* BANNER */}
+      {/* BANNERS */}
       <section className="w-[95%] max-w-[1400px] mx-auto mb-[40px] flex flex-col gap-[20px]">
         <div className="flex items-center gap-2.5 px-2.5 text-[22px] font-[800]" style={{ color: 'var(--text-primary)' }}>
           Para si
           <span className="text-white text-[11px] font-[700] uppercase px-[10px] py-1 rounded-[20px]" style={{ backgroundColor: '#FF453A' }}>Novo</span>
         </div>
-        <div className="w-full h-[200px] md:h-[250px] rounded-[30px] bg-cover bg-center relative overflow-hidden cursor-pointer"
-          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1000&auto=format&fit=crop')" }}>
-          <div className="absolute inset-0" style={{ backgroundColor: 'rgba(0,0,0,0.35)' }} />
-          <div className="absolute bottom-5 left-5 text-white max-w-[70%] z-20">
-            <h2 className="text-[22px] md:text-[28px] font-[900] m-0 mb-1">Champions Cup 2026</h2>
-            <p className="text-[14px] opacity-90 mb-3.5">Inscreve-te agora e compete pelos EUR 25.000 em premios.</p>
-            <button className="text-white px-[25px] py-2.5 rounded-[20px] font-[800] text-[14px]"
-              style={{ background: 'linear-gradient(135deg, #2563FF, #7C3AED)' }}>
-              Inscrever agora
-            </button>
+        <div className="flex flex-col gap-[15px]">
+
+          <div className="w-full h-[200px] md:h-[250px] rounded-[30px] bg-cover bg-center relative overflow-hidden cursor-pointer"
+            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1000&auto=format&fit=crop')" }}>
+            <div className="absolute inset-0" style={{ backgroundColor: 'rgba(0,0,0,0.35)' }} />
+            <div className="absolute bottom-5 left-5 text-white max-w-[70%] z-20">
+              <span className="text-white text-[10px] font-[800] uppercase px-[10px] py-1 rounded-[20px] mb-2 inline-block" style={{ backgroundColor: '#2563FF' }}>Destaque</span>
+              <h2 className="text-[22px] md:text-[28px] font-[900] m-0 mb-1">Champions Cup 2026</h2>
+              <p className="text-[14px] opacity-90 mb-3.5">Inscreve-te agora e compete pelos EUR 25.000 em premios.</p>
+              <button className="text-white px-[25px] py-2.5 rounded-[20px] font-[800] text-[14px]" style={{ background: 'linear-gradient(135deg, #2563FF, #7C3AED)' }}>Inscrever agora</button>
+            </div>
           </div>
+
+          <div className="w-full h-[200px] md:h-[250px] rounded-[30px] bg-cover bg-center relative overflow-hidden cursor-pointer"
+            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1614726365345-5df0b457319c?q=80&w=1000&auto=format&fit=crop')" }}>
+            <div className="absolute inset-0" style={{ backgroundColor: 'rgba(0,0,0,0.4)' }} />
+            <div className="absolute bottom-5 left-5 text-white max-w-[70%] z-20">
+              <span className="text-white text-[10px] font-[800] uppercase px-[10px] py-1 rounded-[20px] mb-2 inline-block" style={{ backgroundColor: '#7C3AED' }}>So Convite</span>
+              <h2 className="text-[22px] md:text-[28px] font-[900] m-0 mb-1">MATZON Grand Prix</h2>
+              <p className="text-[14px] opacity-90 mb-3.5">O torneio mais exclusivo da plataforma. EUR 50.000 em premios.</p>
+              <button className="text-white px-[25px] py-2.5 rounded-[20px] font-[800] text-[14px]" style={{ background: 'linear-gradient(135deg, #7C3AED, #BF5AF2)' }}>Pedir Convite</button>
+            </div>
+          </div>
+
+          <div className="w-full h-[200px] md:h-[250px] rounded-[30px] bg-cover bg-center relative overflow-hidden cursor-pointer"
+            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?q=80&w=1000&auto=format&fit=crop')" }}>
+            <div className="absolute inset-0" style={{ backgroundColor: 'rgba(0,0,0,0.4)' }} />
+            <div className="absolute bottom-5 left-5 text-white max-w-[70%] z-20">
+              <span className="text-white text-[10px] font-[800] uppercase px-[10px] py-1 rounded-[20px] mb-2 inline-block" style={{ backgroundColor: '#FFD60A', color: '#000' }}>Internacional</span>
+              <h2 className="text-[22px] md:text-[28px] font-[900] m-0 mb-1">World Masters 2026</h2>
+              <p className="text-[14px] opacity-90 mb-3.5">Representa o teu pais. EUR 100.000 em premios. 64 equipas.</p>
+              <button className="text-white px-[25px] py-2.5 rounded-[20px] font-[800] text-[14px]" style={{ background: 'linear-gradient(135deg, #FF9F0A, #FFD60A)', color: '#000' }}>Ver Detalhes</button>
+            </div>
+          </div>
+
+          <div className="w-full h-[200px] md:h-[250px] rounded-[30px] bg-cover bg-center relative overflow-hidden"
+            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=1000&auto=format&fit=crop')", filter: 'grayscale(50%)' }}>
+            <div className="absolute inset-0" style={{ backgroundColor: 'rgba(0,0,0,0.55)' }} />
+            <div className="absolute bottom-5 left-5 text-white max-w-[70%] z-20">
+              <span className="text-white text-[10px] font-[800] uppercase px-[10px] py-1 rounded-[20px] mb-2 inline-block" style={{ backgroundColor: '#FF453A' }}>Esgotado</span>
+              <h2 className="text-[22px] md:text-[28px] font-[900] m-0 mb-1">Night Cup Series</h2>
+              <p className="text-[14px] opacity-90 mb-3.5">Inscricoes encerradas. Proximo torneio em Abril 2026.</p>
+              <button className="text-white px-[25px] py-2.5 rounded-[20px] font-[800] text-[14px]" style={{ background: 'rgba(255,255,255,0.15)', cursor: 'not-allowed' }}>Esgotado</button>
+            </div>
+          </div>
+
         </div>
       </section>
 
