@@ -17,40 +17,172 @@ const standings = [
   { pos:7, name:'Night Hawks', j:6, g:1, e:1, d:4, gd:'-8', pts:4, form:['L','L','W','D','L'], qual:'' },
   { pos:8, name:'Alpha Dogs', j:6, g:0, e:2, d:4, gd:'-10', pts:2, form:['L','D','L','L','D'], qual:'eliminated' },
 ];
-const bracketRounds = [
-  { label:'Quartos de Final', color:'#9AA4B6', matches:[
-    { t1:'MATZON FC', s1:3, t2:'Night Hawks', s2:0, winner:1, date:'15 Fev' },
-    { t1:'Elite Squad', s1:2, t2:'Alpha Dogs', s2:1, winner:1, date:'15 Fev' },
-    { t1:'Pro Lions', s1:null, t2:'Royal Flash', s2:null, winner:0, date:'21 Fev' },
-    { t1:'Storm Kings', s1:null, t2:'Cyber Wolves', s2:null, winner:0, date:'22 Fev' },
-  ]},
-  { label:'Meias-Finais', color:'#005EFA', matches:[
-    { t1:'MATZON FC', s1:null, t2:'Elite Squad', s2:null, winner:0, date:'28 Fev' },
-    { t1:'TBD', s1:null, t2:'TBD', s2:null, winner:0, date:'01 Mar' },
-  ]},
-  { label:'Final', color:'#FFD60A', matches:[
-    { t1:'TBD', s1:null, t2:'TBD', s2:null, winner:0, date:'08 Mar' },
-  ]},
-];
 const fC = (r:string) => r==='W'?'#34A853':r==='D'?'#9AA4B6':'#EA4335';
 const qC = (q:string) => q==='direct'?'#4285F4':q==='playoff'?'#FA7B17':'transparent';
 type BM = { t1:string; s1:number|null; t2:string; s2:number|null; winner:number; date:string };
 
 function BracketCard({ m }: { m: BM }) {
   const done = m.s1 !== null;
-  const tbd = m.t1 === 'TBD';
+  const tbd = m.t1 === 'TBD' && m.t2 === 'TBD';
   return (
-    <div style={{ backgroundColor:'#171E2D', borderRadius:10, border:'1px solid #222A3B', overflow:'hidden', opacity:tbd?0.4:1, width:186 }}>
+    <div style={{ backgroundColor:'#171E2D', borderRadius:10, border:'1px solid #222A3B', overflow:'hidden', opacity:tbd?0.4:1, width:160 }}>
       <div style={{ padding:'4px 10px', borderBottom:'1px solid #222A3B', fontSize:9, fontWeight:700, color:'#005EFA', letterSpacing:1, textTransform:'uppercase' }}>{m.date}</div>
       {[{ t:m.t1, s:m.s1, w:m.winner===1 }, { t:m.t2, s:m.s2, w:m.winner===2 }].map((tm, ti) => (
         <div key={ti} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'8px 10px', borderBottom:ti===0?'1px solid rgba(255,255,255,0.05)':'none', backgroundColor:done&&tm.w?'rgba(0,94,250,0.12)':'transparent' }}>
           <div style={{ display:'flex', alignItems:'center', gap:7 }}>
-            <div style={{ width:16, height:16, borderRadius:'50%', backgroundColor:ti===0?'#005EFA':'#7C3AED', flexShrink:0 }}/>
-            <span style={{ fontSize:12, fontWeight:done&&tm.w?700:500, color:done&&!tm.w&&m.winner!==0?'#555':'#fff' }}>{tm.t}</span>
+            <div style={{ width:14, height:14, borderRadius:'50%', backgroundColor:ti===0?'#005EFA':'#7C3AED', flexShrink:0 }}/>
+            <span style={{ fontSize:11, fontWeight:done&&tm.w?700:500, color:done&&!tm.w&&m.winner!==0?'#444':'#fff' }}>{tm.t}</span>
           </div>
-          <span style={{ fontSize:14, fontWeight:800, color:done&&tm.w?'#fff':'#555', minWidth:14, textAlign:'right' }}>{tm.s!==null?tm.s:'—'}</span>
+          <span style={{ fontSize:13, fontWeight:800, color:done&&tm.w?'#fff':'#555', minWidth:14, textAlign:'right' }}>{tm.s!==null?tm.s:'—'}</span>
         </div>
       ))}
+    </div>
+  );
+}
+
+const TBD: BM = { t1:'TBD', s1:null, t2:'TBD', s2:null, winner:0, date:'A definir' };
+
+// Dados do bracket
+const r16L: BM[] = [
+  { t1:'MATZON FC', s1:4, t2:'Wolves FC', s2:1, winner:1, date:'11 Fev' },
+  { t1:'Elite Squad', s1:3, t2:'Storm Boys', s2:0, winner:1, date:'11 Fev' },
+  { t1:'Pro Lions', s1:2, t2:'Dark Horse', s2:2, winner:0, date:'12 Fev' },
+  { t1:'Night Hawks', s1:1, t2:'Flash Kings', s2:0, winner:1, date:'12 Fev' },
+  { t1:'Storm Kings', s1:null, t2:'Red Bulls', s2:null, winner:0, date:'18 Fev' },
+  { t1:'Cyber Force', s1:null, t2:'Alpha Unit', s2:null, winner:0, date:'18 Fev' },
+  { t1:'Royal Flash', s1:null, t2:'Blue Star', s2:null, winner:0, date:'19 Fev' },
+  { t1:'Alpha Dogs', s1:null, t2:'Iron Clan', s2:null, winner:0, date:'19 Fev' },
+];
+const qfL: BM[] = [
+  { t1:'MATZON FC', s1:3, t2:'Elite Squad', s2:1, winner:1, date:'25 Fev' },
+  { t1:'Pro Lions', s1:null, t2:'Night Hawks', s2:null, winner:0, date:'25 Fev' },
+  { t1:'TBD', s1:null, t2:'TBD', s2:null, winner:0, date:'Mar' },
+  { t1:'TBD', s1:null, t2:'TBD', s2:null, winner:0, date:'Mar' },
+];
+const sfL: BM[] = [
+  { t1:'MATZON FC', s1:null, t2:'TBD', s2:null, winner:0, date:'04 Mar' },
+  { t1:'TBD', s1:null, t2:'TBD', s2:null, winner:0, date:'05 Mar' },
+];
+const finalM: BM = { t1:'TBD', s1:null, t2:'TBD', s2:null, winner:0, date:'08 Mar' };
+const sfR: BM[] = [TBD, TBD];
+const qfR: BM[] = [TBD, TBD, TBD, TBD];
+const r16R: BM[] = Array(8).fill(TBD);
+
+function BracketUCL() {
+  const CW = 160, CH = 82, GAP = 28, RG = 10, TH = 62;
+
+  const r16Y = Array.from({length:8}, (_,i) => TH + i*(CH+RG));
+  const r16Cy = r16Y.map(y => y + CH/2);
+  const qfY = [0,1,2,3].map(i => (r16Cy[i*2]+r16Cy[i*2+1])/2 - CH/2);
+  const qfCy = qfY.map(y => y + CH/2);
+  const sfY = [0,1].map(i => (qfCy[i*2]+qfCy[i*2+1])/2 - CH/2);
+  const sfCy = sfY.map(y => y + CH/2);
+  const finY = (sfCy[0]+sfCy[1])/2 - CH/2;
+  const finCy = finY + CH/2;
+
+  const cR16L=0, cQFL=CW+GAP, cSFL=2*(CW+GAP), cFin=3*(CW+GAP), cSFR=4*(CW+GAP), cQFR=5*(CW+GAP), cR16R=6*(CW+GAP);
+  const W = 7*CW+6*GAP, H = TH+8*CH+7*RG+30;
+  const mx = (c:number) => c+CW+GAP/2;
+
+  const LabelH = ({text, col, color}: {text:string, col:number, color:string}) => (
+    <div style={{ position:'absolute', left:col, top:TH-20, width:CW, textAlign:'center', fontSize:8, fontWeight:800, color, textTransform:'uppercase', letterSpacing:1 }}>{text}</div>
+  );
+
+  return (
+    <div style={{ overflowX:'auto', paddingBottom:20 }}>
+      <div style={{ position:'relative', width:W, height:H }}>
+        <svg style={{ position:'absolute', inset:0, overflow:'visible', pointerEvents:'none' }} width={W} height={H}>
+          {/* R16-L → QF-L */}
+          {[0,1,2,3].map(i => { const t=r16Cy[i*2],b=r16Cy[i*2+1],m=(t+b)/2; return (
+            <g key={"a"+i}>
+              <line x1={cR16L+CW} y1={t} x2={mx(cR16L)} y2={t} stroke="#1E293B" strokeWidth="2"/>
+              <line x1={cR16L+CW} y1={b} x2={mx(cR16L)} y2={b} stroke="#1E293B" strokeWidth="2"/>
+              <line x1={mx(cR16L)} y1={t} x2={mx(cR16L)} y2={b} stroke="#1E293B" strokeWidth="2"/>
+              <line x1={mx(cR16L)} y1={m} x2={cQFL} y2={qfCy[i]} stroke="#1E293B" strokeWidth="2"/>
+            </g>
+          );})}
+          {/* QF-L → SF-L */}
+          {[0,1].map(i => { const t=qfCy[i*2],b=qfCy[i*2+1],m=(t+b)/2; return (
+            <g key={"b"+i}>
+              <line x1={cQFL+CW} y1={t} x2={mx(cQFL)} y2={t} stroke="#334155" strokeWidth="2"/>
+              <line x1={cQFL+CW} y1={b} x2={mx(cQFL)} y2={b} stroke="#334155" strokeWidth="2"/>
+              <line x1={mx(cQFL)} y1={t} x2={mx(cQFL)} y2={b} stroke="#334155" strokeWidth="2"/>
+              <line x1={mx(cQFL)} y1={m} x2={cSFL} y2={sfCy[i]} stroke="#334155" strokeWidth="2"/>
+              <circle cx={cSFL} cy={sfCy[i]} r="3" fill="#005EFA"/>
+            </g>
+          );})}
+          {/* SF-L → FINAL */}
+          <line x1={cSFL+CW} y1={sfCy[0]} x2={mx(cSFL)} y2={sfCy[0]} stroke="#005EFA" strokeWidth="2"/>
+          <line x1={cSFL+CW} y1={sfCy[1]} x2={mx(cSFL)} y2={sfCy[1]} stroke="#005EFA" strokeWidth="2"/>
+          <line x1={mx(cSFL)} y1={sfCy[0]} x2={mx(cSFL)} y2={sfCy[1]} stroke="#005EFA" strokeWidth="2"/>
+          <line x1={mx(cSFL)} y1={finCy} x2={cFin} y2={finCy} stroke="#005EFA" strokeWidth="2"/>
+          <circle cx={cFin} cy={finCy} r="5" fill="#FFD60A"/>
+          {/* FINAL → SF-R */}
+          <line x1={cFin+CW} y1={finCy} x2={mx(cFin)} y2={finCy} stroke="#005EFA" strokeWidth="2"/>
+          <line x1={mx(cFin)} y1={sfCy[0]} x2={mx(cFin)} y2={sfCy[1]} stroke="#005EFA" strokeWidth="2"/>
+          <line x1={mx(cFin)} y1={sfCy[0]} x2={cSFR} y2={sfCy[0]} stroke="#005EFA" strokeWidth="2"/>
+          <line x1={mx(cFin)} y1={sfCy[1]} x2={cSFR} y2={sfCy[1]} stroke="#005EFA" strokeWidth="2"/>
+          {/* SF-R → QF-R */}
+          {[0,1].map(i => { const t=qfCy[i*2],b=qfCy[i*2+1]; return (
+            <g key={"c"+i}>
+              <line x1={cSFR+CW} y1={sfCy[i]} x2={mx(cSFR)} y2={sfCy[i]} stroke="#334155" strokeWidth="2"/>
+              <line x1={mx(cSFR)} y1={t} x2={mx(cSFR)} y2={b} stroke="#334155" strokeWidth="2"/>
+              <line x1={mx(cSFR)} y1={t} x2={cQFR} y2={t} stroke="#334155" strokeWidth="2"/>
+              <line x1={mx(cSFR)} y1={b} x2={cQFR} y2={b} stroke="#334155" strokeWidth="2"/>
+            </g>
+          );})}
+          {/* QF-R → R16-R */}
+          {[0,1,2,3].map(i => { const t=r16Cy[i*2],b=r16Cy[i*2+1]; return (
+            <g key={"d"+i}>
+              <line x1={cQFR+CW} y1={qfCy[i]} x2={mx(cQFR)} y2={qfCy[i]} stroke="#1E293B" strokeWidth="2"/>
+              <line x1={mx(cQFR)} y1={t} x2={mx(cQFR)} y2={b} stroke="#1E293B" strokeWidth="2"/>
+              <line x1={mx(cQFR)} y1={t} x2={cR16R} y2={t} stroke="#1E293B" strokeWidth="2"/>
+              <line x1={mx(cQFR)} y1={b} x2={cR16R} y2={b} stroke="#1E293B" strokeWidth="2"/>
+            </g>
+          );})}
+        </svg>
+
+        {/* TROFEU - topo centro */}
+        <div style={{ position:'absolute', left:cFin, top:0, width:CW, textAlign:'center' }}>
+          <div style={{ fontSize:30 }}>🏆</div>
+          <div style={{ fontSize:8, color:'#FFD60A', fontWeight:800, textTransform:'uppercase', letterSpacing:2, marginTop:2 }}>Campeao</div>
+        </div>
+
+        <LabelH text="Oitavos" col={cR16L} color="#64748B"/>
+        <LabelH text="Quartos" col={cQFL} color="#9AA4B6"/>
+        <LabelH text="Meias" col={cSFL} color="#005EFA"/>
+        <LabelH text="Final" col={cFin} color="#FFD60A"/>
+        <LabelH text="Meias" col={cSFR} color="#005EFA"/>
+        <LabelH text="Quartos" col={cQFR} color="#9AA4B6"/>
+        <LabelH text="Oitavos" col={cR16R} color="#64748B"/>
+
+        {/* R16 ESQUERDA */}
+        <div style={{ position:'absolute', left:cR16L, top:TH }}>
+          <div style={{ display:'flex', flexDirection:'column', gap:RG }}>{r16L.map((m,i)=><BracketCard key={i} m={m}/>)}</div>
+        </div>
+        {/* QF ESQUERDA */}
+        <div style={{ position:'absolute', left:cQFL, top:qfY[0] }}>
+          <div style={{ display:'flex', flexDirection:'column', gap:qfY[1]-qfY[0]-CH }}>{qfL.map((m,i)=><BracketCard key={i} m={m}/>)}</div>
+        </div>
+        {/* SF ESQUERDA */}
+        <div style={{ position:'absolute', left:cSFL, top:sfY[0] }}>
+          <div style={{ display:'flex', flexDirection:'column', gap:sfY[1]-sfY[0]-CH }}>{sfL.map((m,i)=><BracketCard key={i} m={m}/>)}</div>
+        </div>
+        {/* FINAL */}
+        <div style={{ position:'absolute', left:cFin, top:finY }}><BracketCard m={finalM}/></div>
+        {/* SF DIREITA */}
+        <div style={{ position:'absolute', left:cSFR, top:sfY[0] }}>
+          <div style={{ display:'flex', flexDirection:'column', gap:sfY[1]-sfY[0]-CH }}>{sfR.map((m,i)=><BracketCard key={i} m={m}/>)}</div>
+        </div>
+        {/* QF DIREITA */}
+        <div style={{ position:'absolute', left:cQFR, top:qfY[0] }}>
+          <div style={{ display:'flex', flexDirection:'column', gap:qfY[1]-qfY[0]-CH }}>{qfR.map((m,i)=><BracketCard key={i} m={m}/>)}</div>
+        </div>
+        {/* R16 DIREITA */}
+        <div style={{ position:'absolute', left:cR16R, top:TH }}>
+          <div style={{ display:'flex', flexDirection:'column', gap:RG }}>{r16R.map((m,i)=><BracketCard key={i} m={m}/>)}</div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -58,32 +190,6 @@ function BracketCard({ m }: { m: BM }) {
 export function TorneiosView() {
   const [activeTab, setActiveTab] = useState('Em Destaque');
   const [bView, setBView] = useState<'chaveamento'|'lista'>('chaveamento');
-
-  const CARD_W = 186;
-  const CARD_H = 86;
-  const COL_GAP = 48;
-  const ROW_GAP_0 = 14;
-  const ROW_GAP_1 = 114;
-  const LABEL_H = 24;
-
-  const r0top = [
-    LABEL_H,
-    LABEL_H + CARD_H + ROW_GAP_0,
-    LABEL_H + 2*(CARD_H + ROW_GAP_0),
-    LABEL_H + 3*(CARD_H + ROW_GAP_0),
-  ];
-  const r0cy = r0top.map(t => t + CARD_H/2);
-  const r1top = [
-    (r0cy[0]+r0cy[1])/2 - CARD_H/2,
-    (r0cy[2]+r0cy[3])/2 - CARD_H/2,
-  ];
-  const r1cy = r1top.map(t => t + CARD_H/2);
-  const r2top = (r1cy[0]+r1cy[1])/2 - CARD_H/2;
-  const r2cy = r2top + CARD_H/2;
-  const colX = [0, CARD_W+COL_GAP, 2*(CARD_W+COL_GAP)];
-  const totalH = Math.max(r0top[3]+CARD_H, r1top[1]+CARD_H, r2top+CARD_H) + 20;
-  const totalW = 3*CARD_W + 2*COL_GAP + 70;
-  const hx = (ri:number)  => colX[ri] + CARD_W + COL_GAP/2;
 
   return (
     <div style={{ backgroundColor:'#0B121E', color:'#F8F9FA', fontFamily:"'Inter',sans-serif", minHeight:'100vh', paddingBottom:40 }}>
@@ -96,10 +202,9 @@ export function TorneiosView() {
         </div>
         <div style={{ position:'absolute', bottom:15, right:20, zIndex:10, width:44, height:44, borderRadius:'50%', background:'linear-gradient(135deg,#005EFA,#7C3AED)', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:900, fontSize:12, color:'#fff' }}>MZ</div>
       </div>
-
       <div style={{ display:'flex', borderBottom:'1px solid #222A3B', padding:'0 20px', overflowX:'auto' }}>
-        {tabs.map(tab => (
-          <button key={tab} onClick={() => setActiveTab(tab)} style={{ background:'none', border:'none', color:activeTab===tab?'#F8F9FA':'#9AA4B6', fontSize:15, fontWeight:600, padding:'15px 0', marginRight:25, cursor:'pointer', whiteSpace:'nowrap', borderBottom:activeTab===tab?'3px solid #005EFA':'3px solid transparent', outline:'none' }}>{tab}</button>
+        {['Em Destaque','Classificacao','Bracket','Sobre'].map(tab => (
+          <button key={tab} onClick={()=>setActiveTab(tab)} style={{ background:'none', border:'none', color:activeTab===tab?'#F8F9FA':'#9AA4B6', fontSize:15, fontWeight:600, padding:'15px 0', marginRight:25, cursor:'pointer', whiteSpace:'nowrap', borderBottom:activeTab===tab?'3px solid #005EFA':'3px solid transparent', outline:'none' }}>{tab}</button>
         ))}
       </div>
 
@@ -168,7 +273,7 @@ export function TorneiosView() {
               <table style={{ width:'100%', borderCollapse:'collapse', whiteSpace:'nowrap' }}>
                 <thead><tr>
                   <th style={{ fontSize:10, color:'#9AA4B6', fontWeight:600, padding:'12px 8px 12px 20px', borderBottom:'1px solid #222A3B', textAlign:'left' }}>POS</th>
-                  {['J','G','E','D','DG'].map(h => <th key={h} style={{ fontSize:10, color:'#9AA4B6', fontWeight:600, padding:'12px 8px', borderBottom:'1px solid #222A3B', textAlign:'center' }}>{h}</th>)}
+                  {['J','G','E','D','DG'].map(h=><th key={h} style={{ fontSize:10, color:'#9AA4B6', fontWeight:600, padding:'12px 8px', borderBottom:'1px solid #222A3B', textAlign:'center' }}>{h}</th>)}
                   <th style={{ fontSize:10, color:'#9AA4B6', fontWeight:600, padding:'12px 8px', borderBottom:'1px solid #222A3B', textAlign:'center', borderLeft:'1px solid #222A3B' }}>PTS</th>
                   <th style={{ fontSize:10, color:'#9AA4B6', fontWeight:600, padding:'12px 8px', borderBottom:'1px solid #222A3B', textAlign:'center' }}>FORMA</th>
                 </tr></thead>
@@ -182,11 +287,11 @@ export function TorneiosView() {
                           <span style={{ fontWeight:600, fontSize:13 }}>{s.name}</span>
                         </div>
                       </td>
-                      {[s.j,s.g,s.e,s.d,s.gd].map((v,vi) => <td key={vi} style={{ padding:'10px 8px', fontSize:13, textAlign:'center', borderBottom:'1px solid rgba(255,255,255,0.02)', color:'#fff' }}>{v}</td>)}
+                      {[s.j,s.g,s.e,s.d,s.gd].map((v,vi)=><td key={vi} style={{ padding:'10px 8px', fontSize:13, textAlign:'center', borderBottom:'1px solid rgba(255,255,255,0.02)', color:'#fff' }}>{v}</td>)}
                       <td style={{ padding:'10px 8px', textAlign:'center', fontWeight:700, borderLeft:'1px solid #222A3B', borderBottom:'1px solid rgba(255,255,255,0.02)', fontSize:13 }}>{s.pts}</td>
                       <td style={{ padding:'10px 8px', borderBottom:'1px solid rgba(255,255,255,0.02)' }}>
                         <div style={{ display:'flex', gap:3, justifyContent:'center' }}>
-                          {s.form.map((r,ri) => <span key={ri} style={{ width:14, height:14, borderRadius:'50%', backgroundColor:fC(r), display:'inline-block' }}/>)}
+                          {s.form.map((r,ri)=><span key={ri} style={{ width:14, height:14, borderRadius:'50%', backgroundColor:fC(r), display:'inline-block' }}/>)}
                         </div>
                       </td>
                     </tr>
@@ -195,7 +300,7 @@ export function TorneiosView() {
               </table>
             </div>
             <div style={{ display:'flex', flexWrap:'wrap', gap:20, padding:20, backgroundColor:'#121825', borderRadius:'0 0 12px 12px' }}>
-              {[{color:'#4285F4',label:'Qualificacao Direta'},{color:'#FA7B17',label:'Playoff'},{color:'#EA4335',label:'Eliminado'}].map((l,i) => (
+              {[{color:'#4285F4',label:'Qualificacao Direta'},{color:'#FA7B17',label:'Playoff'},{color:'#EA4335',label:'Eliminado'}].map((l,i)=>(
                 <div key={i} style={{ display:'flex', alignItems:'center', gap:8, fontSize:11, color:'#9AA4B6' }}>
                   <span style={{ width:8, height:8, backgroundColor:l.color, borderRadius:1, display:'inline-block' }}/>{l.label}
                 </div>
@@ -208,77 +313,25 @@ export function TorneiosView() {
       {activeTab==='Bracket' && (
         <div style={{ padding:'20px' }}>
           <div style={{ display:'flex', gap:10, marginBottom:20 }}>
-            {(['chaveamento','lista'] as const).map(v => (
-              <button key={v} onClick={() => setBView(v)} style={{ flex:1, backgroundColor:bView===v?'#005EFA':'#171E2D', color:bView===v?'#fff':'#9AA4B6', border:'none', padding:10, borderRadius:8, fontSize:13, fontWeight:600, cursor:'pointer', outline:'none' }}>
+            {(['chaveamento','lista'] as const).map(v=>(
+              <button key={v} onClick={()=>setBView(v)} style={{ flex:1, backgroundColor:bView===v?'#005EFA':'#171E2D', color:bView===v?'#fff':'#9AA4B6', border:'none', padding:10, borderRadius:8, fontSize:13, fontWeight:600, cursor:'pointer', outline:'none' }}>
                 {v==='chaveamento'?'Chaveamento':'Lista'}
               </button>
             ))}
           </div>
-
-          {bView==='chaveamento' && (
-            <div style={{ overflowX:'auto', paddingBottom:20 }}>
-              <div style={{ position:'relative', width:totalW, height:totalH }}>
-                <svg style={{ position:'absolute', inset:0, overflow:'visible', pointerEvents:'none' }} width={totalW} height={totalH}>
-                  {/* Q→SF esquerda */}
-                  <line x1={colX[0]+CARD_W} y1={r0cy[0]} x2={hx(0)} y2={r0cy[0]} stroke="#222A3B" strokeWidth="2"/>
-                  <line x1={colX[0]+CARD_W} y1={r0cy[1]} x2={hx(0)} y2={r0cy[1]} stroke="#222A3B" strokeWidth="2"/>
-                  <line x1={hx(0)} y1={r0cy[0]} x2={hx(0)} y2={r0cy[1]} stroke="#222A3B" strokeWidth="2"/>
-                  <line x1={hx(0)} y1={r1cy[0]} x2={colX[1]} y2={r1cy[0]} stroke="#222A3B" strokeWidth="2"/>
-                  <circle cx={colX[1]} cy={r1cy[0]} r="3" fill="#005EFA"/>
-                  {/* Q→SF direita */}
-                  <line x1={colX[0]+CARD_W} y1={r0cy[2]} x2={hx(0)} y2={r0cy[2]} stroke="#222A3B" strokeWidth="2"/>
-                  <line x1={colX[0]+CARD_W} y1={r0cy[3]} x2={hx(0)} y2={r0cy[3]} stroke="#222A3B" strokeWidth="2"/>
-                  <line x1={hx(0)} y1={r0cy[2]} x2={hx(0)} y2={r0cy[3]} stroke="#222A3B" strokeWidth="2"/>
-                  <line x1={hx(0)} y1={r1cy[1]} x2={colX[1]} y2={r1cy[1]} stroke="#222A3B" strokeWidth="2"/>
-                  <circle cx={colX[1]} cy={r1cy[1]} r="3" fill="#005EFA"/>
-                  {/* SF→F */}
-                  <line x1={colX[1]+CARD_W} y1={r1cy[0]} x2={hx(1)} y2={r1cy[0]} stroke="#005EFA" strokeWidth="2"/>
-                  <line x1={colX[1]+CARD_W} y1={r1cy[1]} x2={hx(1)} y2={r1cy[1]} stroke="#005EFA" strokeWidth="2"/>
-                  <line x1={hx(1)} y1={r1cy[0]} x2={hx(1)} y2={r1cy[1]} stroke="#005EFA" strokeWidth="2"/>
-                  <line x1={hx(1)} y1={r2cy} x2={colX[2]} y2={r2cy} stroke="#005EFA" strokeWidth="2"/>
-                  <circle cx={colX[2]} cy={r2cy} r="4" fill="#FFD60A"/>
-                  {/* F→Trofeu */}
-                  <line x1={colX[2]+CARD_W} y1={r2cy} x2={colX[2]+CARD_W+24} y2={r2cy} stroke="#FFD60A" strokeWidth="2" strokeDasharray="4 3"/>
-                </svg>
-
-                {/* QUARTOS */}
-                <div style={{ position:'absolute', left:colX[0], top:0 }}>
-                  <div style={{ fontSize:9, fontWeight:800, color:'#9AA4B6', textTransform:'uppercase', letterSpacing:1, marginBottom:8, textAlign:'center', width:CARD_W }}>Quartos de Final</div>
-                  <div style={{ display:'flex', flexDirection:'column', gap:ROW_GAP_0 }}>
-                    {bracketRounds[0].matches.map((m,mi) => <BracketCard key={mi} m={m}/>)}
-                  </div>
-                </div>
-
-                {/* MEIAS */}
-                <div style={{ position:'absolute', left:colX[1], top:r1top[0] }}>
-                  <div style={{ fontSize:9, fontWeight:800, color:'#005EFA', textTransform:'uppercase', letterSpacing:1, marginBottom:8, textAlign:'center', width:CARD_W }}>Meias-Finais</div>
-                  <div style={{ display:'flex', flexDirection:'column', gap:ROW_GAP_1 }}>
-                    {bracketRounds[1].matches.map((m,mi) => <BracketCard key={mi} m={m}/>)}
-                  </div>
-                </div>
-
-                {/* FINAL */}
-                <div style={{ position:'absolute', left:colX[2], top:r2top }}>
-                  <div style={{ fontSize:9, fontWeight:800, color:'#FFD60A', textTransform:'uppercase', letterSpacing:1, marginBottom:8, textAlign:'center', width:CARD_W }}>Final</div>
-                  <BracketCard m={bracketRounds[2].matches[0]}/>
-                </div>
-
-                {/* TROFEU */}
-                <div style={{ position:'absolute', left:colX[2]+CARD_W+30, top:r2top+CARD_H/2-30, textAlign:'center' }}>
-                  <div style={{ fontSize:36 }}>🏆</div>
-                  <div style={{ fontSize:8, color:'#FFD60A', fontWeight:800, textTransform:'uppercase', letterSpacing:1, marginTop:4 }}>Campeao</div>
-                </div>
-              </div>
-            </div>
-          )}
-
+          {bView==='chaveamento' && <BracketUCL/>}
           {bView==='lista' && (
             <div style={{ display:'flex', flexDirection:'column', gap:24 }}>
-              {bracketRounds.map((round,ri) => (
+              {[
+                { label:'Oitavos de Final', color:'#64748B', matches:r16L },
+                { label:'Quartos de Final', color:'#9AA4B6', matches:qfL },
+                { label:'Meias-Finais', color:'#005EFA', matches:sfL },
+                { label:'Final', color:'#FFD60A', matches:[finalM] },
+              ].map((round,ri)=>(
                 <div key={ri}>
                   <div style={{ fontSize:11, fontWeight:700, color:round.color, textTransform:'uppercase', letterSpacing:1, marginBottom:12 }}>{round.label}</div>
                   <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
-                    {round.matches.map((m,mi) => <BracketCard key={mi} m={m}/>)}
+                    {round.matches.map((m,mi)=><BracketCard key={mi} m={m}/>)}
                   </div>
                 </div>
               ))}
@@ -288,11 +341,10 @@ export function TorneiosView() {
               </div>
             </div>
           )}
-
           <div style={{ marginTop:20, backgroundColor:'#121825', borderRadius:12, padding:'14px 16px' }}>
             <div style={{ fontSize:11, fontWeight:700, color:'#fff', marginBottom:10 }}>Legenda</div>
             <div style={{ display:'flex', flexWrap:'wrap', gap:12 }}>
-              {[{c:'rgba(0,94,250,0.3)',l:'Equipa vencedora'},{c:'#34A853',l:'Vitoria confirmada'},{c:'#EA4335',l:'Eliminado'},{c:'#9AA4B6',l:'Por determinar'}].map((x,i) => (
+              {[{c:'rgba(0,94,250,0.3)',l:'Equipa vencedora'},{c:'#34A853',l:'Vitoria confirmada'},{c:'#9AA4B6',l:'Por determinar'}].map((x,i)=>(
                 <div key={i} style={{ display:'flex', alignItems:'center', gap:6, fontSize:11, color:'#9AA4B6' }}>
                   <span style={{ width:10, height:10, backgroundColor:x.c, borderRadius:2, display:'inline-block' }}/>{x.l}
                 </div>
@@ -305,18 +357,17 @@ export function TorneiosView() {
       {activeTab==='Sobre' && (
         <div style={{ padding:'25px 20px', color:'#9AA4B6', fontSize:13, lineHeight:1.6 }}>
           <h2 style={{ color:'#fff', fontSize:16, margin:'0 0 15px' }}>Sobre a Champions Cup 2026</h2>
-          <p style={{ marginBottom:15 }}>A Champions Cup e o torneio mais prestigiado da MATZON, reunindo as 32 melhores equipas do mundo em competicao pelo titulo supremo e EUR 25.000 em premios.</p>
+          <p>A Champions Cup e o torneio mais prestigiado da MATZON, reunindo as 32 melhores equipas em competicao pelo titulo e EUR 25.000 em premios.</p>
           <h3 style={{ color:'#fff', fontSize:14, margin:'20px 0 8px' }}>Formato</h3>
-          <ul style={{ paddingLeft:20, marginBottom:15 }}>
-            <li style={{ marginBottom:6 }}>Fase de grupos - 8 grupos de 4 equipas</li>
-            <li style={{ marginBottom:6 }}>Quartos de Final - eliminacao direta</li>
-            <li style={{ marginBottom:6 }}>Meias-Finais e Final ao vivo</li>
+          <ul style={{ paddingLeft:20 }}>
+            <li>Oitavos de Final - 16 equipas por lado</li>
+            <li>Quartos, Meias e Final eliminacao direta</li>
           </ul>
           <h3 style={{ color:'#fff', fontSize:14, margin:'20px 0 8px' }}>Premios</h3>
-          <ul style={{ paddingLeft:20, marginBottom:15 }}>
-            <li style={{ marginBottom:6 }}>1 Lugar - EUR 15.000</li>
-            <li style={{ marginBottom:6 }}>2 Lugar - EUR 7.000</li>
-            <li style={{ marginBottom:6 }}>3/4 Lugar - EUR 1.500 cada</li>
+          <ul style={{ paddingLeft:20 }}>
+            <li>1 Lugar - EUR 15.000</li>
+            <li>2 Lugar - EUR 7.000</li>
+            <li>3/4 Lugar - EUR 1.500 cada</li>
           </ul>
         </div>
       )}
