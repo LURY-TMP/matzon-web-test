@@ -11,10 +11,14 @@ const flexPanels = [
 ];
 
 const featuredData = [
-  { title: 'Champions Cup', sub: 'Premio: EUR 5.000', img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1000&auto=format&fit=crop' },
-  { title: 'Pro League S3', sub: 'Premio: EUR 10.000', img: 'https://images.unsplash.com/photo-1560253023-3ec5d502959f?q=80&w=1000&auto=format&fit=crop' },
-  { title: 'Elite Invitational', sub: 'Premio: EUR 25.000', img: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=1000&auto=format&fit=crop' },
-  { title: 'Winter Clash', sub: 'Premio: EUR 2.500', img: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1000&auto=format&fit=crop' },
+  { title: 'Champions Cup', sub: 'Premio: EUR 5.000', img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1000&auto=format&fit=crop', badge: 'Ao Vivo', badgeColor: '#30D158' },
+  { title: 'Pro League S3', sub: 'Premio: EUR 10.000', img: 'https://images.unsplash.com/photo-1560253023-3ec5d502959f?q=80&w=1000&auto=format&fit=crop', badge: 'Aberto', badgeColor: '#2563FF' },
+  { title: 'Elite Invitational', sub: 'Premio: EUR 25.000', img: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=1000&auto=format&fit=crop', badge: 'So Convite', badgeColor: '#7C3AED' },
+  { title: 'Winter Clash', sub: 'Premio: EUR 2.500', img: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1000&auto=format&fit=crop', badge: 'Esgotado', badgeColor: '#FF453A' },
+  { title: 'World Masters 2026', sub: 'Premio: EUR 100.000', img: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?q=80&w=1000&auto=format&fit=crop', badge: 'Internacional', badgeColor: '#FFD60A' },
+  { title: 'Iberian Open', sub: 'Premio: EUR 8.000', img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop', badge: 'Aberto', badgeColor: '#2563FF' },
+  { title: 'Night Cup Series', sub: 'Premio: EUR 3.000', img: 'https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=1000&auto=format&fit=crop', badge: 'Esgotado', badgeColor: '#FF453A' },
+  { title: 'MATZON Grand Prix', sub: 'Premio: EUR 50.000', img: 'https://images.unsplash.com/photo-1614726365345-5df0b457319c?q=80&w=1000&auto=format&fit=crop', badge: 'So Convite', badgeColor: '#7C3AED' },
 ];
 
 const categoriesData = [
@@ -97,7 +101,10 @@ export function DashboardOfficial() {
         <div className="flex gap-[15px] overflow-x-auto px-[5px] pb-[20px] hide-scrollbar snap-x snap-mandatory">
           {featuredData.map((item, idx) => (
             <div key={idx} className="min-w-[240px] md:min-w-[280px] h-[150px] md:h-[180px] rounded-[25px] bg-cover bg-center snap-start relative cursor-pointer overflow-hidden hover:scale-[1.02] transition-transform duration-300"
-              style={{ backgroundImage: `url('${item.img}')` }}>
+              style={{ backgroundImage: `url('${item.img}')`, filter: item.badge === 'Esgotado' ? 'grayscale(60%)' : 'none' }}>
+              <div className="absolute top-3 left-3">
+                <span className="text-white text-[10px] font-[800] uppercase px-[10px] py-1 rounded-[20px]" style={{ backgroundColor: item.badgeColor }}>{item.badge}</span>
+              </div>
               <div className="absolute bottom-0 left-0 w-full p-[15px] text-white" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.9), transparent)' }}>
                 <span className="block text-[16px] font-[800] mb-1">{item.title}</span>
                 <span className="text-[12px] opacity-80">{item.sub}</span>
