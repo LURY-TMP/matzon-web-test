@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, MoreVertical, X, Pencil, Share, Flag, BadgeCheck, Play, Heart } from 'lucide-react';
 
 const chips = ['Todos', 'Valorant', 'CS2', 'Highlights', 'Torneios', 'Clutches', 'Liga Nacional'];
-const tabs = ['Home All', 'Galeria', 'Jogos', 'Live', 'Torneio', 'Eventos', 'Clã', 'Grupo', 'Amigos', 'About'];
+const tabs = ['Tudo', 'Galeria', 'Torneios', 'Live', 'Estatisticas', 'Eventos', 'Cla', 'Amigos', 'Sobre'];
 const posts = [
   { id: 1, img: 'https://images.unsplash.com/photo-1542393545-facac42e67ee?q=80&w=800', views: '12K', type: 'video' },
   { id: 2, img: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=800', likes: '4.5K', type: 'photo' },
@@ -52,8 +52,8 @@ export function ProfileOfficial() {
       <div ref={menuRef} className="fixed top-[50px] right-4 w-[220px] z-[2000] rounded-[14px] border border-white/10 overflow-hidden transition-all duration-200"
         style={{ backgroundColor: 'rgba(30,30,30,0.9)', backdropFilter: 'blur(40px)',
           opacity: isMenuOpen ? 1 : 0, transform: isMenuOpen ? 'scale(1)' : 'scale(0.8)', pointerEvents: isMenuOpen ? 'auto' : 'none' }}>
-        <button className="w-full px-4 py-3.5 flex items-center gap-3 text-[15px] font-medium border-b border-white/10 hover:bg-white/10"><Pencil className="w-5 h-5" /> Editar Perfil</button>
-        <button className="w-full px-4 py-3.5 flex items-center gap-3 text-[15px] font-medium border-b border-white/10 hover:bg-white/10"><Share className="w-5 h-5" /> Compartilhar</button>
+        <button onClick={() => window.location.href='/configuracoes'} className="w-full px-4 py-3.5 flex items-center gap-3 text-[15px] font-medium border-b border-white/10 hover:bg-white/10"><Pencil className="w-5 h-5" /> Editar Perfil</button>
+        <button onClick={() => navigator.share ? navigator.share({ title: 'MATZON', url: window.location.href }) : navigator.clipboard.writeText(window.location.href)} className="w-full px-4 py-3.5 flex items-center gap-3 text-[15px] font-medium border-b border-white/10 hover:bg-white/10"><Share className="w-5 h-5" /> Compartilhar</button>
         <button className="w-full px-4 py-3.5 flex items-center gap-3 text-[15px] font-medium hover:bg-white/10 text-[#FF453A]"><Flag className="w-5 h-5" /> Denunciar</button>
       </div>
 
