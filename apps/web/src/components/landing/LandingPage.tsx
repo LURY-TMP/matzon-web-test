@@ -38,10 +38,10 @@ const healthList = [
 ];
 
 const faqs = [
-  { q: 'O que é a MATZON?', a: 'MATZON é o ecossistema definitivo de esports de futebol digital, com competições, iniciativas comunitárias e uma plataforma global em MATZON.GG.' },
-  { q: 'O que é MATZON.GG?', a: 'MATZON.GG é a plataforma online oficial onde podes competir, seguir torneios e ligar-te à comunidade global.' },
-  { q: 'Como posso participar?', a: 'Cria uma conta, escolhe o teu jogo e inscreve-te nos torneios disponíveis na plataforma.' },
-  { q: 'Quem pode usar MATZON.GG?', a: 'Qualquer jogador de futebol digital, independentemente do nível. Temos competições para todos os níveis.' },
+  { q: 'O que é a MATZON?', a: 'MATZON é a plataforma definitiva de esports competitivo, onde jogadores de todo o mundo competem em torneios, sobem no ranking e constroem o seu legado digital.' },
+  { q: 'Como posso participar?', a: 'Cria uma conta gratuita na MATZON, escolhe o teu jogo, define o teu perfil competitivo e inscreve-te nos torneios disponíveis.' },
+  { q: 'Quem pode usar a MATZON?', a: 'Qualquer jogador, independentemente do nível. Temos competições para iniciantes, amadores e profissionais.' },
+  { q: 'Os torneios são pagos?', a: 'Temos torneios gratuitos e premium. Os torneios premium oferecem prémios maiores e experiências exclusivas.' },
 ];
 
 export function LandingPage() {
