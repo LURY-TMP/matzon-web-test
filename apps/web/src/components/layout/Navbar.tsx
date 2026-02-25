@@ -1,114 +1,129 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Trophy, Search, Home, LayoutGrid, User } from 'lucide-react';
+import React, { useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+
+const navLinks = [
+  { label: 'Dashboard', href: '/dashboard', emoji: '🏠' },
+  { label: 'Torneios', href: '/torneios', emoji: '🏆' },
+  { label: 'Eventos', href: '/eventos', emoji: '⚽' },
+  { label: 'Ranking', href: '/ranking', emoji: '📊' },
+  { label: 'Comunidade', href: '/comunidade', emoji: '👥' },
+];
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLightMode, setIsLightMode] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
 
-  useEffect(() => {
-    if (isLightMode) {
-      document.body.classList.add('light-mode');
-    } else {
-      document.body.classList.remove('light-mode');
-    }
-  }, [isLightMode]);
-
-  const floatingMenuItems = [
-    { icon: Home, label: 'Início' },
-    { icon: LayoutGrid, label: 'Dashboard' },
-    { icon: Trophy, label: 'Torneios' },
-    { icon: User, label: 'Perfil' },
-  ];
+  const navigate = (href: string) => {
+    setIsOpen(false);
+    router.push(href);
+  };
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-lg border-b border-white/10 h-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full relative">
-        <div className="flex items-center justify-between h-full">
+    <>
+      <nav style={{
+        position: 'fixed', top: 0, left: 0, right: 0, height: 64,
+        backgroundColor: 'rgba(10,10,14,0.92)', backdropFilter: 'blur(20px)',
+        borderBottom: '1px solid rgba(255,255,255,0.07)', zIndex: 200,
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: '0 20px',
+      }}>
 
-          {/* LOGO MATZ/N */}
-          <div className="scale-[0.55] sm:scale-[0.65] origin-left">
-            <div className="flex items-center gap-[16px] relative" style={{ perspective: '1000px' }}>
-              <div
-                className="w-[148px] h-[86px] border-[7px] rounded-full flex items-center p-[6px] relative z-10 pointer-events-none transition-colors duration-500"
-                style={{ borderColor: isLightMode ? '#000' : '#FFF' }}
+        {/* LOGO */}
+        <div
+          onClick={() => navigate('/dashboard')}
+          style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}
+        >
+          <div style={{
+            width: 32, height: 32, borderRadius: 9,
+            background: 'linear-gradient(135deg, #2563FF, #7C3AED)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: 15, fontWeight: 900, color: '#fff', flexShrink: 0,
+          }}>M</div>
+          <span style={{ fontWeight: 800, fontSize: 17, color: '#fff', letterSpacing: '-0.3px' }}>
+            MATZ<span style={{ fontFamily: 'serif', fontWeight: 400 }}>ON</span>
+          </span>
+        </div>
+
+        {/* HAMBURGER */}
+        <button
+          onClick={() => setIsOpen(true)}
+          style={{
+            width: 40, height: 40, borderRadius: '50%', border: 'none', cursor: 'pointer',
+            backgroundColor: 'rgba(255,255,255,0.08)',
+            display: 'flex', flexDirection: 'column', alignItems: 'center',
+            justifyContent: 'center', gap: 5, padding: 0,
+          }}
+        >
+          <span style={{ display: 'block', width: 18, height: 2, backgroundColor: '#fff', borderRadius: 2 }} />
+          <span style={{ display: 'block', width: 18, height: 2, backgroundColor: '#fff', borderRadius: 2 }} />
+          <span style={{ display: 'block', width: 12, height: 2, backgroundColor: '#fff', borderRadius: 2 }} />
+        </button>
+      </nav>
+
+      {/* OVERLAY */}
+      {isOpen && (
+        <div
+          onClick={() => setIsOpen(false)}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 300,
+            backgroundColor: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(4px)',
+          }}
+        />
+      )}
+
+      {/* DRAWER */}
+      <div style={{
+        position: 'fixed', top: 0, right: 0, bottom: 0, width: 280, zIndex: 400,
+        backgroundColor: '#0D1625', borderLeft: '1px solid rgba(255,255,255,0.08)',
+        transform: isOpen ? 'translateX(0)' : 'translateX(100%)',
+        transition: 'transform 0.3s cubic-bezier(0.4,0,0.2,1)',
+        display: 'flex', flexDirection: 'column', padding: '0 0 32px',
+      }}>
+        {/* DRAWER HEADER */}
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: '0 20px', height: 64, borderBottom: '1px solid rgba(255,255,255,0.07)',
+        }}>
+          <span style={{ fontWeight: 800, fontSize: 16, color: '#fff' }}>
+            MATZ<span style={{ fontFamily: 'serif', fontWeight: 400 }}>ON</span>
+          </span>
+          <button
+            onClick={() => setIsOpen(false)}
+            style={{
+              background: 'none', border: 'none', color: '#9AA4B6',
+              fontSize: 22, cursor: 'pointer', lineHeight: 1,
+            }}
+          >✕</button>
+        </div>
+
+        {/* LINKS */}
+        <div style={{ flex: 1, padding: '16px 12px', display: 'flex', flexDirection: 'column', gap: 4 }}>
+          {navLinks.map((link) => {
+            const active = pathname === link.href || pathname.startsWith(link.href + '/');
+            return (
+              <button
+                key={link.href}
+                onClick={() => navigate(link.href)}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 12,
+                  padding: '13px 16px', borderRadius: 10, border: 'none', cursor: 'pointer',
+                  backgroundColor: active ? 'rgba(37,99,255,0.15)' : 'transparent',
+                  borderLeft: active ? '3px solid #2563FF' : '3px solid transparent',
+                  color: active ? '#fff' : '#9AA4B6',
+                  fontSize: 14, fontWeight: active ? 700 : 500, textAlign: 'left',
+                  transition: 'all 0.15s ease',
+                }}
               >
-                <motion.div
-                  className="w-[60px] h-[60px] rounded-full flex justify-center items-center cursor-pointer z-20 pointer-events-auto shadow-lg"
-                  style={{ backgroundColor: isLightMode ? '#000' : '#FFF' }}
-                  animate={{ x: isLightMode ? 0 : 62 }}
-                  transition={{ type: "spring", stiffness: 150, damping: 20 }}
-                  onClick={() => setIsLightMode(!isLightMode)}
-                >
-                  <span
-                    className="text-[14px] font-black tracking-[0.5px] select-none pointer-events-none transition-colors"
-                    style={{ color: isLightMode ? '#FFF' : '#000' }}
-                  >
-                    MATZ
-                  </span>
-                </motion.div>
-              </div>
-              <motion.div
-                className="text-[95px] font-black leading-[0.8] -ml-1 select-none relative z-0 cursor-pointer hover:opacity-80 transition-colors"
-                style={{ color: isLightMode ? '#000' : '#FFF', transformOrigin: 'center center' }}
-                animate={{ x: isLightMode ? -100 : 0, scale: isLightMode ? 0.70 : 1 }}
-                transition={{ type: "spring", stiffness: 150, damping: 20 }}
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              >
-                N
-              </motion.div>
-            </div>
-          </div>
-
-          {/* SEARCH */}
-          <div className="hidden md:flex flex-1 justify-center px-8">
-            <div className="flex items-center bg-white/5 rounded-full px-4 py-2 border border-white/10 hover:border-white/20 transition-colors focus-within:border-white/40 w-full max-w-md">
-              <Search className="w-4 h-4 text-white/50 mr-2" />
-              <input type="text" placeholder="Buscar jogador ou torneio..." className="bg-transparent border-none text-white text-sm focus:outline-none placeholder:text-white/30 w-full" />
-            </div>
-          </div>
-
-          {/* HAMBURGER + MENU FLUTUANTE */}
-          <div className="absolute top-[10px] right-4 sm:right-6 lg:right-8 z-[200] flex flex-col items-end">
-            <motion.div
-              onClick={() => setIsOpen(!isOpen)}
-              className="w-[60px] h-[60px] rounded-full flex justify-center items-center cursor-pointer shadow-xl transition-colors duration-500"
-              style={{ backgroundColor: isLightMode ? '#000' : '#FFF' }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <div className="w-[24px] h-[24px] relative">
-                <motion.span animate={{ top: isOpen ? 10.5 : 4, rotate: isOpen ? 45 : 0 }} className="block w-full h-[3px] absolute left-0 transition-colors duration-500" style={{ backgroundColor: isLightMode ? '#FFF' : '#000' }} />
-                <motion.span animate={{ opacity: isOpen ? 0 : 1, top: 10.5 }} className="block w-full h-[3px] absolute left-0 transition-colors duration-500" style={{ backgroundColor: isLightMode ? '#FFF' : '#000' }} />
-                <motion.span animate={{ top: isOpen ? 10.5 : 17, rotate: isOpen ? -45 : 0 }} className="block w-full h-[3px] absolute left-0 transition-colors duration-500" style={{ backgroundColor: isLightMode ? '#FFF' : '#000' }} />
-              </div>
-            </motion.div>
-
-            <AnimatePresence>
-              {isOpen && (
-                <motion.ul className="absolute top-[70px] right-0 flex flex-col gap-[10px] m-0 p-0 list-none">
-                  {floatingMenuItems.map((item, index) => (
-                    <motion.li
-                      key={item.label}
-                      initial={{ opacity: 0, y: -20, scale: 0.5 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -20, scale: 0.5 }}
-                      transition={{ delay: index * 0.1, type: "spring", stiffness: 260, damping: 20 }}
-                      className="w-[60px] h-[60px] rounded-full flex justify-center items-center cursor-pointer shadow-xl transition-transform hover:scale-110"
-                      style={{ backgroundColor: isLightMode ? '#000' : '#FFF' }}
-                      title={item.label}
-                    >
-                      <item.icon className="w-6 h-6 transition-colors duration-500" style={{ color: isLightMode ? '#FFF' : '#000' }} />
-                    </motion.li>
-                  ))}
-                </motion.ul>
-              )}
-            </AnimatePresence>
-          </div>
-
+                <span style={{ fontSize: 18 }}>{link.emoji}</span>
+                {link.label}
+              </button>
+            );
+          })}
         </div>
       </div>
-    </nav>
+    </>
   );
 }
