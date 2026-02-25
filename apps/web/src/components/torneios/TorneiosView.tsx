@@ -297,7 +297,7 @@ export function TorneiosView(){
         <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1000&auto=format&fit=crop" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
         <div style={{position:'absolute',inset:0,background:'linear-gradient(to top,#0B121E 0%,rgba(11,18,30,0.4) 100%)'}}/>
         <div style={{position:'absolute',bottom:15,left:20,zIndex:10}}>
-          <div style={{fontSize:11,fontWeight:700,color:'#005EFA',letterSpacing:1,textTransform:'uppercase',marginBottom:4}}>MATZON Champions Cup 2026</div>
+          <div style={{fontSize:11,fontWeight:700,color:'#005EFA',letterSpacing:1,textTransform:'uppercase',marginBottom:4}}>MATZON Champions Cup · Evento Oficial</div>
           <h1 style={{fontSize:22,fontWeight:800,lineHeight:1.1,margin:0}}>Torneios em Destaque</h1>
         </div>
         <div style={{position:'absolute',bottom:15,right:20,zIndex:10,backgroundColor:'rgba(255,214,10,0.15)',borderRadius:10,padding:'6px 12px',border:'1px solid rgba(255,214,10,0.3)'}}>
@@ -446,7 +446,7 @@ export function TorneiosView(){
 
       {activeTab==='Sobre'&&(
         <div style={{padding:'25px 20px',color:'#9AA4B6',fontSize:13,lineHeight:1.7}}>
-          <h2 style={{color:'#fff',fontSize:16,margin:'0 0 16px'}}>MATZON Champions Cup 2026</h2>
+          <h2 style={{color:'#fff',fontSize:16,margin:'0 0 16px'}}>MATZON Champions Cup · Evento Oficial</h2>
           <h3 style={{color:'#fff',fontSize:13,margin:'0 0 8px'}}>Formato</h3>
           <ul style={{paddingLeft:18,display:'flex',flexDirection:'column',gap:5,marginBottom:16}}>
             <li>30 jogadores · 5 partidas de classificacao</li>
