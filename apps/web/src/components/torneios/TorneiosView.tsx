@@ -41,7 +41,8 @@ const standings = [
   { pos:31, name:'Cosmic Dust',  img:'https://i.pravatar.cc/40?img=31', j:10, g:1, e:1, d:8, gf:3,  gc:23, gd:'-20', pts:4,  form:['L','L','D','L','L'], qual:'eliminated' },
   { pos:32, name:'Zero Hour',    img:'https://i.pravatar.cc/40?img=32', j:10, g:0, e:1, d:9, gf:2,  gc:30, gd:'-28', pts:1,  form:['L','L','L','D','L'], qual:'eliminated' },
 ];
-const fC = (r:string) => r==='W'?'#34A853':r==='D'?'#9AA4B6':'#EA4335';
+const fC = (r:string) => r==='W'?'#34A853':r==='D'?'#F5A623':'#EA4335';
+const fL = (r:string) => r==='W'?'V':r==='D'?'E':'D';
 const qC = (q:string) => q==='direct'?'#4285F4':q==='playoff'?'#FA7B17':'transparent';
 type BM = { t1:string; s1:number|null; t2:string; s2:number|null; winner:number; date:string };
 
@@ -334,8 +335,10 @@ export function TorneiosView() {
                       {[s.j,s.g,s.e,s.d,s.gf,s.gc,s.gd].map((v,vi)=><td key={vi} style={{ padding:'10px 8px', fontSize:13, textAlign:'center', borderBottom:'1px solid rgba(255,255,255,0.02)', color:'#fff' }}>{v}</td>)}
                       <td style={{ padding:'10px 8px', textAlign:'center', fontWeight:700, borderLeft:'1px solid #222A3B', borderBottom:'1px solid rgba(255,255,255,0.02)', fontSize:13 }}>{s.pts}</td>
                       <td style={{ padding:'10px 8px', borderBottom:'1px solid rgba(255,255,255,0.02)' }}>
-                        <div style={{ display:'flex', gap:3, justifyContent:'center' }}>
-                          {s.form.map((r,ri)=><span key={ri} style={{ width:14, height:14, borderRadius:'50%', backgroundColor:fC(r), display:'inline-block' }}/>)}
+                        <div style={{ display:'flex', gap:4, justifyContent:'center' }}>
+                          {s.form.map((r,ri)=>(
+                            <span key={ri} style={{ width:18, height:18, borderRadius:4, backgroundColor:fC(r), display:'inline-flex', alignItems:'center', justifyContent:'center', fontSize:9, fontWeight:800, color:'#fff' }}>{fL(r)}</span>
+                          ))}
                         </div>
                       </td>
                     </tr>
